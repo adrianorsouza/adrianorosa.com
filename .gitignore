@@ -1,0 +1,19 @@
+#########################
+# Folders to ignore
+#########################
+vendor
+node_modules
+bower_components
+tests
+
+sftp-config*.json
+temp
+cache
+
+#########################
+# Numerous always-ignore extensions
+#########################
+*.log
+*.sql
+*.zip
+*.sublime-workspace
