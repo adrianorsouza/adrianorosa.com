@@ -1,0 +1,17 @@
+---
+layout: base
+---
+{% strip %}
+<article class="post">
+  <header class="post-header">
+    <h2 class="post-title">{{ page.title }}</h2>
+  </header>
+
+  <section class="post-content">
+
+    {{ content | markdownify }}
+
+  </section>
+</article>
+
+{% endstrip %}

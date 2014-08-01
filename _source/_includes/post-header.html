@@ -1,0 +1,47 @@
+<header class="post-header">
+{% if post.title %}
+<h2 class="post-title"><a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></h2>
+
+<p class="post-meta">
+<time class="post-time" datetime="{{ post.date | date: "%F" }}"><i class="ico ico-clock"></i> {{ post.date | date_to_string }}</time> &mdash;
+<span class="post-category">
+{% for categ in site.data.categories %}
+{% if categ.slug == post.category %}
+<a href="{{ site.blog_url }}/category/{{ post.category }}" title="Artigos na Categoria {{ categ.label }}">{{ categ.label }}</a>
+{% endif %}
+{% endfor %}
+</span> &mdash;
+{% if site.disqus_enable %}
+<i class="ico ico-comment"></i> <a href="{{ post.url | prepend: site.url }}#disqus_thread" title="Comentário">0 Comentário</a>
+{% endif %}
+{% hide %}
+&mdash;
+<span class="author-name">
+<a href="/about/" rel="author" title="Escrito por {{ post.author }}">{{ post.author }}</a>
+</span>
+{% endhide %}
+</p>
+{% else %}
+<h1 class="post-title">{{ page.title }}</h1>
+
+<p class="post-meta">
+<time class="post-time" datetime="{{ page.date | date: "%F" }}"><i class="ico ico-clock"></i> {{ page.date | date_to_string }}</time> &mdash;
+<span class="post-category">
+{% for categ in site.data.categories %}
+{% if categ.slug == page.categories[1] %}
+<a href="{{ site.blog_url }}/category/{{ page.category }}" title="Artigos na Categoria {{ categ.label }}">{{ categ.label }}</a>
+{% endif %}
+{% endfor %}
+</span> &mdash;
+{% if site.disqus_enable %}
+<i class="ico ico-comment"></i> <a href="{{ page.url | prepend: site.url }}#disqus_thread" title="Comentário">0 Comentário</a>
+{% endif %}
+{% hide %}
+&mdash;
+<span class="author-name">
+<a href="/about/" rel="author" title="Escrito por {{ page.author }}">{{ page.author }}</a>
+</span>
+{% endhide %}
+</p>
+{% endif %}
+</header>

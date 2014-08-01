@@ -1,0 +1,29 @@
+
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="{{ site.author.avatar }}" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="{{ site.author.github }}" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="{{ site.author.twitter }}" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="{{ site.author.facebook }}" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+
+    </ul>
+  </div>
+
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      {% for category in site.data.categories %}
+      <li{% if category.slug == page.category or category.slug == page.slug %} class="active"{% endif %}><a href="{{ site.blog_url }}/category/{{ category.slug }}" title="{{ category.label }}">{{ category.label }}</a></li>
+      {% endfor %}
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->

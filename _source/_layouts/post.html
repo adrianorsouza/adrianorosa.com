@@ -1,0 +1,39 @@
+---
+layout: base
+---
+<article class="post">
+
+  {% include post-header.html %}
+
+  <section class="post-content">
+    {{ content }}
+  </section><!-- ./post-content -->
+
+  <hr>
+  {% if site.related_posts %}
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      {% for post in site.related_posts limit: 3 %}
+      <li><time class="post-time" datetime="{{ post.date | date: "%F" }}">{{ post.date | date_to_string }}</time> &mdash; <a href="{{ post.url }}" title="{{ post.title }}">{{ post.title }}</a></li>
+      {% endfor %}
+    </ol>
+  </section><!-- ./post-related -->
+
+  <hr>
+  {% endif %}
+  <section class="post-navigation">
+    <ul class="pager">
+      {% if page.previous %}
+      <li class="prev"><a href="{{ page.previous.url }}" title="{{ page.previous.title }}">&lsaquo; anterior</a></li>
+      {% endif %}
+
+      {% if page.next %}
+      <li class="next"><a href="{{ page.next.url }}" title="{{ page.next.title }}">próximo &rsaquo;</a></li>
+      {% endif %}
+    </ul>
+  </section><!-- ./post-navigation -->
+
+  {% include dsq_comment.html %}
+
+</article>

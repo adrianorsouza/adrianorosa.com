@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+{% strip %}
+  {% include head.html %}
+  <body>
+
+    {% include nav-header.html %}
+
+    <div class="home-head">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm-7">
+            {{ content | markdownify }}
+          </div>
+
+          <div class="col-sm-5">
+            <img src="/images/responsive-design.jpg" alt="Projeto Web Site Responsivo" class="img-responsive">
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    {% include footer.html %}
+{% endstrip %}
+  </body>
+</html>

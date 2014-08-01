@@ -1,0 +1,24 @@
+---
+title: Blog
+description: Assuntos relacionados com desenvolvimento web e tecnologia.
+---
+
+{% for post in paginator.posts %}
+<article class="post">
+
+  {% include post-header.html %}
+
+  <section class="post-excerpt">
+
+    {{ post.excerpt }}
+
+    <div class="clearfix"></div>
+    <p><a href="{{ post.url }}" title="{{ post.title }}" class="btn">leia mais</a></p>
+
+  </section>
+</article>
+{% endfor %}
+
+{% include pagination.html %}
+
+{% include dsq_count.html %}

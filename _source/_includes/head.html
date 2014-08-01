@@ -1,0 +1,41 @@
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% if page.title %}{{ page.title }}{% if paginator.page > 1 %} - Página {{ paginator.page }}{% endif %} | {% endif %}{{ site.title }}</title>
+    {% if page.description or page.excerpt %}<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.excerpt | strip_html }}{% endif %}">{% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="{{ site.author.name }}">
+
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+
+    {% if paginator.previous_page %}{% assign prev = paginator.previous_page_path %}{% endif %} {% if page.previous %}{% assign prev = page.previous.url %}{% endif %}
+    {% if prev %}<link rel='prev' href='{{ prev | prepend: site.url | remove: "index.html" }}' />{% endif %}
+    {% if paginator.next_page %}{% assign next = paginator.next_page_path %}{% endif %}{% if page.next %}{% assign next = page.next.url %}{% endif %}
+    {% if next %}<link rel='next' href='{{ next | prepend: site.url | remove: "index.html" }}' />{% endif %}
+    {% if paginator.page > 1 %}
+    <link rel="canonical" href="{{ site.blog_url | prepend: site.url | append: "/" | remove: "index.html" }}" />
+    {% else %}
+    <link rel="canonical" href="{{ page.url | prepend: site.url | remove: "index.html" }}" />
+    {% endif %}
+    <link rel="alternate" type="application/rss+xml" title="{{ site.title }} &raquo; Feed" href="{{ "/feed.xml" | prepend: site.url }}" />
+
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="{{ site.locale }}" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}" />
+    <meta property="og:description" content="{% if page.description or page.excerpt %}{% if page.description %}{{ page.description }}{% else %}{{ page.excerpt | strip_html }}{% endif %}{% endif %}" />
+    <meta property="og:url" content="{% if post.url %}{{ post.url }}{% else %}{{ page.url | prepend: site.url | remove: "index.html" }}{% endif %}" />
+    <meta property="og:site_name" content="{{ site.title }}" />
+    <meta property="article:author" content="{% if page.author %}{{ page.author }}{% else %}{{ site.author.url }}{% endif %}" />
+    <meta property="og:image" content="{{ site.url }}/images/logo.png" />
+  </head>

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+{% strip %}
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{{ page.title }} | {{ site.title }}</title>
+    {% if page.description or page.excerpt %}<meta name="description" content="{% if page.description %}{{ page.description }}{% else %}{{ page.excerpt | strip_html }}{% endif %}">{% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="{{ site.author.name }}">
+    <meta name="robots" content="noindex, nofollow">
+
+    <link rel="apple-touch-icon-precomposed" href="/assets/ico/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    {% include nav-header.html %}
+
+    <div class="home-head">
+      <div class="container">
+        <div class="error-page">
+              {{ content | markdownify }}
+        </div>
+
+      </div>
+    </div>
+    {% include footer.html %}
+{% endstrip %}
+  </body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="{{ site.locale }}">
+{% strip %}
+  {% include head.html %}
+
+  <body>
+
+    {% include nav-header.html %}
+
+    <div class="blog-header">
+      <div class="container">
+          {% if page.category == "blog" or page.categories[0] == "blog" %}
+          <h1 class="blog-title">
+            {% if page.category == "blog" %}
+              {{ page.title }}
+            {% else %}
+              {% for categ in site.data.categories %}
+                {% if categ.slug == page.categories[1] %}
+                  {{ categ.label }}
+                {% endif %}
+              {% endfor %}
+            {% endif %}
+          </h1>
+          {% if page.description %}<p class="lead blog-description">{{ page.description }}</p>{% endif %}
+          {% endif %}
+
+          {% if page.quote %}
+
+            <blockquote>
+              <p class="lead blog-description">
+              {{ page.quote }}
+              </p>
+            </blockquote>
+
+          {% endif %}
+      </div>
+    </div>
+
+    <div class="container">
+
+      <div class="row">
+
+          <div class="col-sm-8 content">
+
+{{ content }}
+
+          </div><!-- /.content -->
+
+        {% include sidebar.html %}
+
+      </div><!-- /.row -->
+
+    </div><!-- /.container -->
+
+    {% include footer.html %}
+{% endstrip %}
+  </body>
+</html>

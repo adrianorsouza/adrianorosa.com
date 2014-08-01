@@ -1,0 +1,23 @@
+
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="{{ site.title }}">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li{% if page.category == 'home' %} class="active"{% endif %}><a href="/" title="Home">Home</a></li>
+            <li{% if page.category == 'page' %} class="active"{% endif %}><a href="/about/" title="About">Sobre</a></li>
+            {% hide %}<!-- <li{% if page.category == 'page' %} class="active"{% endif %}><a href="/about/">Sobre</a></li> -->{% endhide %}
+            <li{% if page.category == 'blog' or page.categories[0] == 'blog' %} class="active"{% endif %}><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
