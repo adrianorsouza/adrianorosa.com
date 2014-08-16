@@ -32,6 +32,10 @@
     "lead": ""
 },
 {
+    "label": "Ruby",
+    "slug": "ruby",
+    "lead": "Ambiente de desenvolvimento Ruby"
+},
     "label": "Tecnologia",
     "slug": "tecnologia",
     "lead": ""
