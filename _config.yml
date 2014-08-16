@@ -1,4 +1,6 @@
-# Site settings
+# ----------------------------------
+# Site attributes
+# ----------------------------------
 title:            Adriano Rosa
 description:      "Web Developer FullStack"
 
@@ -14,7 +16,7 @@ author:
   # avatar:         http://127.0.0.1:4000/images/ad6facb479066db3b8007443ce79fcdd.jpg
 
 # ----------------------------------
-# Site Settings
+# Site settings
 # ----------------------------------
 baseurl:          ""
 blog_url:         "/blog"
@@ -42,7 +44,7 @@ highlighter:      pygments
 lsi:              true
 
 # ----------------------------------
-# Path Settings
+# Path settings
 # ----------------------------------
 plugins:          _source/_plugins
 source:           _source
