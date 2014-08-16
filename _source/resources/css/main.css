@@ -1,0 +1,301 @@
+/*html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  font-weight: 300;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  margin-top: 0;
+  color: #333;
+}*/
+
+/*
+ * Override Bootstrap's default container.
+ */
+
+@media (min-width: 1200px) {
+  .container {
+    width: 970px;
+  }
+}
+
+/*
+ *----------------------------------------------------------------------------------------------
+ * Blog name and description
+ *----------------------------------------------------------------------------------------------
+ */
+/* TEMPORARY FIX FOR NAVBAR */
+.navbar {
+  margin-bottom: 0;
+}
+.navbar-brand {
+  font-size: 26px;
+  text-transform: uppercase;
+  /*font-family: 'open_sanslight';*/
+  /*font-weight: 300;*/
+}
+
+.navbar-brand strong {
+  font-weight: 600;
+}
+
+/*
+ *----------------------------------------------------------------------------------------------
+ * Blog Hero Header
+ *----------------------------------------------------------------------------------------------
+ */
+
+.blog-header {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  height: 140px;
+
+  background: url(/images/header-pic.jpg);
+  background-position: 50% 50%;
+  background-size: 100% auto;
+  background-repeat: no-repeat;
+
+  -webkit-box-shadow: inset 0px 1px 16px 2px rgba(0, 0, 0, 0.57);
+  -moz-box-shadow:    inset 0px 1px 16px 2px rgba(0, 0, 0, 0.57);
+  box-shadow:         inset 0px 1px 16px 2px rgba(0, 0, 0, 0.57);
+}
+
+.blog-title {
+  color: #F2F2F2;
+  margin-top: 10px;
+  margin-bottom: 0;
+  font-size: 40px;
+  /*font-weight: normal;*/
+}
+.blog-description {
+  font-size: 20px;
+  color: #F2F2F2;
+}
+
+/*
+ *----------------------------------------------------------------------------------------------
+ * Main column and sidebar layout
+ *----------------------------------------------------------------------------------------------
+ */
+.content {
+  /*font-size: 17px;*/
+  /*line-height: 1.5;*/
+}
+
+/*
+ *----------------------------------------------------------------------------------------------
+ * Home Page
+ *----------------------------------------------------------------------------------------------
+ */
+.home-head { margin-top:60px; }
+.home-content { margin:20px 0; }
+.home-content .container > h2 > small {
+  margin:20px 0;
+   border-left:3px solid;
+   padding-left:10px;
+}
+
+/*
+ *----------------------------------------------------------------------------------------------
+ * Error Pages
+ *----------------------------------------------------------------------------------------------
+ */
+ .error-page {
+   text-align: center;
+ }
+
+ .error-page h1 {
+   font-size: 80px;
+ }
+
+ .error-page p {
+   font-size: 21px;
+ }
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Blog Posting Content
+ ----------------------------------------------------------------------------------------------
+ */
+.content .post {
+  margin-bottom: 30px;
+}
+.content .post .post-header {}
+.content .post .post-title {
+  margin-bottom: 5px;
+  /*font-size: 40px;*/
+}
+.content .post .post-meta {
+  margin-bottom: 20px;
+}
+
+.content .post .post-meta, .post-time {
+  color: #999;
+}
+.content .post .post-meta .author-name {}
+.content .post .post-content {}
+.content .post .post-content h2, .content .post .post-content h3 {
+  font-weight: 400px;
+  margin-top: 10px;
+}
+.content .post .post-content h2 {
+  margin-bottom: 20px;
+  border-bottom: 1px solid #eee;
+  padding: 6px 0;
+  font-weight: 400;
+}
+.content .post .post-content p {
+  margin-bottom: 15px;
+  font-size: 15px;
+  /*font-weight: 400;*/
+  text-align: justify;
+}
+
+.content .post .post-content strong {
+  font-weight: 700;
+}
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Post foot links
+ *---------------------------------------------------------------------------------------------
+ */
+.content .post .post-related{}
+.content .post .post-related ol li {}
+.content .post .post-navigation {}
+.content .post .post-navigation .nav-right,
+.content .post .post-navigation .nav-left {}
+
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Sidebar modules for boxing content
+ *---------------------------------------------------------------------------------------------
+ */
+.sidebar-module {
+  padding: 15px;
+  margin: 0 -15px 15px;
+}
+.sidebar-module-inset {
+  padding: 15px;
+  background-color: #f5f5f5;
+  border-radius: 4px;
+}
+.sidebar-module-inset p:last-child,
+.sidebar-module-inset ul:last-child,
+.sidebar-module-inset ol:last-child {
+  margin-bottom: 0;
+}
+
+.sidebar-module ol li.active a {
+  color: #c0c0c0;
+}
+
+.author-brief ul {
+  /*border: 1px solid #ff9900;*/
+  margin:0;
+  padding: 0;
+  text-align: center;
+}
+
+.author-brief ul li {
+  display: inline-block;
+  /*float: left;*/
+
+  width: 20%;
+  /*border: 1px solid;*/
+  text-align: center !important;
+}
+.author-brief ul li a {
+  font-size: 18px;
+  padding: 4px;
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  background: #0C589D;
+  border-radius: 50%;
+  color: #fff !important;
+  text-align: center;
+
+}
+.author-brief ul li a span {
+  display: none;
+  text-indent: -3000px;
+}
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Pagination
+ *---------------------------------------------------------------------------------------------
+ */
+.pagination .pager, .post-navigation .pager {
+  margin-bottom: 60px;
+  text-align: left;
+}
+
+.pagination .pager > li > a, .post-navigation .pager > li > a {
+  width: 140px;
+  padding: 7px 20px;
+  text-align: center;
+  /*border-radius: 6px;*/
+}
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Common
+ *---------------------------------------------------------------------------------------------
+ */
+.to_top {
+  display: none;
+  position: fixed;
+  padding:10px 12px;
+  right: 20px;
+  /*bottom: 170px;*/
+}
+
+/*
+ *---------------------------------------------------------------------------------------------
+ * Footer
+ *---------------------------------------------------------------------------------------------
+ */
+.blog-footer {
+  padding: 30px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f5f5f5;
+  border-top: 1px solid #f6f6f6;
+}
+
+@media (min-width: 768px) {
+  body {
+    /* Margin bottom by footer height */
+    margin-bottom: 170px;
+  }
+  .blog-footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    /* Set the fixed height of the footer here */
+    height: 170px;
+  }
+}
+
+.blog-footer p:last-child {
+  margin-bottom: 0;
+}
+
+/* Only Mobile */
+@media (max-width: 768px) {
+  .blog-header {
+    background-size: auto 100%;
+  }
+}
