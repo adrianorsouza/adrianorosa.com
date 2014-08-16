@@ -21,6 +21,12 @@
     "lead": ""
 },
 {
+},
+{
+    "label": "Nginx",
+    "slug": "nginx",
+    "lead": "Artigos e dicas sobre NGINX"
+},
     "label": "Noticias",
     "slug": "noticias",
     "lead": ""
