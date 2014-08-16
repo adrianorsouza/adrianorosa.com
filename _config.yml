@@ -1,0 +1,85 @@
+# Site settings
+title:            Adriano Rosa
+description:      "Web Developer FullStack"
+
+author:
+  name:           Adriano Rosa
+  description:    Web Developer
+  url:            http://adrianorosa.com
+  email:          info@adrianorosa.com
+  twitter:        https://twitter.com/adrianorosa
+  github:         https://github.com/adrianorsouza
+  facebook:       https://www.facebook.com/adrianorosadesouza
+  avatar:         https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100
+  # avatar:         http://127.0.0.1:4000/images/ad6facb479066db3b8007443ce79fcdd.jpg
+
+# ----------------------------------
+# Site Settings
+# ----------------------------------
+baseurl:          ""
+blog_url:         "/blog"
+url:              "http://adrianorosa.com"
+locale:           pt-br
+disqus_enable:    true
+disqus_shortname: adrianorosa
+
+ga_tracker_id:    5189486-5 # ==> blog.adrianorosa.com
+
+encoding:         UTF-8
+timezone:         America/Sao_Paulo
+
+# ----------------------------------
+# Build settings
+# ----------------------------------
+# markdown:    kramdown
+# kramdown:
+#   input: GFM
+markdown:         redcarpet
+redcarpet:
+  extensions: ["with_toc_data", "autolink"]
+
+highlighter:      pygments
+lsi:              true
+
+# ----------------------------------
+# Path Settings
+# ----------------------------------
+plugins:          _source/_plugins
+source:           _source
+destination:      _site
+exclude:          [resources, template, .xml, .php, WXR]
+permalink:        none
+paginate:         7
+paginate_path:    'blog/page/:num'
+
+excerpt_separator: "\n\n"
+
+defaults:
+  -
+    scope:
+      path: ""
+      type: "post"
+    values:
+      layout: post
+      author: Adriano Rosa
+      comments: open # enable disqus by default to all posts
+  -
+    scope:
+      path: "blog"
+      type: "page"
+    values:
+      layout: base
+      category: blog
+      dsq_count: true
+  -
+    scope:
+      path: "blog/category"
+      type: "page"
+    values:
+      layout: post_category
+      category: blog
+      dsq_count: true
+
+# safe:        false
+host:        127.0.0.1
+port:        4000
