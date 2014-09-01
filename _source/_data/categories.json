@@ -4,6 +4,10 @@
     "slug": "asp",
     "lead": ""
 },
+{
+    "label": "AWS",
+    "slug": "aws",
+    "lead": "Amazon Web Services"
 },
 {
     "label": "Banco de Dados",
