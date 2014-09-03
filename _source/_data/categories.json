@@ -25,6 +25,10 @@
     "lead": ""
 },
 {
+{
+    "label": "Linux",
+    "slug": "linux",
+    "lead": "Ambiente Linux"
 },
 {
     "label": "Nginx",
