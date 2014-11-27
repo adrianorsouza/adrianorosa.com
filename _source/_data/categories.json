@@ -52,5 +52,10 @@
     "label": "Wordpress",
     "slug": "wordpress",
     "lead": ""
+},
+{
+    "label": "jQuery",
+    "slug": "jquery",
+    "lead": "Artigos e dicas sobre jQuery"
 }
 ]
