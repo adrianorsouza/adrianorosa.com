@@ -44,6 +44,11 @@
     "slug": "ruby",
     "lead": "Ambiente de desenvolvimento Ruby"
 },
+{
+    "label": "Seguran\u00e7a",
+    "slug": "seguranca",
+    "lead": "Artigos e dicas sobre seguran\u00e7a web"
+},
     "label": "Tecnologia",
     "slug": "tecnologia",
     "lead": ""
