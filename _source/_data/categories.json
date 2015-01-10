@@ -35,6 +35,7 @@
     "slug": "nginx",
     "lead": "Artigos e dicas sobre NGINX"
 },
+{
     "label": "Noticias",
     "slug": "noticias",
     "lead": ""
@@ -49,6 +50,12 @@
     "slug": "seguranca",
     "lead": "Artigos e dicas sobre seguran\u00e7a web"
 },
+{
+    "label": "Sublime Text",
+    "slug": "sublime-text",
+    "lead": "Dicas e truques sobre o Sublime Text Editor"
+},
+{
     "label": "Tecnologia",
     "slug": "tecnologia",
     "lead": ""
