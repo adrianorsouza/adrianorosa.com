@@ -25,6 +25,10 @@
     "lead": ""
 },
 {
+    "label": "Laravel",
+    "slug": "laravel",
+    "lead": "PHP framework Laravel"
+},
 {
     "label": "Linux",
     "slug": "linux",
