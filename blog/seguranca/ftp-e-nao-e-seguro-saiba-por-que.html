@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>FTP não é seguro saiba por que | Adriano Rosa</title>
+    <meta name="description" content="FTP (File Transfer Protocol) é um protocolo bem conhecido e vastamente usado para transferência de arquivos entre dois computadores, seu uso é feito principalmente em hospedagens de site para transferência de arquivos. Porém o uso de FTP não é seguro por diversas razões saiba por que.
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="FTP não é seguro saiba por que" />
+    <meta property="og:description" content="FTP (File Transfer Protocol) é um protocolo bem conhecido e vastamente usado para transferência de arquivos entre dois computadores, seu uso é feito principalmente em hospedagens de site para transferência de arquivos. Porém o uso de FTP não é seguro por diversas razões saiba por que.
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  Segurança
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">FTP não é seguro saiba por que</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2015-01-10"><i class="ico ico-clock"></i> 10 Jan 2015</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/seguranca" title="Artigos na Categoria Segurança">Segurança</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p><strong>FTP</strong> (<a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol">File Transfer Protocol</a>) é um protocolo bem conhecido e vastamente usado para transferência de arquivos entre dois computadores, seu uso é feito principalmente em hospedagens de site para transferência de arquivos. Porém o uso de FTP não é seguro por diversas razões saiba por que.</p>
+<h3 id="como-funciona-o-ftp">Como funciona o FTP</h3>
+<p>O design do FTP permite conectar a outro computador remoto com autenticação de usuário e senha, ou também de forma anônima se o servidor for configurado para esse fim. Quando você abre uma nova conexão FTP usando um software client-server, como por exemplo o FileZilla, você digita seu login e senha e o endereço IP ou domínio do servidor, e seu software client-server envia através de comando suas credencias em texto plano para o servidor remoto que verifica se os dados de login estão corretos, e então cria-se uma sessão FTP entre os dois computadores, a partir daí é possível transferir arquivos para o servidor remoto e vice-versa.</p>
+<h3 id="e-por-que-ftp-é-inseguro?">E por que FTP é inseguro?</h3>
+<p>O uso do FTP é um grande risco de segurança porque a transferência de arquivos, tanto <em>upload</em> quanto <em>download</em>, são feitos sem encriptação, ou seja, a transmissão dos dados é feita pela rede em formato de texto plano o que significa que se alguém interceptar o pacote TCP durante a transmissão, método também conhecido como <a href="http://en.wikipedia.org/wiki/Packet_analyzer">Sniffing</a>, dará ao hacker acesso à todas informações de seus arquivos e credencias colocando em risco seu servidor e computador local.</p>
+<p>Além disso, existem <a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol#Security">outras vulnerabilidades</a> bem conhecidas deste protocolo.</p>
+<h3 id="qual-a-solução-seu-eu-uso-ftp">Qual a solução seu eu uso FTP</h3>
+<p>Se você ou sua empresa se preocupa com a segurança de suas informações a solução é bem simples <strong>NÃO USE FTP</strong>, existem outros métodos conhecidos e de fácil implementação  como por exemplo o WinSCP e SFTP.</p>
+<h3 id="use-sftp-invés-do-ftp">Use SFTP invés do FTP</h3>
+<p><a href="http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol">SFTP</a> (Secure Shell File Transfer Protocol) é um protocolo parte do pacote OpenSSH. Embora a semelhança com nome FTP o SFTP tem seu design e recursos diferentes. Uma de suas vantagens é o método de autenticação baseado em SSH Key-pair, ou seja, não depende de usuário e senha e sua transmissão de dados é feita através de tunelamento SSH encriptada do inicio ao fim da conexão, o que significa que mesmo que alguém intercepte seus pacotes TCP estará impossibilitado de decifrar os dados transmitidos.</p>
+<h3 id="como-usar-o-sftp">Como usar o SFTP</h3>
+<p>O SFTP é baseado em SSH Key pair, então basicamente o que precisa:</p>
+<ol>
+<li><p>Criar sua SSH Keys, mas isso pode ser diferente entre sistemas <a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html">Windows</a> e <a href="/blog/seguranca/como-criar-ssh-key-pair-unix.html">Unix</a>.</p></li>
+<li><p>Configurar seu servidor com SFTP ou solicitar junto ao seu provedor de hospedagem de sites se oferece este recurso, mas dificilmente você encontrará esse recurso em hospedagem de site compartilhada. O ideal é que tenha um VPS gerenciável onde possa ter total acesso à configuração, sendo assim será possível <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html#5.4-use-sftp-inv%C3%A9s-de-ftp">configurar SFTP facilmente</a>.</p></li>
+<li><p>Utilizar um SFTP client, diversos softwares FTP client também oferece suporte para SFTP é o caso do <a href="https://filezilla-project.org/">FileZilla</a>, veja <a href="/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html">como configurar uma conexão com SFTP com FileZilla</a>.</p></li>
+</ol>
+<h3 id="conclusão">Conclusão</h3>
+<p>FTP é inseguro é deve ser evitado sempre que possível, o uso de alternativas seguras como SFTP, SCP e WinSCP deve ser usado em seu lugar. Se seu provedor de hospedagem não oferece este recurso procure alternativas como VPS ou migre para empresas que possibilitam essa configuração.</p>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+      <li><time class="post-time" datetime="2014-11-28">28 Nov 2014</time> &mdash; <a href="/blog/seguranca/ssh-keys.html" title="SSH Keys">SSH Keys</a></li>
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html" title="Criar SSH Key pair no Windows">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html" title="Acesse arquivos remoto com SFTP e FileZilla">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'FTP não é seguro saiba por que';
+        var disqus_url = 'http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html';
+        var disqus_identifier = '';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li class="active"><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>

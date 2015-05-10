@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Classe Para Enviar Email Usando Cdosys | Adriano Rosa</title>
+    <meta name="description" content="Olá pessoal, neste artigo irei mostrar um modo prático para enviar e-mails através do seu site usando Classe do ASP e seus métodos e propriedades,
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/asp/funcao-replace-do-asp.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/tecnologia/iphone-3g-chega-no-brasil-em-setembro.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/asp/classe-para-enviar-email-usando-cdosys.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Classe Para Enviar Email Usando Cdosys" />
+    <meta property="og:description" content="Olá pessoal, neste artigo irei mostrar um modo prático para enviar e-mails através do seu site usando Classe do ASP e seus métodos e propriedades,
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/asp/classe-para-enviar-email-usando-cdosys.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  ASP
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">Classe Para Enviar Email Usando Cdosys</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2008-08-27"><i class="ico ico-clock"></i> 27 Aug 2008</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/asp" title="Artigos na Categoria ASP">ASP</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/asp/classe-para-enviar-email-usando-cdosys.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p>Olá pessoal, neste artigo irei mostrar um modo prático para enviar e-mails através do seu site usando Classe do ASP e seus métodos e propriedades,</p>
+<p>Em alguns casos, no site precisamos inserir um formulário para enviar algum tipo de E-mails como contato, indicação do site e etc. A maioria das pessoas costuma criar funções do objeto e-mail para facilitar, mas só isso não basta, quando enviamos uma mensagem no formato html também temos que criar a estrutura do corpo do e-mail acaba sendo trabalhoso escrever o html do corpo do E-mail dentro da programação.</p>
+<p>Pensando nisso resolvi criar uma classe para enviar esses tipos de E-mails usando um modelo de arquivo html externo, ou seja, sem precisarmos escrever e formata-lo dentro do escopo da programação,</p>
+<p>Teremos 4 arquivos.
+- <strong>cls_email.asp</strong> (nossa classe que recebe as propriedades do e-mail).
+- <strong>envia_email.asp</strong> (arquivo para enviar a mensagem).
+- <strong>form.html</strong> (formulário para captar as informações a serem transmitidas).
+- <strong>html_contato.html</strong> (modelo html simples que será corpo da mensagem).</p>
+<p>Primeiro passo será criar um arquivo html modelo com as informações do corpo da mensagem, neste exemplo irá utilizar os dados: Nome, Telefone e Mensagem, que será as variáveis que serão substituídas pelos valores vindos do formulário.</p>
+<p><code>html_contato.html</code></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span>
+<span class="cp">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;title&gt;</span>HTML Contato<span class="nt">&lt;/title&gt;</span>
+      <span class="nt">&lt;style </span><span class="na">type=</span><span class="s">&quot;text/css&quot;</span> <span class="na">media=</span><span class="s">&quot;screen&quot;</span><span class="nt">&gt;</span>
+      <span class="nt">body</span> <span class="p">{</span> <span class="k">font</span><span class="o">:</span><span class="m">11px</span> <span class="s2">&quot;trebuchet MS&quot;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="n">helveitica</span><span class="o">,</span> <span class="k">sans-serif</span><span class="p">;</span> <span class="p">}</span>
+      <span class="nt">h2</span> <span class="p">{</span> <span class="k">font</span><span class="o">:</span><span class="k">bold</span> <span class="m">18px</span> <span class="s2">&quot;trebuchet MS&quot;</span><span class="o">,</span> <span class="n">Arial</span><span class="o">,</span> <span class="n">helveitica</span><span class="o">,</span> <span class="k">sans-serif</span> <span class="p">}</span>
+      <span class="nt">&lt;/style&gt;</span>
+   <span class="nt">&lt;/head&gt;</span>
+   <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;conteudo&quot;</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;h2&gt;</span>Classe para enviar de Email usando CDOSYS FORMATO HTML<span class="nt">&lt;/h2&gt;</span>
+             <span class="nt">&lt;p&gt;</span>Neste arquivo crie quantas vari<span class="ni">&amp;aacute;</span>veis que voc<span class="ni">&amp;ecirc;</span> achar necess<span class="ni">&amp;aacute;</span>rio. dentro das chaves <span class="nt">&lt;/p&gt;</span>
+             <span class="nt">&lt;p&gt;</span>Lembrando que, ao criar as nomenclaturas neste html ref. as vari<span class="ni">&amp;aacute;</span>veis n<span class="ni">&amp;atilde;</span>o esque<span class="ni">&amp;ccedil;</span>a <span class="nt">&lt;/p&gt;</span>
+         <span class="nt">&lt;p&gt;</span>
+              Nome: <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+              Tel:  <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+              Mensagem <span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+             <span class="nt">&lt;/p&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+   <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>Segundo passo será criar o formulário abaixo para envio das informações.</p>
+<p><code>form.html</code></p>
+<div class="highlight"><pre><code class="language-html" data-lang="html"><span class="cp">&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.0 Strict//EN&quot;</span>
+<span class="cp">&quot;http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd&quot;&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">xmlns=</span><span class="s">&quot;http://www.w3.org/1999/xhtml&quot;</span><span class="nt">&gt;</span>
+   <span class="nt">&lt;head&gt;</span>
+      <span class="nt">&lt;meta</span> <span class="na">http-equiv=</span><span class="s">&quot;Content-Type&quot;</span> <span class="na">content=</span><span class="s">&quot;text/html; charset=utf-8&quot;</span> <span class="nt">/&gt;</span>
+      <span class="nt">&lt;title&gt;</span>Formulario Envio de E-mail.<span class="nt">&lt;/title&gt;</span>
+   <span class="nt">&lt;/head&gt;</span>
+    <span class="nt">&lt;body&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">&quot;principal&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;form</span> <span class="na">id=</span><span class="s">&quot;frmMail&quot;</span> <span class="na">action=</span><span class="s">&quot;envia_email.asp&quot;</span> <span class="na">method=</span><span class="s">&quot;post&quot;</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;fieldset&gt;</span>
+          <span class="nt">&lt;legend&gt;</span>Formulario de Contato<span class="nt">&lt;/legend&gt;</span>
+          <span class="nt">&lt;label&gt;</span>Nome:  <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;NOME&quot;</span> <span class="na">id=</span><span class="s">&quot;NOME&quot;</span>  <span class="nt">/&gt;&lt;/label&gt;</span>
+          <span class="nt">&lt;label&gt;</span>E-mail: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;EMAIL&quot;</span> <span class="na">id=</span><span class="s">&quot;EMAIL&quot;</span> <span class="nt">/&gt;&lt;/label&gt;</span>
+          <span class="nt">&lt;label&gt;</span>Telefone: <span class="nt">&lt;input</span> <span class="na">type=</span><span class="s">&quot;text&quot;</span> <span class="na">name=</span><span class="s">&quot;TEL&quot;</span> <span class="na">id=</span><span class="s">&quot;TEL&quot;</span> <span class="nt">/&gt;&lt;/label&gt;</span>
+          <span class="nt">&lt;label&gt;</span>Mensagem: <span class="nt">&lt;textarea</span> <span class="na">name=</span><span class="s">&quot;MENSAGEM&quot;</span> <span class="na">id=</span><span class="s">&quot;MENSAGEM&quot;</span> <span class="na">cols=</span><span class="s">&quot;&quot;</span> <span class="na">rows=</span><span class="s">&quot;&quot;</span><span class="nt">&gt;&lt;/textarea&gt;&lt;/label&gt;</span>
+          <span class="nt">&lt;label&gt;&lt;input</span> <span class="na">type=</span><span class="s">&quot;submit&quot;</span> <span class="na">id=</span><span class="s">&quot;bto&quot;</span> <span class="na">value=</span><span class="s">&quot; ENVIAR &quot;</span>  <span class="nt">/&gt;&lt;/label&gt;</span>
+        <span class="nt">&lt;/fieldset&gt;</span>
+        <span class="nt">&lt;/form&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div>
+<p>Terceiro passo será criar o arquivo <code>cls_email.asp</code> e configurar o servidor smtp de saída de e-mails.</p>
+<p><code>cls_email.asp</code></p>
+<div class="highlight"><pre><code class="language-VB.NET" data-lang="VB.NET"><span class="o">&lt;</span><span class="err">%</span>
+<span class="k">Class</span> <span class="nc">clsEmail</span>
+  <span class="c">&#39; DEFINIÇÃO DAS VARIAVES DO OBJ EMAIL</span>
+  <span class="k">Private</span> <span class="n">sDE</span>  <span class="c">&#39; REMETENTE</span>
+  <span class="k">Private</span> <span class="n">sPARA</span> <span class="c">&#39; DESTINATARIO</span>
+  <span class="k">Private</span> <span class="n">sASSUNTO</span><span class="c">&#39; ASSUNTO DA MENSAGEM</span>
+  <span class="k">Private</span> <span class="n">sCORPO</span> <span class="c">&#39; CORPO DA MENSAGEM</span>
+  <span class="k">Private</span> <span class="n">oConfig</span> <span class="c">&#39; oConfig SERÁ OS ELEMENTOS QUE IREMOS ADICIONAR A CADA FORMULARIO</span>
+  <span class="k">Public</span> <span class="k">Sub</span> <span class="nf">ClassInitialize</span><span class="p">()</span>
+     <span class="k">Set</span> <span class="n">oConfig</span> <span class="o">=</span> <span class="n">Server</span><span class="p">.</span><span class="n">CreateObject</span><span class="p">(</span><span class="s">&quot;Scripting.Dictionary&quot;</span><span class="p">)</span>
+  <span class="k">End</span> <span class="k">Sub</span>
+  <span class="k">Public</span> <span class="k">Sub</span> <span class="nf">ClassTerminate</span><span class="p">()</span>
+     <span class="n">oConfig</span><span class="p">.</span><span class="n">RemoveAll</span>
+     <span class="k">Set</span> <span class="n">oConfig</span> <span class="o">=</span> <span class="k">Nothing</span>
+  <span class="k">End</span> <span class="k">Sub</span>
+  <span class="k">Public</span> <span class="k">Property</span> <span class="nf">Let</span> <span class="n">DE</span><span class="p">(</span><span class="n">valueDE</span><span class="p">)</span>
+  <span class="n">sDE</span> <span class="o">=</span> <span class="n">valueDE</span>
+  <span class="k">End</span> <span class="k">Property</span>
+  <span class="k">Public</span> <span class="k">Property</span> <span class="nf">Let</span> <span class="n">PARA</span><span class="p">(</span><span class="n">valuePARA</span><span class="p">)</span>
+  <span class="n">sPARA</span> <span class="o">=</span> <span class="n">valuePARA</span>
+  <span class="k">End</span> <span class="k">Property</span>
+  <span class="k">Public</span> <span class="k">Property</span> <span class="nf">Let</span> <span class="n">ASSUNTO</span><span class="p">(</span><span class="n">valueASSUNTO</span><span class="p">)</span>
+  <span class="n">sASSUNTO</span> <span class="o">=</span> <span class="n">valueASSUNTO</span>
+  <span class="k">End</span> <span class="k">Property</span>
+  <span class="k">Public</span> <span class="k">Property</span> <span class="nf">Let</span> <span class="n">CORPO</span><span class="p">(</span><span class="n">valueCORPO</span><span class="p">)</span>
+  <span class="n">sCORPO</span> <span class="o">=</span> <span class="n">valueCORPO</span>
+  <span class="k">End</span> <span class="k">Property</span>
+  <span class="k">Public</span> <span class="k">Property</span> <span class="nf">Let</span> <span class="n">Config</span><span class="p">(</span><span class="n">sKey</span><span class="p">,</span> <span class="n">sValue</span><span class="p">)</span>
+  <span class="n">oConfig</span><span class="p">.</span><span class="n">Add</span> <span class="n">sKey</span><span class="p">,</span> <span class="n">sValue</span>
+  <span class="k">End</span> <span class="k">Property</span>
+  <span class="c">&#39; ESTA SUB ROTINA UTILIZAMOS PARA TESTAR O CORPO DO EMAIL.</span>
+  <span class="c">&#39; ASSIM NÃO PRECIMOS FICAR ENCHENDO NOSSA CAIXA DE MSG COM MENSAGENS DE TESTE</span>
+  <span class="c">&#39; OU ATÉ MESMO TESTAR OFF-LINE.</span>
+  <span class="k">Public</span> <span class="k">Sub</span> <span class="nf">testa</span><span class="p">()</span>
+    <span class="n">Response</span><span class="p">.</span><span class="n">Write</span> <span class="n">CorpoEmail</span>
+  <span class="k">End</span> <span class="k">Sub</span>
+  <span class="c">&#39; NESTA FUNÇÃO FAZEMOS A LEITURA DA ESTRUTURA DO AQUIVO HTML E SUBSTITUIMOS AS VARIAVEIS.</span>
+  <span class="k">Public</span> <span class="k">Function</span> <span class="nf">CorpoEmail</span><span class="p">()</span>
+    <span class="k">Dim</span> <span class="n">oFSO</span><span class="p">,</span> <span class="n">oFile</span><span class="p">,</span> <span class="n">sHtml</span>
+    <span class="k">Set</span> <span class="n">oFSO</span>  <span class="o">=</span> <span class="n">Server</span><span class="p">.</span><span class="n">CreateObject</span><span class="p">(</span><span class="s">&quot;Scripting.FileSystemObject&quot;</span><span class="p">)</span>
+    <span class="k">Set</span> <span class="n">oFile</span>  <span class="o">=</span> <span class="n">oFSO</span><span class="p">.</span><span class="n">OpenTextFile</span><span class="p">(</span><span class="n">Server</span><span class="p">.</span><span class="n">MapPath</span><span class="p">(</span><span class="n">sCORPO</span><span class="p">),</span><span class="mi">1</span><span class="p">,</span><span class="k">False</span><span class="p">)</span>
+     <span class="n">sHtml</span>  <span class="o">=</span> <span class="n">oFile</span><span class="p">.</span><span class="n">ReadAll</span>
+    <span class="k">Set</span> <span class="n">oFSO</span>  <span class="o">=</span> <span class="k">Nothing</span>
+    <span class="k">Set</span> <span class="n">oFile</span>  <span class="o">=</span> <span class="k">Nothing</span>
+    <span class="k">Dim</span> <span class="n">oRE</span><span class="p">,</span> <span class="n">sKey</span>
+    <span class="c">&#39; EXPRESSÃO REGULAR PARA SUBSTITUIR DAS VARIAVEIS</span>
+    <span class="k">Set</span> <span class="n">oRE</span> <span class="o">=</span> <span class="k">New</span> <span class="n">RegExp</span>
+    <span class="n">oRE</span><span class="p">.</span><span class="n">IgnoreCase</span>  <span class="o">=</span> <span class="k">TRUE</span>
+    <span class="n">oRE</span><span class="p">.</span><span class="n">Global</span>  <span class="o">=</span> <span class="k">TRUE</span>
+    <span class="c">&#39; SUBSTITUIMOS TODAS AS CHAVES CRIADAS NO ARQUIVO HTML</span>
+     <span class="k">For</span> <span class="k">Each</span> <span class="n">sKey</span> <span class="ow">In</span> <span class="n">oConfig</span>
+         <span class="n">oRE</span><span class="p">.</span><span class="n">Pattern</span> <span class="o">=</span> <span class="n">sKey</span> 
+         <span class="n">oRE</span><span class="p">.</span><span class="n">Replace</span><span class="p">(</span><span class="n">sHtml</span><span class="p">,</span><span class="n">oConfig</span><span class="p">(</span><span class="n">sKey</span><span class="p">))</span>
+     <span class="k">Next</span>
+    <span class="n">CorpoEmail</span> <span class="o">=</span> <span class="n">sHtml</span>
+  <span class="k">End</span> <span class="k">Function</span>
+  <span class="c">&#39;ENVAR EMAIL </span>
+  <span class="k">Public</span> <span class="k">Sub</span> <span class="nf">SendMail</span><span class="p">()</span>
+    <span class="k">Dim</span> <span class="n">objMail</span><span class="p">,</span> <span class="n">objMailConfig</span>
+    <span class="k">Set</span> <span class="n">objMail</span>   <span class="o">=</span> <span class="n">Server</span><span class="p">.</span><span class="n">CreateObject</span><span class="p">(</span><span class="s">&quot;CDO.Message&quot;</span><span class="p">)</span>
+    <span class="k">Set</span> <span class="n">objMailConfig</span> <span class="o">=</span> <span class="n">Server</span><span class="p">.</span><span class="n">CreateObject</span><span class="p">(</span><span class="s">&quot;CDO.Configuration&quot;</span><span class="p">)</span>
+     <span class="n">objMailConfig</span><span class="p">.</span><span class="n">Fields</span><span class="p">(</span><span class="s">&quot;http://schemas.microsoft.com/cdo/configuration/smtpserver&quot;</span><span class="p">)</span>  <span class="o">=</span> <span class="s">&quot;mail.seudominio.com.br&quot;</span>
+     <span class="n">objMailConfig</span><span class="p">.</span><span class="n">Fields</span><span class="p">(</span><span class="s">&quot;http://schemas.microsoft.com/cdo/configuration/sendusing&quot;</span><span class="p">)</span> <span class="o">=</span> <span class="mi">2</span>
+     <span class="n">objMailConfig</span><span class="p">.</span><span class="n">Fields</span><span class="p">.</span><span class="n">Update</span>
+      <span class="k">Set</span> <span class="n">objMail</span><span class="p">.</span><span class="n">Configuration</span>  <span class="o">=</span> <span class="n">objMailConfig</span>
+       <span class="n">objMail</span><span class="p">.</span><span class="n">From</span>   <span class="o">=</span> <span class="n">sDE</span>
+       <span class="n">objMail</span><span class="p">.</span><span class="n">TO</span>    <span class="o">=</span> <span class="n">sPARA</span>
+       <span class="n">objMail</span><span class="p">.</span><span class="n">Subject</span>   <span class="o">=</span> <span class="n">sASSUNTO</span>
+       <span class="n">objMail</span><span class="p">.</span><span class="n">HTMLBody</span>   <span class="o">=</span> <span class="n">CorpoEmail</span>
+       <span class="n">objMail</span><span class="p">.</span><span class="n">Send</span><span class="p">()</span>
+    <span class="k">Set</span> <span class="n">objMail</span> <span class="o">=</span> <span class="k">Nothing</span>
+  <span class="k">End</span> <span class="k">Sub</span>
+<span class="k">End</span> <span class="k">Class</span>
+<span class="err">%</span><span class="o">&gt;</span>
+</code></pre></div>
+<p>Logo após criamos o arquivo para enviar a mensagem.</p>
+<p><code>envia_email.asp</code></p>
+<div class="highlight"><pre><code class="language-VB.NET" data-lang="VB.NET"><span class="na">&lt;%@LANGUAGE=&quot;VBSCRIPT&quot; CODEPAGE=&quot;65001&quot;%&gt;</span>
+<span class="na">&lt;!--#include file=&quot;clsemail.asp&quot; --&gt;</span>
+<span class="o">&lt;</span><span class="err">%</span>
+<span class="n">Response</span><span class="p">.</span><span class="n">Expires</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">Response</span><span class="p">.</span><span class="n">ExpiresAbsolute</span> <span class="o">=</span> <span class="n">now</span><span class="p">()</span>
+<span class="c">&#39;CRIANDO A INSTANCIA DO OBJ EMAIL</span>
+<span class="k">Dim</span> <span class="n">oMail</span>
+<span class="k">Set</span> <span class="n">oMail</span> <span class="o">=</span> <span class="k">New</span> <span class="n">clsEmail</span>
+<span class="c">&#39; ATRIBUIMOS A PROPRIEDADE REMETENTE </span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">DE</span>     <span class="o">=</span> <span class="n">LCase</span><span class="p">(</span><span class="n">Request</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;EMAIL&quot;</span><span class="p">))</span>
+<span class="c">&#39; ATRIBUIMOS A PROPRIEDADE DESTINATARIO</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">PARA</span>    <span class="o">=</span> <span class="s">&quot;seuemail@seudominio.com.br&quot;</span>
+<span class="c">&#39; ATRIBUIMOS A PROPRIEDADE ASSUNTO</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">ASSUNTO</span>   <span class="o">=</span> <span class="s">&quot;CONTATO&quot;</span>
+<span class="c">&#39; ATRIBUIMOS A PROPRIEDADE CORPO DO EMAIL (INDICAMOS O CAMINHO RELATIVO DO ARQUIVO HTML )</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">CORPO</span>    <span class="o">=</span> <span class="s">&quot;htmlcontato.html&quot;</span>
+<span class="c">&#39; CRIAMOS O ARRAY ONDE ATRIBUIMOS AS VARIAVEIS DE SUBSTITUIÇÂO DO CORPO DO EMAIL.</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">Config</span><span class="p">(</span><span class="s">&quot;NOME&quot;</span><span class="p">)</span>  <span class="o">=</span> <span class="n">Trim</span><span class="p">(</span><span class="n">Request</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;NOME&quot;</span><span class="p">))</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">Config</span><span class="p">(</span><span class="s">&quot;TEL&quot;</span><span class="p">)</span>  <span class="o">=</span> <span class="n">Trim</span><span class="p">(</span><span class="n">Request</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;TEL&quot;</span><span class="p">))</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">Config</span><span class="p">(</span><span class="s">&quot;MSG&quot;</span><span class="p">)</span>  <span class="o">=</span> <span class="n">Server</span><span class="p">.</span><span class="n">HTMLEncode</span><span class="p">(</span><span class="n">Request</span><span class="p">.</span><span class="n">Form</span><span class="p">(</span><span class="s">&quot;MENSAGEM&quot;</span><span class="p">))</span>
+<span class="c">&#39; ENVIAMOS O E-MAIL.</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">SendMail</span><span class="p">()</span>
+<span class="c">&#39; CHAMAMOS A FUNÇÃO TESTA PARA SABER ESTAMOS ENVIANDO CORRETAMENTE A MENSAGEM.</span>
+<span class="n">oMail</span><span class="p">.</span><span class="n">testa</span>
+<span class="k">Set</span> <span class="n">oMail</span> <span class="o">=</span> <span class="k">Nothing</span>
+<span class="k">With</span> <span class="n">Response</span>
+<span class="p">.</span><span class="n">Write</span> <span class="s">&quot;&lt;h5&gt;Seu Email foi enviado com sucesso!&lt;/h5&gt;&quot;</span>
+<span class="k">End</span> <span class="k">With</span>
+<span class="err">%</span><span class="o">&gt;</span>
+</code></pre></div>
+<p>Definimos a classe do objeto e-mail e atribuímos seus valores padrões o Remetente, Destinatário, Assunto e o Corpo (quer será o caminho relativo do arquivo modelo html_contato.html)
+Adicionamos o array com as variáveis de substituição.</p>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2008-11-10">10 Nov 2008</time> &mdash; <a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">Como instalar o WordPress</a></li>
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/asp/funcao-replace-do-asp.html" title="Função Replace do Asp">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/tecnologia/iphone-3g-chega-no-brasil-em-setembro.html" title="Iphone 3g Chega no Brasil em Setembro">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'Classe Para Enviar Email Usando Cdosys';
+        var disqus_url = 'http://adrianorosa.com/blog/asp/classe-para-enviar-email-usando-cdosys.html';
+        var disqus_identifier = '7 http://adrianorosa.com/?p=7';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li class="active"><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>

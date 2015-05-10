@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Criar SSH Keys em sistemas UNIX | Adriano Rosa</title>
+    <meta name="description" content="Key Pair, ou SSH Keys ou ainda Chave Pública consiste em duas chaves uma pública que deve ser instalada no servidor remoto, e a outra chave privada que fica salva no seu computador, as duas juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/seguranca/ssh-keys.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Criar SSH Keys em sistemas UNIX" />
+    <meta property="og:description" content="Key Pair, ou SSH Keys ou ainda Chave Pública consiste em duas chaves uma pública que deve ser instalada no servidor remoto, e a outra chave privada que fica salva no seu computador, as duas juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  Segurança
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">Criar SSH Keys em sistemas UNIX</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2014-12-18"><i class="ico ico-clock"></i> 18 Dec 2014</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/seguranca" title="Artigos na Categoria Segurança">Segurança</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p><strong><em>Key Pair</em></strong>, ou <a href="/blog/seguranca/ssh-keys.html"><strong>SSH Keys</strong></a> ou ainda <strong>Chave Pública</strong> consiste em duas chaves uma pública que deve ser instalada no servidor remoto, e a outra chave privada que fica salva no seu computador, as duas juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.</p>
+<p>Para criar sua SSH key em ambientes Unix siga os passos logo abaixo, se você é usuário Windows visite o post <a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html">como criar ssh key pair no windows</a>.</p>
+<h2 id="passo-1:-verifique-seu-já-possui-ssh-key">Passo 1: Verifique seu já possui SSH Key</h2>
+<p>Veja se já existe SSH keys no seu computador, em ambientes Unix pode ser encontrado em um desses diretórios <code>~/.ssh/identity</code>, <code>~/.ssh/id_ecdsa</code>, <code>~/.ssh/id_dsa</code> ou <code>~/.ssh/id_rsa</code>. Para verificar digite no terminal:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ls -al ~/.ssh
+</code></pre></div>
+<blockquote>
+<p>Dica: se você tiver uma nova instalação Mac OSX ou Linux, você não terá o diretório <code>~/.ssh</code> criado ainda, esse diretório onde armazena suas chaves públicas e privadas será criado automaticamente no passo seguinte.</p>
+</blockquote>
+<h2 id="passo-2:-criar-uma-nova-ssh-key">Passo 2: Criar uma nova SSH Key</h2>
+<p>Se ainda não tem sua SSH key deverá gerar uma usando o comando <code>ssh-keygen</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh-keygen -t rsa -b 4096 -C &quot;seuemail@example.com&quot;
+</code></pre></div>
+<p>Explicando o comando acima:  </p>
+<ul>
+<li><p>Parâmetro <code>-t</code> específica o tipo de chave nesse caso usamos o algoritmo <code>rsa</code> para protocolo versão 2 outros possíveis valores são <code>rsa1</code>, <code>dsa</code> e <code>ecdsa</code>.  </p></li>
+<li><p>Parâmetro <code>-C</code> adiciona um comentário à chave pública, é apenas uma maneira fácil de identificar a finalidade desta chave, o valor pode ser <code>user@host</code>. </p></li>
+<li><p>Parâmetro <code>-b</code> informa <em>key size</em> ou total de bits. O padrão é <code>2048</code>, geralmente esse valor já é o suficiente para sua chave se quiser mais segurança use o valor máximo <code>4096</code>.</p></li>
+</ul>
+<blockquote>
+<p>ATENÇÃO: Para chaves <strong>RSA</strong> o valor mínimo é de <code>768</code> bits, mas não crie sua chave com menos de <code>2048</code> bits pois estudos apontam que é possível <a href="http://www.techworld.com/news/security/rsa-1024-bit-private-key-encryption-cracked-3214360/">craquear</a> esses tipos de chaves.</p>
+</blockquote>
+<h3 id="defina-passphrase">Defina Passphrase</h3>
+<p>O Passphrase é como uma senha e precisa ser digitado to vez que usar a chave para se conectar SSH, se você esquecer o Passphrase ou outra pessoa ter acesso à sua Private Key ficará impossibilitado de conectar ao servidor remoto. Caso não queira definir um Passphrase apenas deixe em branco, pressione enter duas vezes para finalizar.</p>
+<h2 id="passo-4:-copie-sua-chave-pública-para-o-servidor">Passo 4: Copie sua chave pública para o servidor</h2>
+<p>Após executar o comando para gerar SSH keys dois arquivos serão salvos no diretório <code>~/ssh</code> por padrão os arquivos são <code>id_rsa</code> e <code>id_rsa.pub</code>, mas é possível criá-los com nomes e diretórios diferentes se for necessário. </p>
+<p>A chave pública, cujo a extensão é <code>.pub</code>, deve ser copiado para o servidor e o seu conteúdo é algo como:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh-rsa AAAAB3NzaC1yc2EAAAADAQA .....
+</code></pre></div>
+<p>A chave privada tem o seguinte conteúdo:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">-----BEGIN RSA PRIVATE KEY-----
+MIIJKQIBAAKCAgEAzpHUcAE5w5e49Qw2S4cp17OmsIc1D8yfNR7y/ZLsf0382zsw
+.....
+</code></pre></div>
+<p>e deve ter apenas permissão de leitura pelo seu usuário, altere usando o comando:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">chmod 400 ~/.ssh/id_rsa
+</code></pre></div>
+<p>Com sua SSH key pair criada, é hora de copiar a chave pública para o servidor, se você não é o administrador do servidor remoto deverá enviar o conteúdo da chave pública para o responsável fazer isso.</p>
+<p>No servidor remoto, usando um editor de sua preferencia adicione a chave pública ao arquivo <code>~/.ssh/authorized_keys</code>, ou simplesmente utilize o comando:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">cat ~/.ssh/id_rsa.pub | ssh user@123.45.56.78 &quot;mkdir -p ~/.ssh &amp;&amp; cat &gt;&gt;  ~/.ssh/authorized_keys&quot;
+</code></pre></div>
+<h2 id="passo-5:-faça-um-teste-com-sua-ssh-key">Passo 5: Faça um teste com sua SSH Key</h2>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh user@123.456.789.0
+</code></pre></div>
+<p>Se sua SSH key foi salva em um diretório diferente de <code>~/.ssh</code> você deverá informar o diretório onde esta a chave para para ter sucesso na conexão com servidor.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh -i /diretorio/subpasta/sua_chave_privada user@123.456.789.0
+</code></pre></div>
+<h2 id="passo-6:-bonus,-usuários-mac-osx">Passo 6: Bonus, usuários Mac OSX</h2>
+<p>Se você definiu um Passphrase, pode salvar esse valor na sua Keychain e assim evitar ter que digitar o passphrase sempre que for conectar ao servidor remoto. Para adicionar sua SSH key na Keychain use o comando <code>ssh-add</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh-add -K ~/.ssh/id_rsa
+</code></pre></div>
+<p>Digite sua Passphrase e sua chave será armazena na Keychain.</p>
+<p>Para visualizar a lista de chaves adicionadas ao <code>ssh-agent</code>:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">ssh-add -l
+</code></pre></div>
+<p>Esse comando exibe o tamanho de bits de sua chave, footprint e o diretório da chave privada da seguinte forma:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">2048 ee:aa:11:11:bb:cc:gg:11:Ca:Fe:00:E1:49:30:8C:01 ~/.ssh/id_rsa (RSA)
+</code></pre></div>
+<h3 id="mais-informações-sobre-ssh-keys:">Mais informações sobre SSH Keys:</h3>
+<p><a href="https://help.ubuntu.com/community/SSH/OpenSSH/Keys">https://help.ubuntu.com/community/SSH/OpenSSH/Keys</a></p>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-11-28">28 Nov 2014</time> &mdash; <a href="/blog/seguranca/ssh-keys.html" title="SSH Keys">SSH Keys</a></li>
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/seguranca/ssh-keys.html" title="SSH Keys">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html" title="Criar SSH Key pair no Windows">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'Criar SSH Keys em sistemas UNIX';
+        var disqus_url = 'http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html';
+        var disqus_identifier = '';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li class="active"><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>

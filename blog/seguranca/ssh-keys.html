@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>SSH Keys | Adriano Rosa</title>
+    <meta name="description" content="Key Pair, ou SSH Keys ou ainda Chave Pública, é o meio de identificação entre seu computador e um servidor SSH usando método de autenticação chave de criptografia pública. Uma de suas vantagens diferentemente do método tradicional com login e senha é que para autenticação com servidor remoto você não precisa enviar seu login e senha, e mesmo que uma pessoa mal intencionada intercepte sua transmissão de dados pela rede não poderá ter acesso à suas credencias impossibilitando roubo de seus dados de acesso. E também, usando SSH Keys para autenticação elimina drasticamente o risco de um hacker tentar adivinhar seu login e senha enviando centenas ou milhares de combinações aleatórias de login e senha para entrar no sistema, esse é um tipo de ataque comum em sistemas baseado em autenticação de login e senha chamado de brute-force password.
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/seguranca/ssh-keys.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="SSH Keys" />
+    <meta property="og:description" content="Key Pair, ou SSH Keys ou ainda Chave Pública, é o meio de identificação entre seu computador e um servidor SSH usando método de autenticação chave de criptografia pública. Uma de suas vantagens diferentemente do método tradicional com login e senha é que para autenticação com servidor remoto você não precisa enviar seu login e senha, e mesmo que uma pessoa mal intencionada intercepte sua transmissão de dados pela rede não poderá ter acesso à suas credencias impossibilitando roubo de seus dados de acesso. E também, usando SSH Keys para autenticação elimina drasticamente o risco de um hacker tentar adivinhar seu login e senha enviando centenas ou milhares de combinações aleatórias de login e senha para entrar no sistema, esse é um tipo de ataque comum em sistemas baseado em autenticação de login e senha chamado de brute-force password.
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/seguranca/ssh-keys.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  Segurança
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">SSH Keys</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2014-11-28"><i class="ico ico-clock"></i> 28 Nov 2014</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/seguranca" title="Artigos na Categoria Segurança">Segurança</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/seguranca/ssh-keys.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p><em>Key Pair</em>, ou SSH Keys ou ainda Chave Pública, é o meio de identificação entre seu computador e um servidor SSH usando método de autenticação <strong>chave de criptografia pública</strong>. Uma de suas vantagens diferentemente do método tradicional com login e senha é que para autenticação com servidor remoto você não precisa enviar seu login e senha, e mesmo que uma pessoa mal intencionada intercepte sua transmissão de dados pela rede não poderá ter acesso à suas credencias impossibilitando roubo de seus dados de acesso. E também, usando SSH Keys para autenticação elimina drasticamente o risco de um hacker tentar adivinhar seu login e senha enviando centenas ou milhares de combinações aleatórias de login e senha para entrar no sistema, esse é um tipo de ataque comum em sistemas baseado em autenticação de login e senha chamado de <em>brute-force password</em>.</p>
+<p>Além de oferecer uma camada de segurança, autenticação por SSH keys pode ser ainda mais conveniente do que o método tradicional de autenticação por login e senha. Quando usado com o programa SSH Agent, SSH keys permite a conexão com um servidor, ou múltiplos servidores, sem a necessidade de ter que lembrar ou digitar sua senha e login para cada acesso.</p>
+<h2 id="como-funciona-ssh-keys">Como funciona SSH keys</h2>
+<p>SSH keys consiste em um par de chaves uma pública que deve ser instalada no servidor remoto, e uma outra chave privada que fica salva no seu computador. Somente você poderá ter acesso à chave privada, então tenha certeza de mantê-la salva em um lugar seguro em seu computador com as devidas permissões e uma boa Passphrase. As duas chaves juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.</p>
+<blockquote>
+<p>NOTA: Para adicionar a sua chave pública na lista de chaves autorizadas é preciso ter acesso administrativo ao servidor no qual deseja estabelecer uma conexão SSH. Se você é usuário de um sistema onde esse acesso é restrito você deverá revelar sua chave pública para o responsável configurar e instalar para você. Lembre-se somente a chave pública deve ser revelada para terceiros.</p>
+</blockquote>
+<h2 id="tipos-de-encriptação">Tipos de encriptação</h2>
+<p>O algoritmo usado para encriptar suas chaves pode ser <code>RSA1</code>, <code>RSA</code>, <code>DSA</code> ou <code>ECDSA</code>, porém o uso desses algoritmos depende da finalidade da sua chave e de recursos suportado pelo servidor SSH.</p>
+<ul>
+<li><p><strong>RSA1</strong> (Rivest-Shamir-Adleman) é um algoritmo para o protocolo SSH versão 1, seu uso é limitado a servidores que não suportam a versão recente SSH 2.</p></li>
+<li><p><strong>RSA</strong> (Rivest-Shamir-Adleman) é o algoritmo para o protocolo SSH versão 2 o mais utilizado em servidores SSH e o mais seguro hoje em dia, possibilita autenticar e transmitir dados criptografados até o seu destino. Esse algoritmo é o <strong>RECOMENDADO</strong> para sua chave SSH.</p></li>
+<li><p><strong>DSA</strong> (Digital Signature Algorithm) é um algoritmo que pode ser usado para gerar sua chave, porém DSA tem se tornado menos seguro nos últimos anos. Sua função é somente autenticar DSA não encripta ou decripta dados.</p></li>
+<li><p><strong>ECDSA</strong> é um algoritmo variante do DSA provê tamanho menor da sua chave, esses tipos de chaves são usado apenas para autenticação.</p></li>
+</ul>
+<h3 id="key-size">Key Size</h3>
+<p>Key Size é o número de bits usado na criação da chave, esse número varia dependendo do algoritmo usado. </p>
+<p>Para SSH keys <strong>RSA</strong>, o tamanho minimo de bits é <code>768</code> bits e o padrão é <code>2048</code> bits. Você pode tornar sua chave ainda mais segura usando <code>4096</code> bits.</p>
+<blockquote>
+<p>NOTA: Para <strong>RSA</strong> não é recomendado utilizar menos do que <code>2048</code> bits. Geralmente <code>2048</code> bits é considerado seguro.</p>
+</blockquote>
+<p>SSH keys <code>DSA</code>, devem conter exatos 1024 bits.</p>
+<p>SSH keys <code>ECDSA</code>, aceita um dos três valores da curva elíptica: <code>256</code>, <code>384</code> ou <code>521</code> bits.</p>
+<h2 id="criar-ssh-key-pair">Criar SSH Key pair</h2>
+<p>Para criar sua SSH keys você precisa ter o programa <code>ssh-keygen</code> parte do pacote <a href="http://www.openssh.com/">OpenSSH</a> encontrado apenas em sistemas Unix. Em distribuições do Linux e Mac OSX esse programa já vem instalado por padrão. Veja neste post <a href="/blog/seguranca/como-criar-ssh-key-pair-unix.html">como criar SSH Keys em sistemas Unix</a>.</p>
+<p>No Windows, o programa <code>ssh-keygen</code> não existe. A maneira mais simples de criar sua chave é utilizando o <a href="http://www.chiark.greenend.org.uk/%7Esgtatham/putty/">PuTTY</a>, PuTTY é um programa de código aberto que emula um Terminal, semelhante ao Terminal do Linux, para estabelecer uma conexão SSH. PuTTY oferece o utilitário <code>PuTTYGen</code> no qual você deverá usar para criar sua chave. Veja neste post <a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html">como criar sua SSH Key no Windows</a>.</p>
+<p>Alternativas como <a href="https://www.itefix.net/copssh">CopSSH</a> pode ser usado no Windows ou se você usa GitHub o programa <a href="https://windows.github.com/">GitHub para Windows</a> oferece o Git Shell como parte da instalação onde é possível criar SSH Keys usando o comando <code>ssh-keygen</code> do mesmo modo em sistemas Unix.</p>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-12-18">18 Dec 2014</time> &mdash; <a href="/blog/seguranca/como-criar-ssh-key-pair-unix.html" title="Criar SSH Keys em sistemas UNIX">Criar SSH Keys em sistemas UNIX</a></li>
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2014-12-18">18 Dec 2014</time> &mdash; <a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html" title="Criar SSH Key pair no Windows">Criar SSH Key pair no Windows</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html" title="Instalar versão mais recente do Nginx no Linux Ubuntu">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/seguranca/como-criar-ssh-key-pair-unix.html" title="Criar SSH Keys em sistemas UNIX">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'SSH Keys';
+        var disqus_url = 'http://adrianorosa.com/blog/seguranca/ssh-keys.html';
+        var disqus_identifier = '';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li class="active"><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>

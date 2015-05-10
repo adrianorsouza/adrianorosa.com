@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Criar uma instancia na Amazon AWS | Adriano Rosa</title>
+    <meta name="description" content="Configurar um servidor na nuvem usando os serviços de cloud computing da Amazon AWS é muito simples e rápido, em poucos minutos você pode ter seu servidor Linux ou Windows Server up and running. Este artigo aborda as principais instruções para criar uma instancia(servidor) com uma distribuição Linux Ubuntu 14.10 utilizando o serviço EC2 (Elastic Cloud Computing) da Amazon AWS.
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/sublime-text/sidebar-icones-suporte-sublime-text-3-soda-theme.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Criar uma instancia na Amazon AWS" />
+    <meta property="og:description" content="Configurar um servidor na nuvem usando os serviços de cloud computing da Amazon AWS é muito simples e rápido, em poucos minutos você pode ter seu servidor Linux ou Windows Server up and running. Este artigo aborda as principais instruções para criar uma instancia(servidor) com uma distribuição Linux Ubuntu 14.10 utilizando o serviço EC2 (Elastic Cloud Computing) da Amazon AWS.
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  AWS
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">Criar uma instancia na Amazon AWS</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2014-09-01"><i class="ico ico-clock"></i> 01 Sep 2014</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/aws" title="Artigos na Categoria AWS">AWS</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p>Configurar um servidor na nuvem usando os serviços de cloud computing da Amazon AWS é muito simples e rápido, em poucos minutos você pode ter seu servidor Linux ou Windows Server up and running. Este artigo aborda as principais instruções para criar uma instancia(servidor) com uma distribuição Linux Ubuntu 14.10 utilizando o serviço EC2 (Elastic Cloud Computing) da Amazon AWS.</p>
+<h2 id="Índice">Índice</h2>
+<!-- MarkdownTOC autolink=true bracket=round  depth=3 -->
+<ul>
+<li><a href="#1.-introdu%C3%A7%C3%A3o">1. Introdução</a></li>
+<li><a href="#2.-requisitos">2. Requisitos</a></li>
+<li><a href="#3.-selecionar-uma-regi%C3%A3o">3. Selecionar uma região</a></li>
+<li><a href="#4.-configurar-security-group">4. Configurar Security Group</a></li>
+<li><a href="#5.-criar-uma-instancia-ec2">5. Criar uma instancia EC2</a>
+<ul>
+<li><a href="#passo-1:-choose-an-amazon-machine-image-(ami)">Passo 1: Choose an Amazon Machine Image (AMI)</a></li>
+<li><a href="#passo-2:-choose-an-instance-type">Passo 2: Choose an Instance Type</a></li>
+<li><a href="#passo-3:-configure-instance-details">Passo 3: Configure Instance Details</a></li>
+<li><a href="#passo-4:-add-storage">Passo 4: Add Storage</a></li>
+<li><a href="#passo-5:-tag-instance">Passo 5: Tag Instance</a></li>
+<li><a href="#passo-6:-configure-security-group">Passo 6: Configure Security Group</a></li>
+<li><a href="#passo-7:-review-instance-launch">Passo 7: Review Instance Launch</a></li>
+</ul></li>
+<li><a href="#6.-criar-elastic-ip-e-associar-a-uma-instancia">6. Criar Elastic IP e associar a uma instancia</a></li>
+<li><a href="#7.-conectar-a-instancia-via-ssh">7. Conectar a Instancia via SSH</a></li>
+<li><a href="#conclus%C3%A3o">Conclusão</a></li>
+</ul>
+<!-- /MarkdownTOC -->
+<h2 id="1.-introdução">1. Introdução</h2>
+<p>Na abordagem deste artigo é muito importante entender alguns termos básicos que serão utilizados no decorrer de cada passo, pois a Amazon AWS usa <a href="http://docs.aws.amazon.com/general/latest/gr/glos-chap.html#E">diferentes nomenclaturas</a> para seus serviços, portanto, termos como <strong><em>Instancia</em></strong> entende-se <strong>Servidor</strong> , <strong><em>Elastic IP</em></strong> entende-se <strong>IP Fixo</strong>, <strong><em>Security Group</em></strong> entende-se  <strong>Firewall</strong> e <strong><em>Console</em></strong> entende-se <strong>Painel</strong>.</p>
+<h2 id="2.-requisitos">2. Requisitos</h2>
+<p>Para avançar neste artigo, é necessário:</p>
+<ul>
+<li>Ter uma conta na <a href="http://aws.amazon.com/pt/free/">Amazon AWS</a>, suponho que já tenha criado, e que já esteja logado com suas credenciais no <a href="https://console.aws.amazon.com/ec2/v2/home">console da AWS</a>.</li>
+<li>Entender como conectar a um servidor remoto via SSH.</li>
+<li>Ter o <a href="http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html">Putty</a> instalado (apenas para usuários Windows).</li>
+</ul>
+<h2 id="3.-selecionar-uma-região">3. Selecionar uma região</h2>
+<p>Após entrar no <a href="https://console.aws.amazon.com/ec2/v2/home">console</a> da AWS é necessário definir uma região padrão onde seus dados e servidores serão armazenados, A Amazon AWS possui DataCenter espalhados pelo mundo se deseja apontar serviços para usuários a nível nacional, então escolha a região São Paulo.</p>
+<p>Cada região onde a Amazon possui DataCenter é identificada por um único ID, em São Paulo é <code>sa-east-1</code>, por ex. na California é <code>us-west-1</code>. Os preços também variam de região para região no momento São Paulo é uma das mais caras <em>(não é atoa que é a ultima na lista <small>imagem 3.1</small> e não é ordem alfabética, e sim preço!)</em>. A região Oregon <code>us-west-2</code> nos Estados Unidos tem o custo menor para os serviços da AWS, porém é necessário levar em consideração a latencia devido a distancia entre uma região e outra.</p>
+<p>Bom, para selecionar uma região onde seu servidor e serviços serão alocado acesse o menu no canto superior direito do console.</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/image1.png" alt="" class="img-thumbnail" width="200">
+<span>imagem 3.1: Selecionar uma região</span>
+</div>
+<p>Após selecionar uma região clique no serviço <a href="https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1">EC2</a>.</p>
+<h2 id="4.-configurar-security-group">4. Configurar Security Group</h2>
+<p>Antes de criar uma instancia é importante definir um <strong>Security Group</strong> com as permissões de acesso de acordo com seu objetivo, nesse caso será definido um novo <strong>Security Group</strong> para atender os requisitos de um servidor web, portanto será necessário liberar as portas TCP 80 para acesso via protocolo HTTP e 22 para poder conectar ao servidor remotamente via SSH.</p>
+<p>No menu lateral esquerdo do console <a href="https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1">ec2</a> localize o item <code>NETWORK &amp; SECURITY</code> clique em <strong>Security Groups</strong>, logo em seguida no botão <strong>Create Security Group</strong>, uma janela de diálogo como na <small>imagem 4.1</small> deverá ser exibida.</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/image2.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 4.1: Configurar Security Group</span>
+</div>
+<p>Nesta janela, na guia <strong>Inbound</strong> preencha corretamente os campos mais importantes:</p>
+<ul>
+<li><strong>Security group name</strong>: Dê um nome para este Security Group.</li>
+<li><strong>Description</strong> : Informe uma descrição para identificar este Security Group.</li>
+</ul>
+<p>Agora, adicione as regras de firewall clicando no botão <strong>Add Rule</strong>
+na coluna <code>Type</code> selecione o protocolo TCP <code>HTTP</code> e em seguida mesmo processo também adicione o protocolo <code>SSH</code>.</p>
+<blockquote>
+<p><strong>IMPORTANTE:</strong> Como essa instancia ainda passará por diversas configurações e testes para se tornar um webserver acessível publicamente, então é recomendado liberar temporariamente acessos apenas para seu IP, na coluna <strong>Source</strong> informe seu endereço IP, como pode ver na <em>imagem 4.1</em>.</p>
+</blockquote>
+<p>Para concluir clique <strong>Create</strong>.</p>
+<h2 id="5.-criar-uma-instancia-ec2">5. Criar uma instancia EC2</h2>
+<p>Bem, agora no menu lateral do console <small>imagem 5.1</small> de um clique em Instances e em seguida clique no botão <strong>Launch Instance</strong>.
+<div class="img-wrap text-center">
+<img src="/images/2014/09/image-create-instance.png" alt="" class="img-thumbnail" width="400">
+<span>imagem 5.1: Criar uma instancia EC2</span>
+</div></p>
+<p>Será aberto uma janela com sete passos até concluir a instalação, no passo um selecione uma imagem(AMI) que deseja instalar, você pode criar um instancia usando distribuições Linux e Windows Server. Para este artigo será utilizado uma distribuição Linux Ubuntu 14.10 e o tipo de virtualização será HVM.</p>
+<h3 id="passo-1:-choose-an-amazon-machine-image-(ami)">Passo 1: Choose an Amazon Machine Image (AMI)</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-1.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.1: Escolha uma Imagem (AMI)</span>
+</div>
+<p><strong>Importante:</strong> Na nova geração de instancias AWS opte pelo tipo de virtualização HVM para obter melhor performance, para mais detalhes veja <a href="#todo" title="Amazon AWS Diferenças Entre Virtualizacao PARAVIRTUAL e HVM">diferenças entre HVM e PARAVIRTUAL</a>.</p>
+<p>Para prosseguir clique em <strong>Next</strong>.</p>
+<h3 id="passo-2:-choose-an-instance-type">Passo 2: Choose an Instance Type</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-2.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.2: Escolha um tipo de instancia</span>
+</div>
+<p>Nesta tela <small>imagem 5.2</small> escolha o tipo de hardware para sua instancia de acordo com suas necessidades. se for elegível Free Tier User pode optar por <code>t2.micro</code>. </p>
+<p>Em seguida clique em <strong>Next</strong>.</p>
+<h3 id="passo-3:-configure-instance-details">Passo 3: Configure Instance Details</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-3.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.3: Configure Detalhes da Instancia</span>
+</div>
+<p>Nesta tela <small>imagem 5.3</small> apenas marque a opção <strong>Enable termination protection</strong> para evitar que acidentalmente você delete essa instancia. Em seguida clique em <strong>Next</strong>.</p>
+<h3 id="passo-4:-add-storage">Passo 4: Add Storage</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-4.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.4: Configure Quantidade de Armazenamento</span>
+</div>
+<p>Na tela <small>imagem 5.4</small> defina na coluna <strong>Size (GiB)</strong> a quantidade de armazenamento, para obter melhor desempenho escolha o tipo de armazenamento <code>SSD</code> ou <code>Provisioned IOPS (SSD)</code>. </p>
+<p>Clique em <strong>Next</strong> para continuar.</p>
+<h3 id="passo-5:-tag-instance">Passo 5: Tag Instance</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-5.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.5: Criar Instance Tags</span>
+</div>
+<p>Esta tela <small>imagem 5.5</small> é opcional, se necessário adicione tags para identificar sua instancia, em seguida clique em <strong>Next</strong>.</p>
+<h3 id="passo-6:-configure-security-group">Passo 6: Configure Security Group</h3>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-6.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 5.6: Configurar Security Group</span>
+</div>
+<p>Nesta etapa <small>imagem 5.6</small> no item <strong>Assign a security group</strong> marque a opção <strong>Select an existing security group</strong> e escolha o <strong>Security Group</strong> que criou anteriormente, para finalizar clique em <strong>Review and Launch</strong>.</p>
+<h3 id="passo-7:-review-instance-launch">Passo 7: Review Instance Launch</h3>
+<p>- Revise suas configurações em seguida clique em <strong>Launch</strong>.<br>
+- Após clicar em <strong>Launch</strong> uma janela de dialogo será aberta <small>imagem 5.7</small>, para que tenha acesso à sua instancia via SSH nesta janela crie seu par de chaves ou selecione uma já existente.</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-7.png" alt="" class="img-thumbnail" width="400">
+<span>imagem 5.7: Selecione Key Pair ou crie uma.</span>
+</div>
+<p>Se selecionar a opção: <strong>create a new key pair</strong> você terá que dar um nome para este par de chaves <small>imagem 5.7.1</small>, e em seguida clique no botão <strong>Download Key Pair</strong>, salve este arquivo no seu computador e posteriormente altere as permissões desse arquivo para somente leitura.</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/step-7.1.png" alt="" class="img-thumbnail" width="400">
+<span>imagem 5.7.1: Criar Key Pair</span>
+</div>
+<p><strong>ATENÇÃO:</strong> A chave privada será utilizada para você se conectar a instancia via SSH. Sem essa chave não terá como acessar a instancia de maneira alguma.</p>
+<p>Clique no botão <strong>Launch Instances</strong> e Pronto sua instancia será criada.</p>
+<p>Após isso volte ao console EC2 Instances e veja na descrição dessa instancia todas informações necessários que precisa para conectar via SSH, você pode usar os dados do seu <strong>Public IP</strong> ou <strong>Public DNS</strong>.</p>
+<p>Até aqui tudo certo, porém o único problema é que sua instancia ao ser criada recebe um <strong>Public IP</strong> e um <strong>Public DNS</strong> ex: <strong>ec2-XX-XX-XX-XX.sa-east-1.compute.amazonaws.com</strong> onde X é o seu <strong>Public IP</strong>, você pode usar ambos para se conectar ou acessar seu website, mas a cada vez que re-iniciar sua instancia este endereço IP e DNS mudam, então para resolver essa questão é importante associar um IP fixo à sua instancia usando <strong>Elastic IP</strong> até porque se deseja manter um webserver terá que ter um IP fixo de qualquer maneira.</p>
+<p>Termina aqui o passo 3, no próximo passo será criar e associar um Elastic IP à essa instancia.</p>
+<h2 id="6.-criar-elastic-ip-e-associar-a-uma-instancia">6. Criar Elastic IP e associar a uma instancia</h2>
+<p>No menu lateral do console EC2 vá até <code>NETWORK &amp; SECURITY</code> and clique em <strong>Elastic IP</strong>, em seguida clique em <strong>Allocate New Address</strong>, isso abrirá uma janela de diálogo <small>imagem 6.1</small>, clique em <strong>Yes, Allocate</strong>.</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/elastic-ip.png" alt="" class="img-thumbnail" width="250">
+<span>imagem 6.1</span>
+</div>
+<p>Após clicar em <strong>Yes</strong> um no novo <strong>Elastic IP</strong> será alocado, agora é preciso associar este IP à sua instancia, então nessa mesma tela selecione o endereço IP recém alocado e clique em <strong>Associate Address</strong>, isso abrirá uma nova janela de dialogo <small>imagem 6.2</small>. </p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/image-associate-address.png" alt="" class="img-thumbnail" width="100%">
+<span>imagem 6.2</span>
+</div>
+<p>Basta um clique no campo <strong>Instance</strong> e inteligentemente o console exibirá uma lista com suas instancias, selecione a instancia na qual deseja alocar este <strong>Elastic IP</strong>. Para concluir clique em <strong>Associate</strong>.</p>
+<p>Agora de volta ao console EC2 Instances veja na descrição da sua instancia Linux um IP fixo publico foi definido agora poderá usar este endereço sempre que for conectar à sua instancia.</p>
+<h2 id="7.-conectar-a-instancia-via-ssh">7. Conectar a Instancia via SSH</h2>
+<p>Sua instancia Linux foi criada, um Elastic IP foi associado! Agora é possível conectar a instancia de maneira segura via SSH, usando sua chave privada salva no momento da criação da instancia.</p>
+<p>No Windows deverá usar o programa Putty para acessar seu servidor via SSH <a href="http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html">veja aqui como se conectar</a>. </p>
+<p>Em sistemas UNIX basta abrir o terminal e primeiramente alterar a permissão da sua chave privada:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">chmod 400 MyKeyPair.pem
+</code></pre></div>
+<p>Em seguida poderá conectar a instancia usando a chave privada <code>MyKeyPair.pem</code></p>
+<p>Comando SSH para conectar a instancia remotamente</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ssh -i MyKeyPair.pem ubuntu@XX.XXX.XXX.XX
+</code></pre></div>
+<blockquote>
+<p><strong>Dica:</strong> você também pode conectar usando seu endereço de <strong>DNS</strong> ex: </p>
+</blockquote>
+<div class="highlight"><pre><code class="language-text" data-lang="text">$ ssh -i MyKeyPair.pem ubuntu@ec2-XX-XX-XXX-XXX.sa-east-1.compute.amazonaws.com
+</code></pre></div>
+<blockquote>
+<p><strong>Dica:</strong> o usuário padrão no Linux Ubuntu é: <code>ubuntu</code> outras distribuições Linux pode ser <code>ec2-user</code> ou <code>root</code>, mas o processo para conectar é o mesmo.</p>
+</blockquote>
+<p>Se tudo foi feito de forma correta a seguinte tela de boas vindas do Ubuntu será exibida:</p>
+<div class="img-wrap text-center">
+<img src="/images/2014/09/connect-ssh.png" alt="" class="img-thumbnail" width="400">
+<span>imagem 7.1: Conexão via SSH</span>
+</div>
+<p>Agora tendo acesso remoto a instancia é possível prosseguir com as demais configurações necessárias para um servidor web, esses próximos passos serão detalhados em diferentes artigos:</p>
+<ul>
+<li><a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html">Como configurar um servidor Linux Ubuntu</a></li>
+<li>Como configurar um servidor Web Linux Ubuntu com PHP5, Apache e MySQL (LAMP).</li>
+<li>Como configurar um servidor Web Linux com PHP5, Nginx e MySQL (LEMP).</li>
+</ul>
+<p>Mais dicas podem ser encontradas neste artigo:</p>
+<h2 id="conclusão">Conclusão</h2>
+<p>Vimos como criar um servidor na nuvem da AWS, mas que chamamos de <code>Instancia</code>, em alguns cliques temos um servidor web up and running em uma das maiores empresas de Cloud Computing, essa é uma simples instalação, mas existem diversos serviços e possibilidades, dependendo do seu tipo de negócio ou projeto.</p>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+      <li><time class="post-time" datetime="2015-01-17">17 Jan 2015</time> &mdash; <a href="/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html" title="Acesse arquivos remoto com SFTP e FileZilla">Acesse arquivos remoto com SFTP e FileZilla</a></li>
+      <li><time class="post-time" datetime="2008-11-10">10 Nov 2008</time> &mdash; <a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">Como instalar o WordPress</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/sublime-text/sidebar-icones-suporte-sublime-text-3-soda-theme.html" title="Sidebar Icons Suporte Sublime Text 3 para o Soda Theme">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'Criar uma instancia na Amazon AWS';
+        var disqus_url = 'http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html';
+        var disqus_identifier = '';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li class="active"><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>

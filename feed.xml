@@ -1,0 +1,857 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Adriano Rosa</title>
+    <description>Web Developer FullStack</description>
+    <link>http://adrianorosa.com/</link>
+    <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Sat, 09 May 2015 20:00:19 -0300</pubDate>
+    <lastBuildDate>Sat, 09 May 2015 20:00:19 -0300</lastBuildDate>
+    <generator>Jekyll v2.2.0</generator>
+    
+      <item>
+        <title>Alterar public path no Laravel 5</title>
+        <description>&lt;p&gt;No Laravel 5 o arquivo &lt;code&gt;bootstrap/paths.php&lt;/code&gt; foi removido, antes era possível alterar os diretórios padrão usado pelo framework, ou seja, quando queríamos definir outro diretório público do webserver para outro nome diferente de &lt;code&gt;public&lt;/code&gt; bastava definir esse valor no array para por exemplo &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Mas desde a versão 5 do Laravel, e até o momento que escrevo este post, não há uma maneira simples de alterar esses paths, então o que você deve fazer é extender a classe &lt;code&gt;Illuminate\Foundation\Application&lt;/code&gt; e redefinir o método &lt;code&gt;publicPath()&lt;/code&gt; ou qualquer outro path que deseja modificar ex. o diretório &lt;code&gt;storage&lt;/code&gt; deverá redefinir o método &lt;code&gt;storagePath()&lt;/code&gt;, após criar a classe também é necessário alterar o arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt; onde a classe é instanciado e utilizado em toda aplicação.&lt;/p&gt;
+&lt;p&gt;Sua classe ficaria assim:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;namespace MyApp
+class Application extends \Illuminate\Foundation\Application {
+    public function publicPath()
+    {
+        return $this-&amp;gt;basePath.DIRECTORY_SEPARATOR.&amp;#39;public_html&amp;#39;;
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;No arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt; instancie a classe Application dentro do namespace da sua aplicação:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$app = new MyApp\Application(
+    realpath(__DIR__.&amp;#39;/../&amp;#39;)
+);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Existe também outras maneiras de alterar os paths, como por exemplo redefinir helper function &lt;code&gt;public_path()&lt;/code&gt; no seu index.php, como no exemplo logo abaixo retirado do &lt;a href=&quot;https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5&quot;&gt;fórum laracasts&lt;/a&gt;, mas não recomendo esse outro tipo de hack:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;function public_path($path = &amp;#39;&amp;#39;)
+{
+    return realpath(__DIR__);
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        <pubDate>Sat, 09 May 2015 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</guid>
+        <category>blog</category>
+        <category>laravel</category>
+      </item>
+      <item>
+        <title>Acesse arquivos remoto com SFTP e FileZilla</title>
+        <description>&lt;p&gt;&lt;strong&gt;FTP&lt;/strong&gt; (&lt;a href=&quot;http://en.wikipedia.org/wiki/File_Transfer_Protocol&quot;&gt;File Transfer Protocol&lt;/a&gt;) é o protrocolo muito utilizado para transferência de arquivos, porém o &lt;a href=&quot;/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html&quot;&gt;uso do FTP não é seguro&lt;/a&gt;, a maneira mais segura para transferência de arquivos entre um computador local e servidor remoto é através do SFTP (Secure Shell File Transfer Protocol).&lt;/p&gt;
+&lt;p&gt;Embora a semelhança com nome FTP, o SFTP possui características diferentes, uma delas é o tipo de autenticação e transferência de arquivos que é baseado em SSH Keys uma método com criptografia de chave pública, o que torna a comunicação entre um computador local e o servidor remoto totalmente segura.&lt;/p&gt;
+&lt;p&gt;A maneira para conectar a um servidor SFTP é um pouco diferente do FTP pois você deve utilizar sua SSH keys para estabelecer a autenticação com o servidor remoto. Neste post explico passo a passo como configurar uma conexão com servidor SFTP utilizando o FileZilla.&lt;/p&gt;
+&lt;h3 id=&quot;requisitos&quot;&gt;Requisitos&lt;/h3&gt;
+&lt;p&gt;Para configurar uma conexão SFTP com FileZilla você precisa:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-windows.html&quot;&gt;Criar sua SSH Key-pair&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Endereço do servidor remoto devidamente configurado com SSH e SFTP.&lt;/li&gt;
+&lt;li&gt;FileZilla.&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h2 id=&quot;passo-1:-adicionar-private-key-ao-filezilla&quot;&gt;Passo 1: Adicionar Private Key ao FileZilla&lt;/h2&gt;
+&lt;p&gt;O FileZilla precisa saber onde esta sua chave privada (&lt;em&gt;Private Key&lt;/em&gt;) criada anteriormente para ser usada toda vez que for estabelecer uma conexão com o servidor SFTP. Para dizer ao FileZilla o caminho até sua chave:&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2015/01/sftp-filezilla-1.jpg&quot; alt=&quot;Tela de configurações do FileZilla&quot; title=&quot;Tela de configurações do FileZilla&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 1: Tela de configurações do FileZilla&lt;/span&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Abra o FileZilla.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Vá ao menu superior &lt;strong&gt;&lt;em&gt;Editar &amp;gt; Configurações&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Na tela de configurações &lt;small&gt;imagem 1&lt;/small&gt; expanda o item &lt;strong&gt;&lt;em&gt;Conexão&lt;/em&gt;&lt;/strong&gt; e clique em &lt;strong&gt;&lt;em&gt;SFTP&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Clique no botão &lt;strong&gt;&lt;em&gt;Adicionar Arquivo de Chave&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Localize sua Private Key e clique &lt;strong&gt;&lt;em&gt;Abrir&lt;/em&gt;&lt;/strong&gt;, em seguida clique em &lt;strong&gt;&lt;em&gt;OK&lt;/em&gt;&lt;/strong&gt; na tela de configurações. &lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: O FileZilla suporta Private Keys no formato &lt;code&gt;.ppk&lt;/code&gt; Se sua Private Key é um arquivo no formato &lt;code&gt;.pem&lt;/code&gt; ou não foi gerada usando PuTTY o FileZilla exibirá uma janela de dialogo dizendo: &lt;em&gt;arquivo não esta no formato suportado pelo FileZilla&lt;/em&gt;, e ainda se você definiu um Passphrase para sua chave a seguinte mensagem também será exibida: &lt;em&gt;O arquivo esta protegido por senha deseja criar uma chave desprotegida no formato reconhecido&lt;/em&gt;. Se isso acontecer clique em &lt;strong&gt;&lt;em&gt;Sim&lt;/em&gt;&lt;/strong&gt; e digite sua senha se for o caso de ter definido Passphrase e depois salve e uma cópia da Private Key no formato &lt;code&gt;.ppk&lt;/code&gt; em algum lugar seguro no seu computador.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;passo-2:-criar-uma-conexão-sftp&quot;&gt;Passo 2: Criar uma conexão SFTP&lt;/h2&gt;
+&lt;p&gt;Agora que o FileZilla sabe o caminho de sua Private Key você precisa criar uma nova entrada no &lt;strong&gt;&lt;em&gt;Gerenciador de Sites&lt;/em&gt;&lt;/strong&gt; e informar os dados do servidor SFTP:&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2015/01/sftp-filezilla-2.jpg&quot; alt=&quot;Tela Gerenciamento de Sites do FileZilla&quot; title=&quot;Tela Gerenciamento de Sites do FileZilla&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 2.1: Tela Gerenciamento de Sites do FileZilla&lt;/span&gt;
+&lt;/div&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Vá ao menu superior clique em &lt;strong&gt;&lt;em&gt;Arquivo &amp;gt; Gerenciamento de Sites&lt;/em&gt;&lt;/strong&gt; ou pressione &lt;strong&gt;&lt;em&gt;crtl+S&lt;/em&gt;&lt;/strong&gt; ou &lt;strong&gt;&lt;em&gt;cmd+S&lt;/em&gt;&lt;/strong&gt; no OSX.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Clique no botão &lt;strong&gt;&lt;em&gt;Novo Site&lt;/em&gt;&lt;/strong&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Na guia &lt;strong&gt;&lt;em&gt;Geral&lt;/em&gt;&lt;/strong&gt; preencha os dados do servidor SFTP:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Host&lt;/strong&gt;: Informe o endereço IP do servidor&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Porta&lt;/strong&gt;: geralmente esse valor é 22&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Protocolo&lt;/strong&gt;: selecione &lt;strong&gt;&lt;em&gt;SFTP - SSH File Transfer Protocol&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Tipo de Login&lt;/strong&gt;: selecione &lt;strong&gt;&lt;em&gt;Normal&lt;/em&gt;&lt;/strong&gt;&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Usuário&lt;/strong&gt;: informe seu nome usuário&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Senha&lt;/strong&gt;: deixe em branco pois não é necessário&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Clique em &lt;strong&gt;&lt;em&gt;Conectar&lt;/em&gt;&lt;/strong&gt;, e pronto se tudo ocorreu como previsto deverá visualizar a janela comum de transferência de arquivos:&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2015/01/sftp-filezilla-3.jpg&quot; alt=&quot;Tela de transferência de arquivo via SFTP do FileZilla&quot; title=&quot;Tela de transferência de arquivo via SFTP do FileZilla&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 2.2: Tela de transferência de arquivo via SFTP do FileZilla&lt;/span&gt;
+&lt;/div&gt;
+</description>
+        <pubDate>Sat, 17 Jan 2015 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</guid>
+        <category>blog</category>
+        <category>seguranca</category>
+      </item>
+      <item>
+        <title>FTP não é seguro saiba por que</title>
+        <description>&lt;p&gt;&lt;strong&gt;FTP&lt;/strong&gt; (&lt;a href=&quot;http://en.wikipedia.org/wiki/File_Transfer_Protocol&quot;&gt;File Transfer Protocol&lt;/a&gt;) é um protocolo bem conhecido e vastamente usado para transferência de arquivos entre dois computadores, seu uso é feito principalmente em hospedagens de site para transferência de arquivos. Porém o uso de FTP não é seguro por diversas razões saiba por que.&lt;/p&gt;
+&lt;h3 id=&quot;como-funciona-o-ftp&quot;&gt;Como funciona o FTP&lt;/h3&gt;
+&lt;p&gt;O design do FTP permite conectar a outro computador remoto com autenticação de usuário e senha, ou também de forma anônima se o servidor for configurado para esse fim. Quando você abre uma nova conexão FTP usando um software client-server, como por exemplo o FileZilla, você digita seu login e senha e o endereço IP ou domínio do servidor, e seu software client-server envia através de comando suas credencias em texto plano para o servidor remoto que verifica se os dados de login estão corretos, e então cria-se uma sessão FTP entre os dois computadores, a partir daí é possível transferir arquivos para o servidor remoto e vice-versa.&lt;/p&gt;
+&lt;h3 id=&quot;e-por-que-ftp-é-inseguro?&quot;&gt;E por que FTP é inseguro?&lt;/h3&gt;
+&lt;p&gt;O uso do FTP é um grande risco de segurança porque a transferência de arquivos, tanto &lt;em&gt;upload&lt;/em&gt; quanto &lt;em&gt;download&lt;/em&gt;, são feitos sem encriptação, ou seja, a transmissão dos dados é feita pela rede em formato de texto plano o que significa que se alguém interceptar o pacote TCP durante a transmissão, método também conhecido como &lt;a href=&quot;http://en.wikipedia.org/wiki/Packet_analyzer&quot;&gt;Sniffing&lt;/a&gt;, dará ao hacker acesso à todas informações de seus arquivos e credencias colocando em risco seu servidor e computador local.&lt;/p&gt;
+&lt;p&gt;Além disso, existem &lt;a href=&quot;http://en.wikipedia.org/wiki/File_Transfer_Protocol#Security&quot;&gt;outras vulnerabilidades&lt;/a&gt; bem conhecidas deste protocolo.&lt;/p&gt;
+&lt;h3 id=&quot;qual-a-solução-seu-eu-uso-ftp&quot;&gt;Qual a solução seu eu uso FTP&lt;/h3&gt;
+&lt;p&gt;Se você ou sua empresa se preocupa com a segurança de suas informações a solução é bem simples &lt;strong&gt;NÃO USE FTP&lt;/strong&gt;, existem outros métodos conhecidos e de fácil implementação  como por exemplo o WinSCP e SFTP.&lt;/p&gt;
+&lt;h3 id=&quot;use-sftp-invés-do-ftp&quot;&gt;Use SFTP invés do FTP&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/SSH_File_Transfer_Protocol&quot;&gt;SFTP&lt;/a&gt; (Secure Shell File Transfer Protocol) é um protocolo parte do pacote OpenSSH. Embora a semelhança com nome FTP o SFTP tem seu design e recursos diferentes. Uma de suas vantagens é o método de autenticação baseado em SSH Key-pair, ou seja, não depende de usuário e senha e sua transmissão de dados é feita através de tunelamento SSH encriptada do inicio ao fim da conexão, o que significa que mesmo que alguém intercepte seus pacotes TCP estará impossibilitado de decifrar os dados transmitidos.&lt;/p&gt;
+&lt;h3 id=&quot;como-usar-o-sftp&quot;&gt;Como usar o SFTP&lt;/h3&gt;
+&lt;p&gt;O SFTP é baseado em SSH Key pair, então basicamente o que precisa:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Criar sua SSH Keys, mas isso pode ser diferente entre sistemas &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-windows.html&quot;&gt;Windows&lt;/a&gt; e &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-unix.html&quot;&gt;Unix&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Configurar seu servidor com SFTP ou solicitar junto ao seu provedor de hospedagem de sites se oferece este recurso, mas dificilmente você encontrará esse recurso em hospedagem de site compartilhada. O ideal é que tenha um VPS gerenciável onde possa ter total acesso à configuração, sendo assim será possível &lt;a href=&quot;/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html#5.4-use-sftp-inv%C3%A9s-de-ftp&quot;&gt;configurar SFTP facilmente&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Utilizar um SFTP client, diversos softwares FTP client também oferece suporte para SFTP é o caso do &lt;a href=&quot;https://filezilla-project.org/&quot;&gt;FileZilla&lt;/a&gt;, veja &lt;a href=&quot;/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html&quot;&gt;como configurar uma conexão com SFTP com FileZilla&lt;/a&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;h3 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h3&gt;
+&lt;p&gt;FTP é inseguro é deve ser evitado sempre que possível, o uso de alternativas seguras como SFTP, SCP e WinSCP deve ser usado em seu lugar. Se seu provedor de hospedagem não oferece este recurso procure alternativas como VPS ou migre para empresas que possibilitam essa configuração.&lt;/p&gt;
+</description>
+        <pubDate>Sat, 10 Jan 2015 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</guid>
+        <category>blog</category>
+        <category>seguranca</category>
+      </item>
+      <item>
+        <title>Criar SSH Key pair no Windows</title>
+        <description>&lt;p&gt;A maneira mais simples de criar SSH key no Windows é utilizando o PuTTY. O PuTTY é um programa de código aberto que emula um Terminal, semelhante ao Terminal do Linux, para estabelecer uma conexão SSH. PuTTY oferece o utilitário PuTTYGen no qual você deverá usar para criar sua chave.&lt;/p&gt;
+&lt;p&gt;Em ambientes Unix veja o post &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-unix.html&quot;&gt;Como criar SSH Key pair em sistemas UNIX&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;&lt;em&gt;Key Pair&lt;/em&gt;&lt;/strong&gt;, ou &lt;a href=&quot;/blog/seguranca/ssh-keys.html&quot;&gt;&lt;strong&gt;SSH Keys&lt;/strong&gt;&lt;/a&gt; ou ainda &lt;strong&gt;Chave Pública&lt;/strong&gt; consiste em duas chaves uma pública que deve ser instalada no servidor remoto, e a outra chave privada que fica salva no seu computador, as duas juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.&lt;/p&gt;
+&lt;h2 id=&quot;passo-1:-download-puttygen&quot;&gt;Passo 1: Download PuTTYgen&lt;/h2&gt;
+&lt;p&gt;Vá até o site &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html&quot;&gt;PuTTY&lt;/a&gt; faça o download do utilitário &lt;code&gt;PuTTYGen&lt;/code&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;passo-2:-criar-ssh-key&quot;&gt;Passo 2: Criar SSH Key&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Execute o &lt;code&gt;puttygen.exe&lt;/code&gt;, e log verá a janela &lt;code&gt;PuTTY Key Generator&lt;/code&gt; &lt;small&gt;imagem 2.1&lt;/small&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Na parte inferior da janela, no item &lt;em&gt;Parameters&lt;/em&gt; por padrão já estará selecionado o algoritmo &lt;code&gt;SSH-2 RSA&lt;/code&gt; e definido o número de bits &lt;code&gt;2048&lt;/code&gt;, esses parâmetros são o recomendado para gerar SSH Key.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Para criar SSH Key clique no botão &lt;code&gt;Generate&lt;/code&gt;. E tenha certeza de movimentar o ponteiro do mouse logo a abaixo a barra de progresso até que seja finalizada.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/12/putty-1.jpg&quot; alt=&quot;Tela PuTTY Key Generator&quot; title=&quot;Tela PuTTY Key Generator&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 2.1 Tela PuTTY Key Generator&lt;/span&gt;
+&lt;/div&gt;
+&lt;h2 id=&quot;passo-3:-complete-as-informações-e-salve-sua-ssh-key&quot;&gt;Passo 3: Complete as informações e salve sua SSH Key&lt;/h2&gt;
+&lt;p&gt;Na próxima tela, &lt;small&gt;imagem 3.1&lt;/small&gt; siga os passos:&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;&lt;p&gt;Adicione um comentário para identificar sua Public Key ex. usuario@host.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Crie um Passphrase (recomendado). O Passphrase é como uma senha que precisa ser digitado cada vez que iniciar uma sessão SSH ou SFTP, o que torna sua SSH Key ainda mais segura.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Copie a Public Key para o servidor e salve em &lt;code&gt;authorized_keys&lt;/code&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: Para adicionar a sua chave pública na lista de chaves autorizadas é preciso ter acesso administrativo ao servidor no qual deseja estabelecer uma conexão SSH. Se você é usuário de um sistema onde esse acesso é restrito você deverá revelar sua chave pública para o responsável configurar e instalar para você. Lembre-se somente a chave pública deve ser revelada para terceiros.&lt;/p&gt;
+&lt;/blockquote&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Por fim, salve sua Private Key em algum local seguro no seu computador.&lt;/p&gt;&lt;/li&gt;
+&lt;/ol&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/12/putty-2.jpg&quot; alt=&quot;Gerando SSH keys com PuTTY&quot; title=&quot;Gerando SSH keys com PuTTY&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 3.1 Gerando SSH keys com PuTTY&lt;/span&gt;
+&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: PuTTY e OpenSSH usam diferentes formatos para Public Key. Sua Public Key deve começar com a linha: &lt;code&gt;ssh-rsa AAAAAAAB3.....&lt;/code&gt; se esse valor for algo como: &lt;code&gt;---- BEGIN SSH2 PUBLIC KEY ----&lt;/code&gt; .... esta errado.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Veja mais detalhes na &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/docs.html&quot;&gt;documentação do PuTTY&lt;/a&gt;.&lt;/p&gt;
+</description>
+        <pubDate>Thu, 18 Dec 2014 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</guid>
+        <category>blog</category>
+        <category>seguranca</category>
+      </item>
+      <item>
+        <title>Criar SSH Keys em sistemas UNIX</title>
+        <description>&lt;p&gt;&lt;strong&gt;&lt;em&gt;Key Pair&lt;/em&gt;&lt;/strong&gt;, ou &lt;a href=&quot;/blog/seguranca/ssh-keys.html&quot;&gt;&lt;strong&gt;SSH Keys&lt;/strong&gt;&lt;/a&gt; ou ainda &lt;strong&gt;Chave Pública&lt;/strong&gt; consiste em duas chaves uma pública que deve ser instalada no servidor remoto, e a outra chave privada que fica salva no seu computador, as duas juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.&lt;/p&gt;
+&lt;p&gt;Para criar sua SSH key em ambientes Unix siga os passos logo abaixo, se você é usuário Windows visite o post &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-windows.html&quot;&gt;como criar ssh key pair no windows&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;passo-1:-verifique-seu-já-possui-ssh-key&quot;&gt;Passo 1: Verifique seu já possui SSH Key&lt;/h2&gt;
+&lt;p&gt;Veja se já existe SSH keys no seu computador, em ambientes Unix pode ser encontrado em um desses diretórios &lt;code&gt;~/.ssh/identity&lt;/code&gt;, &lt;code&gt;~/.ssh/id_ecdsa&lt;/code&gt;, &lt;code&gt;~/.ssh/id_dsa&lt;/code&gt; ou &lt;code&gt;~/.ssh/id_rsa&lt;/code&gt;. Para verificar digite no terminal:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ls -al ~/.ssh
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Dica: se você tiver uma nova instalação Mac OSX ou Linux, você não terá o diretório &lt;code&gt;~/.ssh&lt;/code&gt; criado ainda, esse diretório onde armazena suas chaves públicas e privadas será criado automaticamente no passo seguinte.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;passo-2:-criar-uma-nova-ssh-key&quot;&gt;Passo 2: Criar uma nova SSH Key&lt;/h2&gt;
+&lt;p&gt;Se ainda não tem sua SSH key deverá gerar uma usando o comando &lt;code&gt;ssh-keygen&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh-keygen -t rsa -b 4096 -C &amp;quot;seuemail@example.com&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Explicando o comando acima:  &lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;Parâmetro &lt;code&gt;-t&lt;/code&gt; específica o tipo de chave nesse caso usamos o algoritmo &lt;code&gt;rsa&lt;/code&gt; para protocolo versão 2 outros possíveis valores são &lt;code&gt;rsa1&lt;/code&gt;, &lt;code&gt;dsa&lt;/code&gt; e &lt;code&gt;ecdsa&lt;/code&gt;.  &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Parâmetro &lt;code&gt;-C&lt;/code&gt; adiciona um comentário à chave pública, é apenas uma maneira fácil de identificar a finalidade desta chave, o valor pode ser &lt;code&gt;user@host&lt;/code&gt;. &lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;Parâmetro &lt;code&gt;-b&lt;/code&gt; informa &lt;em&gt;key size&lt;/em&gt; ou total de bits. O padrão é &lt;code&gt;2048&lt;/code&gt;, geralmente esse valor já é o suficiente para sua chave se quiser mais segurança use o valor máximo &lt;code&gt;4096&lt;/code&gt;.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;blockquote&gt;
+&lt;p&gt;ATENÇÃO: Para chaves &lt;strong&gt;RSA&lt;/strong&gt; o valor mínimo é de &lt;code&gt;768&lt;/code&gt; bits, mas não crie sua chave com menos de &lt;code&gt;2048&lt;/code&gt; bits pois estudos apontam que é possível &lt;a href=&quot;http://www.techworld.com/news/security/rsa-1024-bit-private-key-encryption-cracked-3214360/&quot;&gt;craquear&lt;/a&gt; esses tipos de chaves.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h3 id=&quot;defina-passphrase&quot;&gt;Defina Passphrase&lt;/h3&gt;
+&lt;p&gt;O Passphrase é como uma senha e precisa ser digitado to vez que usar a chave para se conectar SSH, se você esquecer o Passphrase ou outra pessoa ter acesso à sua Private Key ficará impossibilitado de conectar ao servidor remoto. Caso não queira definir um Passphrase apenas deixe em branco, pressione enter duas vezes para finalizar.&lt;/p&gt;
+&lt;h2 id=&quot;passo-4:-copie-sua-chave-pública-para-o-servidor&quot;&gt;Passo 4: Copie sua chave pública para o servidor&lt;/h2&gt;
+&lt;p&gt;Após executar o comando para gerar SSH keys dois arquivos serão salvos no diretório &lt;code&gt;~/ssh&lt;/code&gt; por padrão os arquivos são &lt;code&gt;id_rsa&lt;/code&gt; e &lt;code&gt;id_rsa.pub&lt;/code&gt;, mas é possível criá-los com nomes e diretórios diferentes se for necessário. &lt;/p&gt;
+&lt;p&gt;A chave pública, cujo a extensão é &lt;code&gt;.pub&lt;/code&gt;, deve ser copiado para o servidor e o seu conteúdo é algo como:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh-rsa AAAAB3NzaC1yc2EAAAADAQA .....
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;A chave privada tem o seguinte conteúdo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;-----BEGIN RSA PRIVATE KEY-----
+MIIJKQIBAAKCAgEAzpHUcAE5w5e49Qw2S4cp17OmsIc1D8yfNR7y/ZLsf0382zsw
+.....
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;e deve ter apenas permissão de leitura pelo seu usuário, altere usando o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;chmod 400 ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Com sua SSH key pair criada, é hora de copiar a chave pública para o servidor, se você não é o administrador do servidor remoto deverá enviar o conteúdo da chave pública para o responsável fazer isso.&lt;/p&gt;
+&lt;p&gt;No servidor remoto, usando um editor de sua preferencia adicione a chave pública ao arquivo &lt;code&gt;~/.ssh/authorized_keys&lt;/code&gt;, ou simplesmente utilize o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cat ~/.ssh/id_rsa.pub | ssh user@123.45.56.78 &amp;quot;mkdir -p ~/.ssh &amp;amp;&amp;amp; cat &amp;gt;&amp;gt;  ~/.ssh/authorized_keys&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;passo-5:-faça-um-teste-com-sua-ssh-key&quot;&gt;Passo 5: Faça um teste com sua SSH Key&lt;/h2&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh user@123.456.789.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se sua SSH key foi salva em um diretório diferente de &lt;code&gt;~/.ssh&lt;/code&gt; você deverá informar o diretório onde esta a chave para para ter sucesso na conexão com servidor.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh -i /diretorio/subpasta/sua_chave_privada user@123.456.789.0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;passo-6:-bonus,-usuários-mac-osx&quot;&gt;Passo 6: Bonus, usuários Mac OSX&lt;/h2&gt;
+&lt;p&gt;Se você definiu um Passphrase, pode salvar esse valor na sua Keychain e assim evitar ter que digitar o passphrase sempre que for conectar ao servidor remoto. Para adicionar sua SSH key na Keychain use o comando &lt;code&gt;ssh-add&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh-add -K ~/.ssh/id_rsa
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Digite sua Passphrase e sua chave será armazena na Keychain.&lt;/p&gt;
+&lt;p&gt;Para visualizar a lista de chaves adicionadas ao &lt;code&gt;ssh-agent&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;ssh-add -l
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Esse comando exibe o tamanho de bits de sua chave, footprint e o diretório da chave privada da seguinte forma:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;2048 ee:aa:11:11:bb:cc:gg:11:Ca:Fe:00:E1:49:30:8C:01 ~/.ssh/id_rsa (RSA)
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;mais-informações-sobre-ssh-keys:&quot;&gt;Mais informações sobre SSH Keys:&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/Keys&quot;&gt;https://help.ubuntu.com/community/SSH/OpenSSH/Keys&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 18 Dec 2014 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</guid>
+        <category>blog</category>
+        <category>seguranca</category>
+      </item>
+      <item>
+        <title>SSH Keys</title>
+        <description>&lt;p&gt;&lt;em&gt;Key Pair&lt;/em&gt;, ou SSH Keys ou ainda Chave Pública, é o meio de identificação entre seu computador e um servidor SSH usando método de autenticação &lt;strong&gt;chave de criptografia pública&lt;/strong&gt;. Uma de suas vantagens diferentemente do método tradicional com login e senha é que para autenticação com servidor remoto você não precisa enviar seu login e senha, e mesmo que uma pessoa mal intencionada intercepte sua transmissão de dados pela rede não poderá ter acesso à suas credencias impossibilitando roubo de seus dados de acesso. E também, usando SSH Keys para autenticação elimina drasticamente o risco de um hacker tentar adivinhar seu login e senha enviando centenas ou milhares de combinações aleatórias de login e senha para entrar no sistema, esse é um tipo de ataque comum em sistemas baseado em autenticação de login e senha chamado de &lt;em&gt;brute-force password&lt;/em&gt;.&lt;/p&gt;
+&lt;p&gt;Além de oferecer uma camada de segurança, autenticação por SSH keys pode ser ainda mais conveniente do que o método tradicional de autenticação por login e senha. Quando usado com o programa SSH Agent, SSH keys permite a conexão com um servidor, ou múltiplos servidores, sem a necessidade de ter que lembrar ou digitar sua senha e login para cada acesso.&lt;/p&gt;
+&lt;h2 id=&quot;como-funciona-ssh-keys&quot;&gt;Como funciona SSH keys&lt;/h2&gt;
+&lt;p&gt;SSH keys consiste em um par de chaves uma pública que deve ser instalada no servidor remoto, e uma outra chave privada que fica salva no seu computador. Somente você poderá ter acesso à chave privada, então tenha certeza de mantê-la salva em um lugar seguro em seu computador com as devidas permissões e uma boa Passphrase. As duas chaves juntas permitem que você conecte de forma segura a um servidor remoto usando o protocolo SSH ou SFTP.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: Para adicionar a sua chave pública na lista de chaves autorizadas é preciso ter acesso administrativo ao servidor no qual deseja estabelecer uma conexão SSH. Se você é usuário de um sistema onde esse acesso é restrito você deverá revelar sua chave pública para o responsável configurar e instalar para você. Lembre-se somente a chave pública deve ser revelada para terceiros.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;tipos-de-encriptação&quot;&gt;Tipos de encriptação&lt;/h2&gt;
+&lt;p&gt;O algoritmo usado para encriptar suas chaves pode ser &lt;code&gt;RSA1&lt;/code&gt;, &lt;code&gt;RSA&lt;/code&gt;, &lt;code&gt;DSA&lt;/code&gt; ou &lt;code&gt;ECDSA&lt;/code&gt;, porém o uso desses algoritmos depende da finalidade da sua chave e de recursos suportado pelo servidor SSH.&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RSA1&lt;/strong&gt; (Rivest-Shamir-Adleman) é um algoritmo para o protocolo SSH versão 1, seu uso é limitado a servidores que não suportam a versão recente SSH 2.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;RSA&lt;/strong&gt; (Rivest-Shamir-Adleman) é o algoritmo para o protocolo SSH versão 2 o mais utilizado em servidores SSH e o mais seguro hoje em dia, possibilita autenticar e transmitir dados criptografados até o seu destino. Esse algoritmo é o &lt;strong&gt;RECOMENDADO&lt;/strong&gt; para sua chave SSH.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;DSA&lt;/strong&gt; (Digital Signature Algorithm) é um algoritmo que pode ser usado para gerar sua chave, porém DSA tem se tornado menos seguro nos últimos anos. Sua função é somente autenticar DSA não encripta ou decripta dados.&lt;/p&gt;&lt;/li&gt;
+&lt;li&gt;&lt;p&gt;&lt;strong&gt;ECDSA&lt;/strong&gt; é um algoritmo variante do DSA provê tamanho menor da sua chave, esses tipos de chaves são usado apenas para autenticação.&lt;/p&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h3 id=&quot;key-size&quot;&gt;Key Size&lt;/h3&gt;
+&lt;p&gt;Key Size é o número de bits usado na criação da chave, esse número varia dependendo do algoritmo usado. &lt;/p&gt;
+&lt;p&gt;Para SSH keys &lt;strong&gt;RSA&lt;/strong&gt;, o tamanho minimo de bits é &lt;code&gt;768&lt;/code&gt; bits e o padrão é &lt;code&gt;2048&lt;/code&gt; bits. Você pode tornar sua chave ainda mais segura usando &lt;code&gt;4096&lt;/code&gt; bits.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: Para &lt;strong&gt;RSA&lt;/strong&gt; não é recomendado utilizar menos do que &lt;code&gt;2048&lt;/code&gt; bits. Geralmente &lt;code&gt;2048&lt;/code&gt; bits é considerado seguro.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;SSH keys &lt;code&gt;DSA&lt;/code&gt;, devem conter exatos 1024 bits.&lt;/p&gt;
+&lt;p&gt;SSH keys &lt;code&gt;ECDSA&lt;/code&gt;, aceita um dos três valores da curva elíptica: &lt;code&gt;256&lt;/code&gt;, &lt;code&gt;384&lt;/code&gt; ou &lt;code&gt;521&lt;/code&gt; bits.&lt;/p&gt;
+&lt;h2 id=&quot;criar-ssh-key-pair&quot;&gt;Criar SSH Key pair&lt;/h2&gt;
+&lt;p&gt;Para criar sua SSH keys você precisa ter o programa &lt;code&gt;ssh-keygen&lt;/code&gt; parte do pacote &lt;a href=&quot;http://www.openssh.com/&quot;&gt;OpenSSH&lt;/a&gt; encontrado apenas em sistemas Unix. Em distribuições do Linux e Mac OSX esse programa já vem instalado por padrão. Veja neste post &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-unix.html&quot;&gt;como criar SSH Keys em sistemas Unix&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;No Windows, o programa &lt;code&gt;ssh-keygen&lt;/code&gt; não existe. A maneira mais simples de criar sua chave é utilizando o &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/&quot;&gt;PuTTY&lt;/a&gt;, PuTTY é um programa de código aberto que emula um Terminal, semelhante ao Terminal do Linux, para estabelecer uma conexão SSH. PuTTY oferece o utilitário &lt;code&gt;PuTTYGen&lt;/code&gt; no qual você deverá usar para criar sua chave. Veja neste post &lt;a href=&quot;/blog/seguranca/como-criar-ssh-key-pair-windows.html&quot;&gt;como criar sua SSH Key no Windows&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Alternativas como &lt;a href=&quot;https://www.itefix.net/copssh&quot;&gt;CopSSH&lt;/a&gt; pode ser usado no Windows ou se você usa GitHub o programa &lt;a href=&quot;https://windows.github.com/&quot;&gt;GitHub para Windows&lt;/a&gt; oferece o Git Shell como parte da instalação onde é possível criar SSH Keys usando o comando &lt;code&gt;ssh-keygen&lt;/code&gt; do mesmo modo em sistemas Unix.&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Nov 2014 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/seguranca/ssh-keys.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/ssh-keys.html</guid>
+        <category>blog</category>
+        <category>seguranca</category>
+      </item>
+      <item>
+        <title>Instalar versão mais recente do Nginx no Linux Ubuntu</title>
+        <description>&lt;p&gt;Instalar o Nginx no Linux é muito simples usando package manager, basta executar comando &lt;code&gt;sudo apt-get install nginx&lt;/code&gt; e pronto, mas o problema que atualmente o Ubuntu 14.10 é entregue com a versão &lt;code&gt;1.4.6&lt;/code&gt; do Nginx pre-instalado em seu repositório de pacotes. É recomendado instalar a versão mais recente e estável de um pacote, no caso do Nginx, hoje a versão mais recente e estável é &lt;code&gt;1.6.2&lt;/code&gt;. Para instalar a versão do Nginx mais recente é necessário algumas configurações no package manager.&lt;/p&gt;
+&lt;h2 id=&quot;1.-remover-o-apache-completamente&quot;&gt;1. Remover o Apache completamente&lt;/h2&gt;
+&lt;p&gt;Caso não tenha o Apache instalado pule para o passo 2.&lt;/p&gt;
+&lt;p&gt;Se o Apache foi instalado anteriormente e você não deseja utilizar os dois webserver Apache e Nginx é recomendado que remova completamente o Apache para evitar conflitos e erro de bind na porta 80.&lt;/p&gt;
+&lt;p&gt;Para remover o Apache:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get purge apache2* 
+sudo apt-get autoremove
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;2.-configure-nginx-pgp-signing_key&quot;&gt;2. Configure Nginx PGP signing_key&lt;/h2&gt;
+&lt;p&gt;É necessário adicionar PGP Key usado nos pacotes nginx para autenticação ao repositório do nginx e evitar alertas de PGP key durante a instalação.&lt;/p&gt;
+&lt;p&gt;Baixe nginx PGP signin key e adicione ao &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;curl http://nginx.org/keys/nginx_signing.key 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Alternativa, se não tiver o &lt;code&gt;curl&lt;/code&gt; instalado utilize &lt;code&gt;wget&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo wget http://nginx.org/keys/nginx_signing.key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Adicionar a chave ao &lt;code&gt;apt&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-key add nginx_signing.key
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;3.-update-source.list&quot;&gt;3. Update source.list&lt;/h2&gt;
+&lt;p&gt;Adicione o repositório &lt;code&gt;http://nginx.org/packages/ubuntu&lt;/code&gt; ao source.list para isso é necessário saber qual o codename do Ubuntu que esta usando, esse nome varia de acordo com a distribuição do Ubuntu, isso é importante para que possa instalar a versão correta do Nginx no seu sistema.&lt;/p&gt;
+&lt;p&gt;Para descobrir a qual o codename do sua versão do Ubuntu execute o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cat /etc/lsb-release | grep DISTRIB_CODENAME
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Será exibido algo como &lt;code&gt;DISTRIB_CODENAME=trusty&lt;/code&gt; onde nesse exemplo &lt;em&gt;trusty&lt;/em&gt; será o seu codename.&lt;/p&gt;
+&lt;p&gt;Agora, finalmente crie uma nova &lt;em&gt;source.list&lt;/em&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/apt/sources.list.d/nginx.list
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E adicione as seguintes linhas nesse arquivo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;deb http://nginx.org/packages/ubuntu trusty nginx
+deb-src http://nginx.org/packages/ubuntu trusty nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;NOTA: substitua os valores &lt;em&gt;trusty&lt;/em&gt; se seu codename for diferente.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;4.-instalar-a-versão-recente-do-nginx&quot;&gt;4. Instalar a versão recente do Nginx&lt;/h2&gt;
+&lt;p&gt;Primeiro se você instalou alguma versão antiga do Nginx(como a versão nativa pre-instalado nas distribuições) você pode remover completamente essa versão utilizando o seguinte comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo aptitude purge nginx nginx-light nginx-full nginx-extras nginx-common
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Nota: usando o &lt;code&gt;purge&lt;/code&gt; removerá também arquivos de configuração do nginx&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Re-sincronize o index dos repositorios de seus pacotes    &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Verifique a versão do Nginx na sua lista de repositórios:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-cache show nginx
+Package: nginx
+Version: 1.6.2-1~trusty
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Agora que já tem o versão recente do Nginx poderá instalar executando o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install nginx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;… Ou se você já tem o nginx instalado e deseja apenas fazer o upgrade:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;apt-get dist-upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Após instalar verifique se o nginx esta em execução:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;service nginx status
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se o Nginx não estiver está em execução significa que algum erro aconteceu, talvez porque outro processo esta sendo usado na porta 80, verifique usando o seguinte comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo netstat -tulpn
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se outro processo estiver utilizando a porta 80 finalize este processo com o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;kill -9 xxxx
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;comandos-úteis-do-nginx&quot;&gt;Comandos úteis do Nginx&lt;/h2&gt;
+&lt;p&gt;Inicializar o Nginx:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;service nginx start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Reiniciar o Nginx:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nginx -s reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Parar o Nginx:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nginx -s stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Teste a instalação acesse &lt;a href=&quot;http://localhost&quot;&gt;http://localhost&lt;/a&gt;&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/11/nginx.jpg&quot; alt=&quot;Nginx&quot; title=&quot;Nginx&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 1: Tela inicial do Nginx&lt;/span&gt;
+&lt;/div&gt;
+&lt;h3 id=&quot;referências&quot;&gt;Referências&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;http://nginx.org/en/linux_packages.html&quot;&gt;http://nginx.org/en/linux_packages.html&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Fri, 28 Nov 2014 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html</guid>
+        <category>blog</category>
+        <category>nginx</category>
+      </item>
+      <item>
+        <title>jQuery KeyCode Tabela de referência</title>
+        <description>&lt;p&gt;Capturar a tecla pressionada no teclado do usuário usando as propriedades do Javascript &lt;strong&gt;charCode&lt;/strong&gt; / &lt;strong&gt;keyCode&lt;/strong&gt; / &lt;strong&gt;which&lt;/strong&gt; pode parecer um pouco complexo, e realmente é, por isso é preciso entender como funciona esses eventos. A Captura desses tipos de eventos pode ser útil para validar algum de tipo de entrada em formulários ou em algum outro tipo de evento no browser. Para lidar com esse tipo de evento a biblioteca &lt;a href=&quot;http://api.jquery.com/category/events/keyboard-events/&quot;&gt;jQuery&lt;/a&gt; pode ser uma boa opção, pois alguns browser armazenam esses eventos de forma diferente, principalmente IE. Para capturar o &lt;code&gt;keyCode&lt;/code&gt; do usuário de forma mais precisa o evento &lt;code&gt;keypress()&lt;/code&gt; é a melhor opção.&lt;/p&gt;
+&lt;h3 id=&quot;diferenças-entre-keycode-e-charcode&quot;&gt;Diferenças entre &lt;code&gt;keyCode&lt;/code&gt; e &lt;code&gt;charCode&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;&lt;strong&gt;keyCode&lt;/strong&gt; (Keyboard Codes): Representa o número da tecla que o usuário pressiona no teclado.&lt;br&gt;
+&lt;strong&gt;charCode:&lt;/strong&gt; (Character Codes): Representa um número de cada caractere na tabela &lt;a href=&quot;http://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=oct&amp;amp;unicodeinhtml=dec&amp;amp;htmlent=1&quot;&gt;&lt;em&gt;Unicode&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para entender e ter sempre a mão o número de cada &lt;code&gt;keyCode&lt;/code&gt; representado no teclado criei uma tabela para ter como referência, e para testar os eventos &lt;code&gt;keydown()&lt;/code&gt;, &lt;code&gt;keypress()&lt;/code&gt; e &lt;code&gt;keyup()&lt;/code&gt; basta digitar a tecla nos campos de texto a seguir.&lt;/p&gt;
+&lt;h3 id=&quot;javascript-keycode-tabela-de-referencia.&quot;&gt;Javascript KeyCode tabela de referencia.&lt;/h3&gt;
+&lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;keypress&quot; placeholder=&quot;keypress()&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;keydown&quot; placeholder=&quot;keydown()&quot;&gt;
+&lt;input type=&quot;text&quot; name=&quot;keyup&quot; placeholder=&quot;keyup()&quot;&gt; &lt;br&gt;
+&lt;strong&gt;&lt;small class=&quot;feedback&quot;&gt;Para testar digite algo nos campos de texto acima&lt;/small&gt;&lt;/strong&gt;
+&lt;table id=&quot;CharCodeList&quot; class=&quot;table table-responsive table-striped table-bordered &quot;&gt;
+  &lt;tbody&gt;&lt;/tbody&gt;
+&lt;/table&gt;&lt;/p&gt;
+&lt;h4 id=&quot;referência:&quot;&gt;Referência:&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;http://unixpapa.com/js/key.html&quot;&gt;http://unixpapa.com/js/key.html&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://en.wikipedia.org/wiki/UTF-8&quot;&gt;http://en.wikipedia.org/wiki/UTF-8&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Thu, 27 Nov 2014 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</guid>
+        <category>blog</category>
+        <category>jquery</category>
+      </item>
+      <item>
+        <title>Como configurar um servidor web Linux Ubuntu</title>
+        <description>&lt;p&gt;Este artigo pode ser considerado a continuação de &lt;a href=&quot;/blog/aws/criar-instancia-na-amazon-aws.html&quot; title=&quot;Como Criar uma instancia na Amazon AWS&quot;&gt;como criar uma instancia na Amazon AWS&lt;/a&gt; escrito recentemente onde falo sobre a instalação do Ubuntu Server na nuvem. Porém os métodos descritos neste post podem ser aplicados em qualquer instalação do Linux Ubuntu Server versão a partir da 12.10 até a mais recente. Foram longas horas de pesquisas e testes para chegar há um conceito básico de configuração e dos principais requisitos de segurança para um servidor web, este guia foi elaborado para efeito de estudos e testes de novas aplicações e pode ser aplicado no mundo real. Por favor, sinta-se livre em colaborar com este material se de alguma forma possua alguma informação relevante que possa ser atribuída à este artigo.&lt;/p&gt;
+&lt;h2 id=&quot;Índice&quot;&gt;Índice&lt;/h2&gt;
+&lt;!-- MarkdownTOC depth=3 autolink=true bracket=round --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1.-introdu%C3%A7%C3%A3o&quot;&gt;1. Introdução&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2.-requisitos&quot;&gt;2. Requisitos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3.-atualizar-o-sistema&quot;&gt;3. Atualizar o sistema&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#3.1-executar-a-atualiza%C3%A7%C3%A3o-do-sistema&quot;&gt;3.1 Executar a atualização do sistema&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3.2-atualizar-timezone-e-locale&quot;&gt;3.2 Atualizar Timezone e Locale&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.-configura%C3%A7%C3%B5es-de-seguran%C3%A7a&quot;&gt;4. Configurações de Segurança&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#4.1-firewall---ufw&quot;&gt;4.1 Firewall - UFW&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.2-habilitar-logs-do-firewall&quot;&gt;4.2 Habilitar Logs do Firewall&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.3-restringir-configura%C3%A7%C3%B5es-de-rede&quot;&gt;4.3 Restringir configurações de rede&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.4-prevenir-ip-spoofing&quot;&gt;4.4 Prevenir IP Spoofing&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.5-secure-shared-memory&quot;&gt;4.5 Secure shared memory&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.6-prevenir-fork-bomb-limitando-user-process&quot;&gt;4.6 Prevenir Fork Bomb limitando user process&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.7-configura%C3%A7%C3%B5es-de-seguran%C3%A7a-do-apache&quot;&gt;4.7 Configurações de Segurança do Apache&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.8-configura%C3%A7%C3%B5es-de-seguran%C3%A7a-do-nginx&quot;&gt;4.8 Configurações de Segurança do Nginx&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.-ssh-security&quot;&gt;5. SSH Security&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#5.1-desabilitar-ssh-root-login&quot;&gt;5.1 Desabilitar SSH Root Login&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.2-desabilitar-port-forwarding&quot;&gt;5.2 Desabilitar Port Forwarding&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.3-definir-usu%C3%A1rios-que-podem-conectar-via-ssh&quot;&gt;5.3 Definir usuários que podem conectar via SSH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.4-use-sftp-inv%C3%A9s-de-ftp&quot;&gt;5.4 Use SFTP invés de FTP&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.5-ssh-welcome-banner&quot;&gt;5.5 SSH Welcome Banner&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6.-monitorar-o-sistema-e-alertas&quot;&gt;6. Monitorar o Sistema e Alertas&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#6.1-configurar-o-monit&quot;&gt;6.1 Configurar o Monit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7.-instalar-htop&quot;&gt;7. Instalar HTOP&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /MarkdownTOC --&gt;
+&lt;h2 id=&quot;1.-introdução&quot;&gt;1. Introdução&lt;/h2&gt;
+&lt;p&gt;Este artigo é um guia baseado em várias horas de pesquisa em fóruns, sites e na própria documentação do &lt;a href=&quot;https://help.ubuntu.com/&quot; title=&quot;Documentação Ubuntu&quot;&gt;Linux Ubuntu&lt;/a&gt;. Em forma de agradecimento para aqueles que contribuem para comunidade open source no fim desta página deixo uma referência de seus respectivos links para que também possa ser útil para você que deseja se aprofundar nesse assunto.&lt;/p&gt;
+&lt;h2 id=&quot;2.-requisitos&quot;&gt;2. Requisitos&lt;/h2&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/aws/criar-instancia-na-amazon-aws.html&quot; title=&quot;Como Criar uma instancia na Amazon AWS&quot;&gt;Linux Ubuntu Server 13.10 LTS&lt;/a&gt; ou posterior instalado.&lt;/li&gt;
+&lt;li&gt;Opcional &lt;a href=&quot;/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html&quot;&gt;Nginx (LEMP stack)&lt;/a&gt; instalado&lt;/li&gt;
+&lt;li&gt;Opcional &lt;a href=&quot;#todo&quot;&gt;Apache (LAMP stack)&lt;/a&gt; instalado ou ambos LEMP e LAMP stack.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;3.-atualizar-o-sistema&quot;&gt;3. Atualizar o sistema&lt;/h2&gt;
+&lt;p&gt;Primeira coisa após uma recente instalação do Ubuntu é atualizar sua lista de pacotes e pacotes já instalados, mesmo sendo uma nova instalação pode conter alguns programas desatualizadas ou algumas correções de bug não incluída na compilação do sistema.&lt;/p&gt;
+&lt;h3 id=&quot;3.1-executar-a-atualização-do-sistema&quot;&gt;3.1 Executar a atualização do sistema&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
+sudo apt-get upgrade
+sudo apt-get dist-upgrade
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Caso deseja fazer o upgrade do sistema por ex: da versão 13.10 LTS para 14.10 LTS:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo do-release-upgrade 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;3.2-atualizar-timezone-e-locale&quot;&gt;3.2 Atualizar Timezone e Locale&lt;/h3&gt;
+&lt;p&gt;Quando instalamos um novo servidor web é fundamental verificar se está sincronizado com a data e fuso horário local ou definido pela sua aplicação.&lt;/p&gt;
+&lt;p&gt;O Timezone define seu fuso horário, Locale define as traduções de strings e formatos data, numérico, moeda e etc. de acordo com sua região.&lt;/p&gt;
+&lt;p&gt;Em caso de instancias criada na Amazon AWS EC2 o Timezone do servidor não estará definido, é necessário configurar o Timezone e locale conforme os seguintes passos:&lt;/p&gt;
+&lt;p&gt;Alterar o Timezone e Locale:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo dpkg-reconfigure tzdata 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para verificar o atual locale execute:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;locale
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para visualizar o locale definido no sistema:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;locale -a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Caso não tenha o &lt;code&gt;pt_BR.UTF8&lt;/code&gt; definido no locale é possível instalar o pacote:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo locale-gen pt_BR.UTF-8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se sua configuração não foi feita corretamente e esta recebendo a seguinte mensagem de erro: &lt;/p&gt;
+&lt;pre&gt;&lt;span class=&quot;text-danger&quot;&gt;FIX ERROR: Sorry, command-not-found has crashed! Please file a bug report at: http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&lt;/span&gt;&lt;/pre&gt;
+&lt;p&gt;Solução edite o arquivo de configuração &lt;code&gt;/var/lib/locales/supported.d/local&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /var/lib/locales/supported.d/local
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E adicione as seguintes linhas:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;pt_BR.UTF-8 UTF-8
+en_US.UTF-8 UTF-8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Ou abra o arquivo: &lt;code&gt;/etc/default/locale&lt;/code&gt; e defina manualmente os parâmetros que causam erros:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;LANG=&amp;quot;pt_BR.UTF-8&amp;quot;
+LANGUAGE=&amp;quot;pt_BR.UTF-8&amp;quot;
+LC_CTYPE=&amp;quot;pt_BR.UTF-8&amp;quot;
+LC_ALL=&amp;quot;pt_BR.UTF-8&amp;quot;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Se o problema persistir execute os seguintes comandos:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;export LANGUAGE=pt_BR.UTF-8
+export LANG=pt_BR.UTF-8
+export LC_ALL=pt_BR.UTF-8
+export LC_CTYPE=pt_BR.UTF-8
+sudo locale-gen pt_BR.UTF-8
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Por Fim Reconfigure o Locale:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo dpkg-reconfigure locales
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;4.-configurações-de-segurança&quot;&gt;4. Configurações de Segurança&lt;/h2&gt;
+&lt;h3 id=&quot;4.1-firewall---ufw&quot;&gt;4.1 Firewall - UFW&lt;/h3&gt;
+&lt;p&gt;Se seu servidor está na Amazon AWS ele está protegido por um &lt;a href=&quot;http://en.wikipedia.org/wiki/Application_firewall#Network-based_application_firewalls&quot;&gt;Network Firewall&lt;/a&gt;, caso tenha definido um &lt;strong&gt;Security Group&lt;/strong&gt;, porém podemos adicionar mais uma camada de segurança usando o UFW (&lt;em&gt;Uncomplicated Firewall&lt;/em&gt;) um &lt;a href=&quot;http://en.wikipedia.org/wiki/Application_firewall#Host-based_application_firewalls&quot;&gt;Host-based Firewall&lt;/a&gt; que já vem instalado no Ubuntu, mas desativado.&lt;/p&gt;
+&lt;p&gt;Antes de habilitar UFW Firewall é necessário adicionar as regras de entrada para evitar que você fique trancado do lado de fora e não tenha qualquer tipo acesso ao servidor.&lt;/p&gt;
+&lt;p&gt;As principais portas de acesso que precisam ser adicionadas são TCP 22 &lt;code&gt;SSH&lt;/code&gt; e 80 &lt;code&gt;HTTP&lt;/code&gt;. Para liberar essas portas execute o seguinte comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw allow 22
+sudo ufw allow 80
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para permitir acesso ao servidor de um especifico endereço IP:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw allow proto tcp from 1234.456.789.0 to any port 22 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Então poderá ativar o UFW Firewall com o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw enable
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para verificar o status do UFW use:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw status verbose
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para deletar uma regra no UFW:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw delete deny 80/tcp 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.2-habilitar-logs-do-firewall&quot;&gt;4.2 Habilitar Logs do Firewall&lt;/h3&gt;
+&lt;p&gt;Se você estiver usando o ufw, você pode habilitar logs com o seguinte comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw logging on
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.3-restringir-configurações-de-rede&quot;&gt;4.3 Restringir configurações de rede&lt;/h3&gt;
+&lt;p&gt;O Kernel do Linux permite alterar vários parâmetros no system runtime, o arquivo &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; pode ser modificado para deixar ainda mais restrito suas configurações de rede como também prevenir ataques como &lt;strong&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/SYN_flood&quot;&gt;Syn Flood&lt;/a&gt;&lt;/strong&gt;. Não vou detalhar todos os itens aqui, mas o arquivo é bem comentado, eu recomendo que antes de editar leia seu manual.&lt;/p&gt;
+&lt;p&gt;Agora, abra o arquivo &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/sysctl.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E altere conteúdo desse arquivo para o seguinte:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;net.ipv4.conf.default.rp_filter = 1
+net.ipv4.conf.all.rp_filter = 1
+net.ipv4.icmp_echo_ignore_broadcasts = 1
+net.ipv4.tcp_syncookies = 1
+net.ipv4.tcp_max_syn_backlog = 2048
+net.ipv4.tcp_synack_retries = 2
+net.ipv4.tcp_syn_retries = 5
+net.ipv4.ip_forward = 0
+net.ipv4.icmp_echo_ignore_all = 1
+net.ipv4.conf.all.accept_redirects = 0
+net.ipv6.conf.all.accept_redirects = 0
+net.ipv4.conf.default.accept_redirects = 0
+net.ipv6.conf.default.accept_redirects = 0
+net.ipv4.conf.all.send_redirects = 0
+net.ipv4.conf.default.send_redirects = 0
+net.ipv4.conf.all.accept_source_route = 0
+net.ipv6.conf.all.accept_source_route = 0
+net.ipv4.conf.default.accept_source_route = 0
+net.ipv6.conf.default.accept_source_route = 0
+net.ipv4.conf.all.log_martians = 1
+net.ipv4.icmp_ignore_bogus_error_responses = 1
+net.ipv6.conf.default.router_solicitations = 0
+net.ipv6.conf.default.accept_ra_rtr_pref = 0
+net.ipv6.conf.default.accept_ra_pinfo = 0
+net.ipv6.conf.default.accept_ra_defrtr = 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;após alterar o arquivo faça reload:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo sysctl -p
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.4-prevenir-ip-spoofing&quot;&gt;4.4 Prevenir IP Spoofing&lt;/h3&gt;
+&lt;p&gt;Edite o arquivo &lt;code&gt;/etc/host.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/host.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Adicione as seguintes linhas:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;order bind,hosts
+nospoof on
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.5-secure-shared-memory&quot;&gt;4.5 Secure shared memory&lt;/h3&gt;
+&lt;p&gt;Por padrão, &lt;code&gt;/run/shm&lt;/code&gt; é montado com leitura/gravação, com permissão para executar programas. Nos últimos anos, muitas listas de discussão de segurança identificaram diversos exploits onde &lt;code&gt;/run/shm&lt;/code&gt; é usado em um ataque contra a serviços, como o httpd. &lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults#Shared_Memory&quot;&gt;Para mais detalhes&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Edite o arquivo &lt;code&gt;/etc/fstab&lt;/code&gt; e adicione a seguinte linha:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;none    /run/shm    tmpfs   rw,noexec,nosuid,nodev  0 0
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.6-prevenir-fork-bomb-limitando-user-process&quot;&gt;4.6 Prevenir Fork Bomb limitando user process&lt;/h3&gt;
+&lt;p&gt;Edit o arquivo: &lt;code&gt;/etc/security/limits.conf&lt;/code&gt;&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/security/limits.conf
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E adicione a seguinte linha no fim do arquivo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;*                hard    nproc           800
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;4.7-configurações-de-segurança-do-apache&quot;&gt;4.7 Configurações de Segurança do Apache&lt;/h3&gt;
+&lt;p&gt;Se possui o Apache (LAMP stack) instalado no seu servidor siga as instruções do artigo &lt;a href=&quot;#todo&quot;&gt;como instalar e configurar o Apache&lt;/a&gt; para adicionar uma camada extra de segurança no seu servidor web.&lt;/p&gt;
+&lt;h3 id=&quot;4.8-configurações-de-segurança-do-nginx&quot;&gt;4.8 Configurações de Segurança do Nginx&lt;/h3&gt;
+&lt;p&gt;Se possui o Nginx (LEMP stack) instalado no seu servidor siga as instruções do artigo &lt;a href=&quot;/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html&quot;&gt;como instalar e configurar o Nginx&lt;/a&gt; para adicionar uma camada extra de segurança no seu servidor web.&lt;/p&gt;
+&lt;h2 id=&quot;5.-ssh-security&quot;&gt;5. SSH Security&lt;/h2&gt;
+&lt;p&gt;SSH é um meio seguro para conexão com seu servidor remoto, embora seja muito seguro alguns tweaks na configuração do &lt;code&gt;sshd&lt;/code&gt; pode tornar ainda mais restrito, para isso é necessário abrir o arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;. E neste arquivo vamos alterar alguns parâmetros e se esses parâmetros não existirem iremos adicioná-lo.&lt;/p&gt;
+&lt;h3 id=&quot;5.1-desabilitar-ssh-root-login&quot;&gt;5.1 Desabilitar SSH Root Login&lt;/h3&gt;
+&lt;p&gt;Geralmente o Ubuntu não permite acesso direto com o usuário &lt;code&gt;root&lt;/code&gt;, mas caso tenha definido uma senha para usuário &lt;code&gt;root&lt;/code&gt; isso pode ser um potencial risco de segurança. Para desabilitar login com &lt;code&gt;root&lt;/code&gt; abra o o arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Aproveite e desabilite também &lt;strong&gt;&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Disable_Password_Authentication&quot;&gt;Password Authentication&lt;/a&gt;&lt;/strong&gt; e &lt;strong&gt;&lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults#SSH_Login_Grace_Time&quot;&gt;LoginGraceTime&lt;/a&gt;&lt;/strong&gt; encontre os parâmetros a seguir e defina conforme abaixo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;LoginGraceTime 20
+PasswordAuthentication no
+PermitRootLogin no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;5.2-desabilitar-port-forwarding&quot;&gt;5.2 Desabilitar Port Forwarding&lt;/h3&gt;
+&lt;p&gt;Se os parâmetros abaixo não existirem adicione no fim do arquivo para desabilitar SSH Port Forwarding:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowTcpForwarding no
+X11Forwarding no
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;5.3-definir-usuários-que-podem-conectar-via-ssh&quot;&gt;5.3 Definir usuários que podem conectar via SSH&lt;/h3&gt;
+&lt;p&gt;É possível definir usuários ou grupos específicos que podem ter ou não acesso via SSH.&lt;br&gt;
+Para permitir ou bloquear usuários SSH:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowUsers username
+DenyUsers username
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para permitir ou bloquear groups SSH:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowGroups groupname
+DenyGroups groupname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;5.4-use-sftp-invés-de-ftp&quot;&gt;5.4 Use SFTP invés de FTP&lt;/h3&gt;
+&lt;p&gt;Suponha que você queira dar alguns usuários ou grupos a capacidade de upload e download de arquivos de seus diretórios home (ou ~/web), mas não uma conta shell completo com permissão de conexão SSH. No Ubuntu isso é simples de conseguir com componente SFTP do OpenSSH.&lt;/p&gt;
+&lt;p&gt;Primeiro localize a seguinte linha no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Subsystem sftp /usr/lib/openssh/sftp-server
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E altera para:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Subsystem sftp internal-sftp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Agora, adicione as linhas como esta abaixo no fim do arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Match User username
+  ChrootDirectory %h
+  X11Forwarding no
+  AllowAgentForwarding no
+  AllowTcpForwarding no
+  ForceCommand internal-sftp
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para definir essa regra para mais de um usuário, use grupos e altere a linha &lt;code&gt;Match User username&lt;/code&gt; para o nome do grupo que criou para usuários &lt;code&gt;SFTP&lt;/code&gt; como abaixo:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Match Group groupname
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Também, defina o shell para &lt;code&gt;/usr/bin/false&lt;/code&gt; para previnir normal ssh login:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo usermod -s /usr/bin/false username
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p class=&quot;text-warning&quot;&gt;
+&lt;strong&gt;Importante:&lt;/strong&gt; A diretório definido no parâmetro &lt;code&gt;ChrootDirectory&lt;/code&gt; deve pertencer ao usuário &lt;code&gt;root&lt;/code&gt; se este diretório é a própria pasta home do usuário, então altere as permissões:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo chown root:root /home/username
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;5.5-ssh-welcome-banner&quot;&gt;5.5 SSH Welcome Banner&lt;/h3&gt;
+&lt;p&gt;Se desejar é possível adicionar um banner de boas vindas para ser exibido quando usuários SSH se conectarem, para isso no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; remova &lt;code&gt;#&lt;/code&gt; na linha &lt;code&gt;#Banner /etc/issue.net&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Logo após, edite o arquivo &lt;code&gt;/etc/issue.net&lt;/code&gt; para definir o banner que será exibido quando usuários se conectarem via SSH.&lt;/p&gt;
+&lt;p&gt;Após todas as mudanças no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; lembre-se de reiniciar o ssh daemon com o seguinte comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo service ssh restart
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;6.-monitorar-o-sistema-e-alertas&quot;&gt;6. Monitorar o Sistema e Alertas&lt;/h2&gt;
+&lt;p&gt;Mesmo as melhores configurações de servidores podem ter problemas. Para monitorar os recursos do seu servidor Linux eu recomendo instalar e configurar o &lt;a href=&quot;http://mmonit.com/monit/&quot;&gt;Monit&lt;/a&gt;. Monit permite monitorar eventos e processos, muito útil para checar sobrecarga ou paralisação de algum recurso.&lt;/p&gt;
+&lt;p&gt;Para instalar o Monit:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install monit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para habilitar Monit on startup edite o arquivo &lt;code&gt;/etc/default/monit&lt;/code&gt;: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/default/monit
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;E altere o parâmetro &lt;code&gt;START&lt;/code&gt; para &lt;code&gt;yes&lt;/code&gt; ou &lt;code&gt;1&lt;/code&gt; da seguinte maneira: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Set START to yes to start the monit
+START=yes
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;6.1-configurar-o-monit&quot;&gt;6.1 Configurar o Monit&lt;/h3&gt;
+&lt;p&gt;O arquivo de configuração do Monit fica localizado em &lt;code&gt;/etc/monit/monitrc&lt;/code&gt;. Ao abrir esse arquivo pode parecer inicialmente bem complexo para entender seus parâmetros, mas o que precisa ser feito e adicionar entradas dos processos que deseja monitorar por ex: apache, mysql, ssh e definir seus limites e alertas caso tenha alguma falha e finalmente definir um endereço de email para onde será enviado alertas em caso de falha ou overload. Bom eu recomendo que leia a &lt;a href=&quot;http://mmonit.com/monit/#documentation&quot;&gt;documentação&lt;/a&gt; caso tenha alguma dúvida.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/monit/monitrc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Depois de configurar o Monit pode testar as configurações: &lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo monit -t
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Após configurar o Monit para habilitar/desabilitar use os seguintes comandos:&lt;/p&gt;
+&lt;p&gt;Habilitar:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo /etc/init.d/monit start
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Desabilitar:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo /etc/init.d/monit stop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;7.-instalar-htop&quot;&gt;7. Instalar HTOP&lt;/h2&gt;
+&lt;p&gt;&lt;a href=&quot;http://hisham.hm/htop/&quot;&gt;HTOP&lt;/a&gt; é um programa similar ao comando &lt;code&gt;top&lt;/code&gt; mas de forma interativa você pode visualizar processos no Linux. Para instalar execute o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install htop
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;hr&gt;
+&lt;h4 id=&quot;referência&quot;&gt;Referência&lt;/h4&gt;
+&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults&quot;&gt;https://help.ubuntu.com/community/StricterDefaults&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&quot;&gt;http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/&quot;&gt;https://help.ubuntu.com/community/SSH/OpenSSH/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;https://help.ubuntu.com/community/UFW&quot;&gt;https://help.ubuntu.com/community/UFW&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://hisham.hm/htop/&quot;&gt;http://hisham.hm/htop/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://mmonit.com/monit/#documentation&quot;&gt;http://mmonit.com/monit/#documentation&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics&quot;&gt;https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;http://blog.chriskankiewicz.com/setting-up-an-ubuntu-web-server.html&quot;&gt;http://blog.chriskankiewicz.com/setting-up-an-ubuntu-web-server.html&lt;/a&gt;  &lt;/p&gt;
+</description>
+        <pubDate>Wed, 03 Sep 2014 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</guid>
+        <category>blog</category>
+        <category>linux</category>
+      </item>
+      <item>
+        <title>Criar uma instancia na Amazon AWS</title>
+        <description>&lt;p&gt;Configurar um servidor na nuvem usando os serviços de cloud computing da Amazon AWS é muito simples e rápido, em poucos minutos você pode ter seu servidor Linux ou Windows Server up and running. Este artigo aborda as principais instruções para criar uma instancia(servidor) com uma distribuição Linux Ubuntu 14.10 utilizando o serviço EC2 (Elastic Cloud Computing) da Amazon AWS.&lt;/p&gt;
+&lt;h2 id=&quot;Índice&quot;&gt;Índice&lt;/h2&gt;
+&lt;!-- MarkdownTOC autolink=true bracket=round  depth=3 --&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#1.-introdu%C3%A7%C3%A3o&quot;&gt;1. Introdução&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#2.-requisitos&quot;&gt;2. Requisitos&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#3.-selecionar-uma-regi%C3%A3o&quot;&gt;3. Selecionar uma região&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#4.-configurar-security-group&quot;&gt;4. Configurar Security Group&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#5.-criar-uma-instancia-ec2&quot;&gt;5. Criar uma instancia EC2&lt;/a&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-1:-choose-an-amazon-machine-image-(ami)&quot;&gt;Passo 1: Choose an Amazon Machine Image (AMI)&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-2:-choose-an-instance-type&quot;&gt;Passo 2: Choose an Instance Type&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-3:-configure-instance-details&quot;&gt;Passo 3: Configure Instance Details&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-4:-add-storage&quot;&gt;Passo 4: Add Storage&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-5:-tag-instance&quot;&gt;Passo 5: Tag Instance&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-6:-configure-security-group&quot;&gt;Passo 6: Configure Security Group&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#passo-7:-review-instance-launch&quot;&gt;Passo 7: Review Instance Launch&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#6.-criar-elastic-ip-e-associar-a-uma-instancia&quot;&gt;6. Criar Elastic IP e associar a uma instancia&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#7.-conectar-a-instancia-via-ssh&quot;&gt;7. Conectar a Instancia via SSH&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;&lt;a href=&quot;#conclus%C3%A3o&quot;&gt;Conclusão&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;!-- /MarkdownTOC --&gt;
+&lt;h2 id=&quot;1.-introdução&quot;&gt;1. Introdução&lt;/h2&gt;
+&lt;p&gt;Na abordagem deste artigo é muito importante entender alguns termos básicos que serão utilizados no decorrer de cada passo, pois a Amazon AWS usa &lt;a href=&quot;http://docs.aws.amazon.com/general/latest/gr/glos-chap.html#E&quot;&gt;diferentes nomenclaturas&lt;/a&gt; para seus serviços, portanto, termos como &lt;strong&gt;&lt;em&gt;Instancia&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;Servidor&lt;/strong&gt; , &lt;strong&gt;&lt;em&gt;Elastic IP&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;IP Fixo&lt;/strong&gt;, &lt;strong&gt;&lt;em&gt;Security Group&lt;/em&gt;&lt;/strong&gt; entende-se  &lt;strong&gt;Firewall&lt;/strong&gt; e &lt;strong&gt;&lt;em&gt;Console&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;Painel&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;2.-requisitos&quot;&gt;2. Requisitos&lt;/h2&gt;
+&lt;p&gt;Para avançar neste artigo, é necessário:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;Ter uma conta na &lt;a href=&quot;http://aws.amazon.com/pt/free/&quot;&gt;Amazon AWS&lt;/a&gt;, suponho que já tenha criado, e que já esteja logado com suas credenciais no &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home&quot;&gt;console da AWS&lt;/a&gt;.&lt;/li&gt;
+&lt;li&gt;Entender como conectar a um servidor remoto via SSH.&lt;/li&gt;
+&lt;li&gt;Ter o &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html&quot;&gt;Putty&lt;/a&gt; instalado (apenas para usuários Windows).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;h2 id=&quot;3.-selecionar-uma-região&quot;&gt;3. Selecionar uma região&lt;/h2&gt;
+&lt;p&gt;Após entrar no &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home&quot;&gt;console&lt;/a&gt; da AWS é necessário definir uma região padrão onde seus dados e servidores serão armazenados, A Amazon AWS possui DataCenter espalhados pelo mundo se deseja apontar serviços para usuários a nível nacional, então escolha a região São Paulo.&lt;/p&gt;
+&lt;p&gt;Cada região onde a Amazon possui DataCenter é identificada por um único ID, em São Paulo é &lt;code&gt;sa-east-1&lt;/code&gt;, por ex. na California é &lt;code&gt;us-west-1&lt;/code&gt;. Os preços também variam de região para região no momento São Paulo é uma das mais caras &lt;em&gt;(não é atoa que é a ultima na lista &lt;small&gt;imagem 3.1&lt;/small&gt; e não é ordem alfabética, e sim preço!)&lt;/em&gt;. A região Oregon &lt;code&gt;us-west-2&lt;/code&gt; nos Estados Unidos tem o custo menor para os serviços da AWS, porém é necessário levar em consideração a latencia devido a distancia entre uma região e outra.&lt;/p&gt;
+&lt;p&gt;Bom, para selecionar uma região onde seu servidor e serviços serão alocado acesse o menu no canto superior direito do console.&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/image1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;200&quot;&gt;
+&lt;span&gt;imagem 3.1: Selecionar uma região&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Após selecionar uma região clique no serviço &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1&quot;&gt;EC2&lt;/a&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;4.-configurar-security-group&quot;&gt;4. Configurar Security Group&lt;/h2&gt;
+&lt;p&gt;Antes de criar uma instancia é importante definir um &lt;strong&gt;Security Group&lt;/strong&gt; com as permissões de acesso de acordo com seu objetivo, nesse caso será definido um novo &lt;strong&gt;Security Group&lt;/strong&gt; para atender os requisitos de um servidor web, portanto será necessário liberar as portas TCP 80 para acesso via protocolo HTTP e 22 para poder conectar ao servidor remotamente via SSH.&lt;/p&gt;
+&lt;p&gt;No menu lateral esquerdo do console &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1&quot;&gt;ec2&lt;/a&gt; localize o item &lt;code&gt;NETWORK &amp;amp; SECURITY&lt;/code&gt; clique em &lt;strong&gt;Security Groups&lt;/strong&gt;, logo em seguida no botão &lt;strong&gt;Create Security Group&lt;/strong&gt;, uma janela de diálogo como na &lt;small&gt;imagem 4.1&lt;/small&gt; deverá ser exibida.&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/image2.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 4.1: Configurar Security Group&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Nesta janela, na guia &lt;strong&gt;Inbound&lt;/strong&gt; preencha corretamente os campos mais importantes:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;Security group name&lt;/strong&gt;: Dê um nome para este Security Group.&lt;/li&gt;
+&lt;li&gt;&lt;strong&gt;Description&lt;/strong&gt; : Informe uma descrição para identificar este Security Group.&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Agora, adicione as regras de firewall clicando no botão &lt;strong&gt;Add Rule&lt;/strong&gt;
+na coluna &lt;code&gt;Type&lt;/code&gt; selecione o protocolo TCP &lt;code&gt;HTTP&lt;/code&gt; e em seguida mesmo processo também adicione o protocolo &lt;code&gt;SSH&lt;/code&gt;.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;IMPORTANTE:&lt;/strong&gt; Como essa instancia ainda passará por diversas configurações e testes para se tornar um webserver acessível publicamente, então é recomendado liberar temporariamente acessos apenas para seu IP, na coluna &lt;strong&gt;Source&lt;/strong&gt; informe seu endereço IP, como pode ver na &lt;em&gt;imagem 4.1&lt;/em&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Para concluir clique &lt;strong&gt;Create&lt;/strong&gt;.&lt;/p&gt;
+&lt;h2 id=&quot;5.-criar-uma-instancia-ec2&quot;&gt;5. Criar uma instancia EC2&lt;/h2&gt;
+&lt;p&gt;Bem, agora no menu lateral do console &lt;small&gt;imagem 5.1&lt;/small&gt; de um clique em Instances e em seguida clique no botão &lt;strong&gt;Launch Instance&lt;/strong&gt;.
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/image-create-instance.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 5.1: Criar uma instancia EC2&lt;/span&gt;
+&lt;/div&gt;&lt;/p&gt;
+&lt;p&gt;Será aberto uma janela com sete passos até concluir a instalação, no passo um selecione uma imagem(AMI) que deseja instalar, você pode criar um instancia usando distribuições Linux e Windows Server. Para este artigo será utilizado uma distribuição Linux Ubuntu 14.10 e o tipo de virtualização será HVM.&lt;/p&gt;
+&lt;h3 id=&quot;passo-1:-choose-an-amazon-machine-image-(ami)&quot;&gt;Passo 1: Choose an Amazon Machine Image (AMI)&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.1: Escolha uma Imagem (AMI)&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; Na nova geração de instancias AWS opte pelo tipo de virtualização HVM para obter melhor performance, para mais detalhes veja &lt;a href=&quot;#todo&quot; title=&quot;Amazon AWS Diferenças Entre Virtualizacao PARAVIRTUAL e HVM&quot;&gt;diferenças entre HVM e PARAVIRTUAL&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Para prosseguir clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;passo-2:-choose-an-instance-type&quot;&gt;Passo 2: Choose an Instance Type&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-2.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.2: Escolha um tipo de instancia&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Nesta tela &lt;small&gt;imagem 5.2&lt;/small&gt; escolha o tipo de hardware para sua instancia de acordo com suas necessidades. se for elegível Free Tier User pode optar por &lt;code&gt;t2.micro&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;Em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;passo-3:-configure-instance-details&quot;&gt;Passo 3: Configure Instance Details&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-3.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.3: Configure Detalhes da Instancia&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Nesta tela &lt;small&gt;imagem 5.3&lt;/small&gt; apenas marque a opção &lt;strong&gt;Enable termination protection&lt;/strong&gt; para evitar que acidentalmente você delete essa instancia. Em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;passo-4:-add-storage&quot;&gt;Passo 4: Add Storage&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-4.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.4: Configure Quantidade de Armazenamento&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Na tela &lt;small&gt;imagem 5.4&lt;/small&gt; defina na coluna &lt;strong&gt;Size (GiB)&lt;/strong&gt; a quantidade de armazenamento, para obter melhor desempenho escolha o tipo de armazenamento &lt;code&gt;SSD&lt;/code&gt; ou &lt;code&gt;Provisioned IOPS (SSD)&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;Clique em &lt;strong&gt;Next&lt;/strong&gt; para continuar.&lt;/p&gt;
+&lt;h3 id=&quot;passo-5:-tag-instance&quot;&gt;Passo 5: Tag Instance&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-5.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.5: Criar Instance Tags&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Esta tela &lt;small&gt;imagem 5.5&lt;/small&gt; é opcional, se necessário adicione tags para identificar sua instancia, em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;passo-6:-configure-security-group&quot;&gt;Passo 6: Configure Security Group&lt;/h3&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-6.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 5.6: Configurar Security Group&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Nesta etapa &lt;small&gt;imagem 5.6&lt;/small&gt; no item &lt;strong&gt;Assign a security group&lt;/strong&gt; marque a opção &lt;strong&gt;Select an existing security group&lt;/strong&gt; e escolha o &lt;strong&gt;Security Group&lt;/strong&gt; que criou anteriormente, para finalizar clique em &lt;strong&gt;Review and Launch&lt;/strong&gt;.&lt;/p&gt;
+&lt;h3 id=&quot;passo-7:-review-instance-launch&quot;&gt;Passo 7: Review Instance Launch&lt;/h3&gt;
+&lt;p&gt;- Revise suas configurações em seguida clique em &lt;strong&gt;Launch&lt;/strong&gt;.&lt;br&gt;
+- Após clicar em &lt;strong&gt;Launch&lt;/strong&gt; uma janela de dialogo será aberta &lt;small&gt;imagem 5.7&lt;/small&gt;, para que tenha acesso à sua instancia via SSH nesta janela crie seu par de chaves ou selecione uma já existente.&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-7.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 5.7: Selecione Key Pair ou crie uma.&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Se selecionar a opção: &lt;strong&gt;create a new key pair&lt;/strong&gt; você terá que dar um nome para este par de chaves &lt;small&gt;imagem 5.7.1&lt;/small&gt;, e em seguida clique no botão &lt;strong&gt;Download Key Pair&lt;/strong&gt;, salve este arquivo no seu computador e posteriormente altere as permissões desse arquivo para somente leitura.&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/step-7.1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 5.7.1: Criar Key Pair&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;&lt;strong&gt;ATENÇÃO:&lt;/strong&gt; A chave privada será utilizada para você se conectar a instancia via SSH. Sem essa chave não terá como acessar a instancia de maneira alguma.&lt;/p&gt;
+&lt;p&gt;Clique no botão &lt;strong&gt;Launch Instances&lt;/strong&gt; e Pronto sua instancia será criada.&lt;/p&gt;
+&lt;p&gt;Após isso volte ao console EC2 Instances e veja na descrição dessa instancia todas informações necessários que precisa para conectar via SSH, você pode usar os dados do seu &lt;strong&gt;Public IP&lt;/strong&gt; ou &lt;strong&gt;Public DNS&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Até aqui tudo certo, porém o único problema é que sua instancia ao ser criada recebe um &lt;strong&gt;Public IP&lt;/strong&gt; e um &lt;strong&gt;Public DNS&lt;/strong&gt; ex: &lt;strong&gt;ec2-XX-XX-XX-XX.sa-east-1.compute.amazonaws.com&lt;/strong&gt; onde X é o seu &lt;strong&gt;Public IP&lt;/strong&gt;, você pode usar ambos para se conectar ou acessar seu website, mas a cada vez que re-iniciar sua instancia este endereço IP e DNS mudam, então para resolver essa questão é importante associar um IP fixo à sua instancia usando &lt;strong&gt;Elastic IP&lt;/strong&gt; até porque se deseja manter um webserver terá que ter um IP fixo de qualquer maneira.&lt;/p&gt;
+&lt;p&gt;Termina aqui o passo 3, no próximo passo será criar e associar um Elastic IP à essa instancia.&lt;/p&gt;
+&lt;h2 id=&quot;6.-criar-elastic-ip-e-associar-a-uma-instancia&quot;&gt;6. Criar Elastic IP e associar a uma instancia&lt;/h2&gt;
+&lt;p&gt;No menu lateral do console EC2 vá até &lt;code&gt;NETWORK &amp;amp; SECURITY&lt;/code&gt; and clique em &lt;strong&gt;Elastic IP&lt;/strong&gt;, em seguida clique em &lt;strong&gt;Allocate New Address&lt;/strong&gt;, isso abrirá uma janela de diálogo &lt;small&gt;imagem 6.1&lt;/small&gt;, clique em &lt;strong&gt;Yes, Allocate&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/elastic-ip.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;250&quot;&gt;
+&lt;span&gt;imagem 6.1&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Após clicar em &lt;strong&gt;Yes&lt;/strong&gt; um no novo &lt;strong&gt;Elastic IP&lt;/strong&gt; será alocado, agora é preciso associar este IP à sua instancia, então nessa mesma tela selecione o endereço IP recém alocado e clique em &lt;strong&gt;Associate Address&lt;/strong&gt;, isso abrirá uma nova janela de dialogo &lt;small&gt;imagem 6.2&lt;/small&gt;. &lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/image-associate-address.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
+&lt;span&gt;imagem 6.2&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Basta um clique no campo &lt;strong&gt;Instance&lt;/strong&gt; e inteligentemente o console exibirá uma lista com suas instancias, selecione a instancia na qual deseja alocar este &lt;strong&gt;Elastic IP&lt;/strong&gt;. Para concluir clique em &lt;strong&gt;Associate&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;Agora de volta ao console EC2 Instances veja na descrição da sua instancia Linux um IP fixo publico foi definido agora poderá usar este endereço sempre que for conectar à sua instancia.&lt;/p&gt;
+&lt;h2 id=&quot;7.-conectar-a-instancia-via-ssh&quot;&gt;7. Conectar a Instancia via SSH&lt;/h2&gt;
+&lt;p&gt;Sua instancia Linux foi criada, um Elastic IP foi associado! Agora é possível conectar a instancia de maneira segura via SSH, usando sua chave privada salva no momento da criação da instancia.&lt;/p&gt;
+&lt;p&gt;No Windows deverá usar o programa Putty para acessar seu servidor via SSH &lt;a href=&quot;http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html&quot;&gt;veja aqui como se conectar&lt;/a&gt;. &lt;/p&gt;
+&lt;p&gt;Em sistemas UNIX basta abrir o terminal e primeiramente alterar a permissão da sua chave privada:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;chmod 400 MyKeyPair.pem
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Em seguida poderá conectar a instancia usando a chave privada &lt;code&gt;MyKeyPair.pem&lt;/code&gt;&lt;/p&gt;
+&lt;p&gt;Comando SSH para conectar a instancia remotamente&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ ssh -i MyKeyPair.pem ubuntu@XX.XXX.XXX.XX
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; você também pode conectar usando seu endereço de &lt;strong&gt;DNS&lt;/strong&gt; ex: &lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ ssh -i MyKeyPair.pem ubuntu@ec2-XX-XX-XXX-XXX.sa-east-1.compute.amazonaws.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; o usuário padrão no Linux Ubuntu é: &lt;code&gt;ubuntu&lt;/code&gt; outras distribuições Linux pode ser &lt;code&gt;ec2-user&lt;/code&gt; ou &lt;code&gt;root&lt;/code&gt;, mas o processo para conectar é o mesmo.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;Se tudo foi feito de forma correta a seguinte tela de boas vindas do Ubuntu será exibida:&lt;/p&gt;
+&lt;div class=&quot;img-wrap text-center&quot;&gt;
+&lt;img src=&quot;/images/2014/09/connect-ssh.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
+&lt;span&gt;imagem 7.1: Conexão via SSH&lt;/span&gt;
+&lt;/div&gt;
+&lt;p&gt;Agora tendo acesso remoto a instancia é possível prosseguir com as demais configurações necessárias para um servidor web, esses próximos passos serão detalhados em diferentes artigos:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;a href=&quot;/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html&quot;&gt;Como configurar um servidor Linux Ubuntu&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;Como configurar um servidor Web Linux Ubuntu com PHP5, Apache e MySQL (LAMP).&lt;/li&gt;
+&lt;li&gt;Como configurar um servidor Web Linux com PHP5, Nginx e MySQL (LEMP).&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Mais dicas podem ser encontradas neste artigo:&lt;/p&gt;
+&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
+&lt;p&gt;Vimos como criar um servidor na nuvem da AWS, mas que chamamos de &lt;code&gt;Instancia&lt;/code&gt;, em alguns cliques temos um servidor web up and running em uma das maiores empresas de Cloud Computing, essa é uma simples instalação, mas existem diversos serviços e possibilidades, dependendo do seu tipo de negócio ou projeto.&lt;/p&gt;
+</description>
+        <pubDate>Mon, 01 Sep 2014 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html</guid>
+        <category>blog</category>
+        <category>aws</category>
+      </item>
+    
+  </channel>
+</rss>

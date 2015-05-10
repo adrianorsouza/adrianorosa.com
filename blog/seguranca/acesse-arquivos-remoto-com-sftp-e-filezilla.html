@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Acesse arquivos remoto com SFTP e FileZilla | Adriano Rosa</title>
+    <meta name="description" content="FTP (File Transfer Protocol) é o protrocolo muito utilizado para transferência de arquivos, porém o uso do FTP não é seguro, a maneira mais segura para transferência de arquivos entre um computador local e servidor remoto é através do SFTP (Secure Shell File Transfer Protocol).
+">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="author" content="Adriano Rosa">
+    <link rel="apple-touch-icon-precomposed" href="/images/apple-touch-icon-precomposed.png">
+    <link rel="icon" href="/images/favicon.png">
+    <link rel="stylesheet" href="/assets/css/application-style.css"/>
+    <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+    <!--[if IE]><script src="/assets/js/ie10-viewport.js"></script><![endif]-->
+    <!--[if lt IE 9]>
+      <script src="/assets/js/html5shiv.min.js"></script>
+      <script src="/assets/js/respond.min.js"></script>
+    <![endif]-->
+    <link rel='prev' href='http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html" />
+    <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
+    <!-- OpenGraphic tags -->
+    <meta property="og:locale" content="pt-br" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Acesse arquivos remoto com SFTP e FileZilla" />
+    <meta property="og:description" content="FTP (File Transfer Protocol) é o protrocolo muito utilizado para transferência de arquivos, porém o uso do FTP não é seguro, a maneira mais segura para transferência de arquivos entre um computador local e servidor remoto é através do SFTP (Secure Shell File Transfer Protocol).
+" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html" />
+    <meta property="og:site_name" content="Adriano Rosa" />
+    <meta property="article:author" content="Adriano Rosa" />
+    <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
+  </head>
+  <body>
+    <div class="navbar navbar-default navbar-static-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target=".navbar-collapse">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/" title="Adriano Rosa">adriano<strong>rosa</strong></a>
+        </div>
+        <nav class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="/" title="Home">Home</a></li>
+            <li><a href="/about/" title="About">Sobre</a></li>
+            <li class="active"><a href="/blog/" title="Artigos no Blog">Blog</a></li>
+          </ul>
+        </nav><!--/.nav-collapse -->
+      </div>
+    </div>
+    <!-- /.header -->
+    <div class="blog-header">
+      <div class="container">
+          <h1 class="blog-title">
+                  Segurança
+          </h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-8 content">
+<article class="post">
+  <header class="post-header">
+<h1 class="post-title">Acesse arquivos remoto com SFTP e FileZilla</h1>
+<p class="post-meta">
+<time class="post-time" datetime="2015-01-17"><i class="ico ico-clock"></i> 17 Jan 2015</time> &mdash;
+<span class="post-category">
+<a href="/blog/category/seguranca" title="Artigos na Categoria Segurança">Segurança</a>
+</span> &mdash;
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html#disqus_thread" title="Comentário">0 Comentário</a>
+</p>
+</header>
+  <section class="post-content">
+    <p><strong>FTP</strong> (<a href="http://en.wikipedia.org/wiki/File_Transfer_Protocol">File Transfer Protocol</a>) é o protrocolo muito utilizado para transferência de arquivos, porém o <a href="/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html">uso do FTP não é seguro</a>, a maneira mais segura para transferência de arquivos entre um computador local e servidor remoto é através do SFTP (Secure Shell File Transfer Protocol).</p>
+<p>Embora a semelhança com nome FTP, o SFTP possui características diferentes, uma delas é o tipo de autenticação e transferência de arquivos que é baseado em SSH Keys uma método com criptografia de chave pública, o que torna a comunicação entre um computador local e o servidor remoto totalmente segura.</p>
+<p>A maneira para conectar a um servidor SFTP é um pouco diferente do FTP pois você deve utilizar sua SSH keys para estabelecer a autenticação com o servidor remoto. Neste post explico passo a passo como configurar uma conexão com servidor SFTP utilizando o FileZilla.</p>
+<h3 id="requisitos">Requisitos</h3>
+<p>Para configurar uma conexão SFTP com FileZilla você precisa:</p>
+<ol>
+<li><a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html">Criar sua SSH Key-pair</a>.</li>
+<li>Endereço do servidor remoto devidamente configurado com SSH e SFTP.</li>
+<li>FileZilla.</li>
+</ol>
+<h2 id="passo-1:-adicionar-private-key-ao-filezilla">Passo 1: Adicionar Private Key ao FileZilla</h2>
+<p>O FileZilla precisa saber onde esta sua chave privada (<em>Private Key</em>) criada anteriormente para ser usada toda vez que for estabelecer uma conexão com o servidor SFTP. Para dizer ao FileZilla o caminho até sua chave:</p>
+<div class="img-wrap text-center">
+<img src="/images/2015/01/sftp-filezilla-1.jpg" alt="Tela de configurações do FileZilla" title="Tela de configurações do FileZilla" class="img-thumbnail" width="400">
+<span>imagem 1: Tela de configurações do FileZilla</span>
+</div>
+<ul>
+<li><p>Abra o FileZilla.</p></li>
+<li><p>Vá ao menu superior <strong><em>Editar &gt; Configurações</em></strong>.</p></li>
+<li><p>Na tela de configurações <small>imagem 1</small> expanda o item <strong><em>Conexão</em></strong> e clique em <strong><em>SFTP</em></strong>.</p></li>
+<li><p>Clique no botão <strong><em>Adicionar Arquivo de Chave</em></strong>.</p></li>
+<li><p>Localize sua Private Key e clique <strong><em>Abrir</em></strong>, em seguida clique em <strong><em>OK</em></strong> na tela de configurações. </p></li>
+</ul>
+<blockquote>
+<p>NOTA: O FileZilla suporta Private Keys no formato <code>.ppk</code> Se sua Private Key é um arquivo no formato <code>.pem</code> ou não foi gerada usando PuTTY o FileZilla exibirá uma janela de dialogo dizendo: <em>arquivo não esta no formato suportado pelo FileZilla</em>, e ainda se você definiu um Passphrase para sua chave a seguinte mensagem também será exibida: <em>O arquivo esta protegido por senha deseja criar uma chave desprotegida no formato reconhecido</em>. Se isso acontecer clique em <strong><em>Sim</em></strong> e digite sua senha se for o caso de ter definido Passphrase e depois salve e uma cópia da Private Key no formato <code>.ppk</code> em algum lugar seguro no seu computador.</p>
+</blockquote>
+<h2 id="passo-2:-criar-uma-conexão-sftp">Passo 2: Criar uma conexão SFTP</h2>
+<p>Agora que o FileZilla sabe o caminho de sua Private Key você precisa criar uma nova entrada no <strong><em>Gerenciador de Sites</em></strong> e informar os dados do servidor SFTP:</p>
+<div class="img-wrap text-center">
+<img src="/images/2015/01/sftp-filezilla-2.jpg" alt="Tela Gerenciamento de Sites do FileZilla" title="Tela Gerenciamento de Sites do FileZilla" class="img-thumbnail" width="400">
+<span>imagem 2.1: Tela Gerenciamento de Sites do FileZilla</span>
+</div>
+<ul>
+<li><p>Vá ao menu superior clique em <strong><em>Arquivo &gt; Gerenciamento de Sites</em></strong> ou pressione <strong><em>crtl+S</em></strong> ou <strong><em>cmd+S</em></strong> no OSX.</p></li>
+<li><p>Clique no botão <strong><em>Novo Site</em></strong>.</p></li>
+<li><p>Na guia <strong><em>Geral</em></strong> preencha os dados do servidor SFTP:  </p>
+<ul>
+<li><strong>Host</strong>: Informe o endereço IP do servidor</li>
+<li><strong>Porta</strong>: geralmente esse valor é 22</li>
+<li><strong>Protocolo</strong>: selecione <strong><em>SFTP - SSH File Transfer Protocol</em></strong></li>
+<li><strong>Tipo de Login</strong>: selecione <strong><em>Normal</em></strong></li>
+<li><strong>Usuário</strong>: informe seu nome usuário</li>
+<li><strong>Senha</strong>: deixe em branco pois não é necessário</li>
+</ul></li>
+</ul>
+<p>Clique em <strong><em>Conectar</em></strong>, e pronto se tudo ocorreu como previsto deverá visualizar a janela comum de transferência de arquivos:</p>
+<div class="img-wrap text-center">
+<img src="/images/2015/01/sftp-filezilla-3.jpg" alt="Tela de transferência de arquivo via SFTP do FileZilla" title="Tela de transferência de arquivo via SFTP do FileZilla" class="img-thumbnail" width="400">
+<span>imagem 2.2: Tela de transferência de arquivo via SFTP do FileZilla</span>
+</div>
+  </section><!-- ./post-content -->
+  <hr>
+  <section class="post-related">
+    <h3>Post relacionados</h3>
+    <ol class="list-unstyled">
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2014-12-18">18 Dec 2014</time> &mdash; <a href="/blog/seguranca/como-criar-ssh-key-pair-windows.html" title="Criar SSH Key pair no Windows">Criar SSH Key pair no Windows</a></li>
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+    </ol>
+  </section><!-- ./post-related -->
+  <hr>
+  <section class="post-navigation">
+    <ul class="pager">
+      <li class="prev"><a href="/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html" title="FTP não é seguro saiba por que">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/laravel/alterar-public-path-no-laravel-5.html" title="Alterar public path no Laravel 5">próximo &rsaquo;</a></li>
+    </ul>
+  </section><!-- ./post-navigation -->
+  <section class="post-comments">
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'adrianorosa';
+        var disqus_title = 'Acesse arquivos remoto com SFTP e FileZilla';
+        var disqus_url = 'http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html';
+        var disqus_identifier = '';
+        // var disqus_developer = 1; // developer mode is on
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+  </section>
+<script type="text/javascript">
+  var disqus_shortname = 'adrianorosa';
+  (function () {
+  var s = document.createElement('script'); s.async = true;
+  s.type = 'text/javascript';
+  s.src = 'http://' + disqus_shortname + '.disqus.com/count.js';
+  (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+  }());
+</script>
+</article>
+          </div><!-- /.content -->
+<aside class="col-sm-3 col-sm-offset-1 blog-sidebar">
+  <div class="sidebar-module sidebar-module-inset author-brief">
+    <h4><img src="https://secure.gravatar.com/avatar/ad6facb479066db3b8007443ce79fcdd?s=100" alt="" class="img-circle" width="50" height="50"> Sobre o Adriano</h4>
+    <p>
+      Adriano é Desenvolvedor Web há oito anos. Apaixonado pelo o que faz!
+      Ao longo de todos esses anos se especializou em diversas tecnologias de desenvolvimento web,
+      hoje é considerado FullStack Developer.
+    </p>
+    <hr>
+    <ul>
+      <li><a href="https://github.com/adrianorsouza" class="_blank" title="veja meu perfil no Github"><i class="ico ico-github"></i> <span class="hide-text">GitHub</span></a></li>
+      <li><a href="https://twitter.com/adrianorosa" class="_blank" title="veja meu perfil no Twitter"><i class="ico ico-twitter"></i> <span class="hide-text">Twitter</span></a></li>
+      <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank" title="veja meu perfil no Facebook"><i class="ico ico-facebook"></i> <span class="hide-text">Facebook</span></a></li>
+      <li><a href="/feed.xml" class="_blank" title="acompanhe as atualizações do blog"><i class="ico ico-rss"></i> <span class="hide-text">Rss</span></a></li>
+    </ul>
+  </div>
+  <div class="sidebar-module">
+    <h4>Categorias</h4>
+    <ol class="list-unstyled">
+      <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
+      <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
+      <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
+      <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
+      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
+      <li class="active"><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
+      <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
+      <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
+      <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
+      <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
+    </ol>
+  </div>
+</aside><!-- /.blog-sidebar -->
+      </div><!-- /.row -->
+    </div><!-- /.container -->
+    <footer class="blog-footer">
+      <p>Adriano Rosa - Web Developer</p>
+      <ol class="list-unstyled">
+        <li><a href="https://github.com/adrianorsouza" class="_blank"><i class="ico ico-github"></i> GitHub</a></li>
+        <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
+        <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
+      </ol>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2014</small></p>
+    </footer>
+<script src="/assets/js/jquery.min.js"></script>
+<script src="/assets/js/main.js"></script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+  ga('create', 'UA-5189486-5', 'auto');
+  ga('send', 'pageview');
+</script>
+<a href="#top" class="btn to_top" title="rolar a página"><i class="ico ico-arrow-up"></i></a>
+
+  </body>
+</html>
