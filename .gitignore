@@ -4,9 +4,6 @@
 _RawFiles
 _site
 _source
-_source/assets/**
-public_html/**
-src/dist
 vendor
 node_modules
 tests
