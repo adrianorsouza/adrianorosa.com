@@ -5,34 +5,32 @@
     <description>Web Developer FullStack</description>
     <link>http://adrianorosa.com/</link>
     <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 09 May 2015 20:00:19 -0300</pubDate>
-    <lastBuildDate>Sat, 09 May 2015 20:00:19 -0300</lastBuildDate>
+    <pubDate>Sun, 10 May 2015 21:13:41 -0300</pubDate>
+    <lastBuildDate>Sun, 10 May 2015 21:13:41 -0300</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
         <title>Alterar public path no Laravel 5</title>
-        <description>&lt;p&gt;No Laravel 5 o arquivo &lt;code&gt;bootstrap/paths.php&lt;/code&gt; foi removido, antes era possível alterar os diretórios padrão usado pelo framework, ou seja, quando queríamos definir outro diretório público do webserver para outro nome diferente de &lt;code&gt;public&lt;/code&gt; bastava definir esse valor no array para por exemplo &lt;code&gt;public_html&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Mas desde a versão 5 do Laravel, e até o momento que escrevo este post, não há uma maneira simples de alterar esses paths, então o que você deve fazer é extender a classe &lt;code&gt;Illuminate\Foundation\Application&lt;/code&gt; e redefinir o método &lt;code&gt;publicPath()&lt;/code&gt; ou qualquer outro path que deseja modificar ex. o diretório &lt;code&gt;storage&lt;/code&gt; deverá redefinir o método &lt;code&gt;storagePath()&lt;/code&gt;, após criar a classe também é necessário alterar o arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt; onde a classe é instanciado e utilizado em toda aplicação.&lt;/p&gt;
-&lt;p&gt;Sua classe ficaria assim:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;namespace MyApp
-class Application extends \Illuminate\Foundation\Application {
-    public function publicPath()
-    {
-        return $this-&amp;gt;basePath.DIRECTORY_SEPARATOR.&amp;#39;public_html&amp;#39;;
-    }
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;No arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt; instancie a classe Application dentro do namespace da sua aplicação:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$app = new MyApp\Application(
-    realpath(__DIR__.&amp;#39;/../&amp;#39;)
-);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Existe também outras maneiras de alterar os paths, como por exemplo redefinir helper function &lt;code&gt;public_path()&lt;/code&gt; no seu index.php, como no exemplo logo abaixo retirado do &lt;a href=&quot;https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5&quot;&gt;fórum laracasts&lt;/a&gt;, mas não recomendo esse outro tipo de hack:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;function public_path($path = &amp;#39;&amp;#39;)
-{
-    return realpath(__DIR__);
-}
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;</description>
+        <description>&lt;p&gt;No Laravel 5 me deparei com um problema comum que vem sendo &lt;a href=&quot;https://github.com/laravel/framework/issues/7108&quot;&gt;discutido&lt;/a&gt; largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo &lt;code&gt;bootstrap/paths.php&lt;/code&gt; muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot &lt;code&gt;public&lt;/code&gt; que as vezes precisa se chamar &lt;code&gt;public_html&lt;/code&gt;, &lt;code&gt;www&lt;/code&gt; ou &lt;code&gt;web&lt;/code&gt; dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.&lt;/p&gt;
+&lt;p&gt;Pois bem, esse arquivo &lt;code&gt;bootstrap/paths.php&lt;/code&gt; foi removido no Laravel 5, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe &lt;code&gt;Illuminate\Foundation\Application&lt;/code&gt; e redefinir o método &lt;code&gt;publicPath()&lt;/code&gt; ou qualquer outro path que deseja modificar ex. para o diretório &lt;code&gt;storage&lt;/code&gt; deverá redefinir o método &lt;code&gt;storagePath()&lt;/code&gt;, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt; onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.&lt;/p&gt;
+&lt;p&gt;Passo 1: Extender a classe Application:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MyApp&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;Application&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;extends&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;\Illuminate\Foundation\Application&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;public&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;publicPath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$this&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&amp;gt;&lt;/span&gt;&lt;span class=&quot;na&quot;&gt;basePath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;DIRECTORY_SEPARATOR&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;public_html&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Passo 2: Atualizar o arquivo &lt;code&gt;bootstrap/app.php&lt;/code&gt;:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;nv&quot;&gt;$app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;MyApp\Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;
+    &lt;span class=&quot;nb&quot;&gt;realpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__DIR__&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;&amp;#39;/../&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Existe também outras maneiras de alterar os paths, se não quiser extender a class &lt;code&gt;Application&lt;/code&gt;, exemplo redefinir helper function &lt;code&gt;public_path()&lt;/code&gt; no seu index.php, como no exemplo logo abaixo retirado do &lt;a href=&quot;https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5&quot;&gt;fórum laracasts&lt;/a&gt;, mas não recomendo esse outro tipo de hack:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-php&quot; data-lang=&quot;php&quot;&gt;&lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;public_path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;&amp;#39;&amp;#39;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;realpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;__DIR__&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+</description>
         <pubDate>Sat, 09 May 2015 00:00:00 -0300</pubDate>
         <link>http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</link>
         <guid isPermaLink="true">http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</guid>

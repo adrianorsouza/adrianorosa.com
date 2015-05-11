@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Alterar public path no Laravel 5 | Adriano Rosa</title>
-    <meta name="description" content="No Laravel 5 o arquivo bootstrap/paths.php foi removido, antes era possível alterar os diretórios padrão usado pelo framework, ou seja, quando queríamos definir outro diretório público do webserver para outro nome diferente de public bastava definir esse valor no array para por exemplo public_html.
+    <meta name="description" content="No Laravel 5 me deparei com um problema comum que vem sendo discutido largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo bootstrap/paths.php muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot public que as vezes precisa se chamar public_html, www ou web dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.
 ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Adriano Rosa">
@@ -25,7 +25,7 @@
     <meta property="og:locale" content="pt-br" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Alterar public path no Laravel 5" />
-    <meta property="og:description" content="No Laravel 5 o arquivo bootstrap/paths.php foi removido, antes era possível alterar os diretórios padrão usado pelo framework, ou seja, quando queríamos definir outro diretório público do webserver para outro nome diferente de public bastava definir esse valor no array para por exemplo public_html.
+    <meta property="og:description" content="No Laravel 5 me deparei com um problema comum que vem sendo discutido largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo bootstrap/paths.php muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot public que as vezes precisa se chamar public_html, www ou web dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.
 " />
     <meta property="og:url" content="http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html" />
     <meta property="og:site_name" content="Adriano Rosa" />
@@ -76,28 +76,25 @@
 </p>
 </header>
   <section class="post-content">
-    <p>No Laravel 5 o arquivo <code>bootstrap/paths.php</code> foi removido, antes era possível alterar os diretórios padrão usado pelo framework, ou seja, quando queríamos definir outro diretório público do webserver para outro nome diferente de <code>public</code> bastava definir esse valor no array para por exemplo <code>public_html</code>.</p>
-<p>Mas desde a versão 5 do Laravel, e até o momento que escrevo este post, não há uma maneira simples de alterar esses paths, então o que você deve fazer é extender a classe <code>Illuminate\Foundation\Application</code> e redefinir o método <code>publicPath()</code> ou qualquer outro path que deseja modificar ex. o diretório <code>storage</code> deverá redefinir o método <code>storagePath()</code>, após criar a classe também é necessário alterar o arquivo <code>bootstrap/app.php</code> onde a classe é instanciado e utilizado em toda aplicação.</p>
-<p>Sua classe ficaria assim:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">namespace MyApp
-class Application extends \Illuminate\Foundation\Application {
-    public function publicPath()
-    {
-        return $this-&gt;basePath.DIRECTORY_SEPARATOR.&#39;public_html&#39;;
-    }
-}
-</code></pre></div>
-<p>No arquivo <code>bootstrap/app.php</code> instancie a classe Application dentro do namespace da sua aplicação:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">$app = new MyApp\Application(
-    realpath(__DIR__.&#39;/../&#39;)
-);
-</code></pre></div>
-<p>Existe também outras maneiras de alterar os paths, como por exemplo redefinir helper function <code>public_path()</code> no seu index.php, como no exemplo logo abaixo retirado do <a href="https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5">fórum laracasts</a>, mas não recomendo esse outro tipo de hack:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">function public_path($path = &#39;&#39;)
-{
-    return realpath(__DIR__);
-}
-</code></pre></div>
+    <p>No Laravel 5 me deparei com um problema comum que vem sendo <a href="https://github.com/laravel/framework/issues/7108">discutido</a> largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo <code>bootstrap/paths.php</code> muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot <code>public</code> que as vezes precisa se chamar <code>public_html</code>, <code>www</code> ou <code>web</code> dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.</p>
+<p>Pois bem, esse arquivo <code>bootstrap/paths.php</code> foi removido no Laravel 5, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe <code>Illuminate\Foundation\Application</code> e redefinir o método <code>publicPath()</code> ou qualquer outro path que deseja modificar ex. para o diretório <code>storage</code> deverá redefinir o método <code>storagePath()</code>, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo <code>bootstrap/app.php</code> onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.</p>
+<p>Passo 1: Extender a classe Application:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">namespace</span> <span class="nx">MyApp</span>
+<span class="k">class</span> <span class="nc">Application</span> <span class="k">extends</span> <span class="nx">\Illuminate\Foundation\Application</span> <span class="p">{</span>
+    <span class="k">public</span> <span class="k">function</span> <span class="nf">publicPath</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="nv">$this</span><span class="o">-&gt;</span><span class="na">basePath</span><span class="o">.</span><span class="nx">DIRECTORY_SEPARATOR</span><span class="o">.</span><span class="s1">&#39;public_html&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></div>
+<p>Passo 2: Atualizar o arquivo <code>bootstrap/app.php</code>:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="nv">$app</span> <span class="o">=</span> <span class="k">new</span> <span class="nx">MyApp\Application</span><span class="p">(</span>
+    <span class="nb">realpath</span><span class="p">(</span><span class="nx">__DIR__</span><span class="o">.</span><span class="s1">&#39;/../&#39;</span><span class="p">)</span>
+<span class="p">);</span></code></pre></div>
+<p>Existe também outras maneiras de alterar os paths, se não quiser extender a class <code>Application</code>, exemplo redefinir helper function <code>public_path()</code> no seu index.php, como no exemplo logo abaixo retirado do <a href="https://laracasts.com/discuss/channels/general-discussion/where-do-you-set-public-directory-laravel-5">fórum laracasts</a>, mas não recomendo esse outro tipo de hack:</p>
+<div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">function</span> <span class="nf">public_path</span><span class="p">(</span><span class="nv">$path</span> <span class="o">=</span> <span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="nb">realpath</span><span class="p">(</span><span class="nx">__DIR__</span><span class="p">);</span>
+<span class="p">}</span></code></pre></div>
   </section><!-- ./post-content -->
   <hr>
   <section class="post-related">
@@ -105,7 +102,7 @@ class Application extends \Illuminate\Foundation\Application {
     <ol class="list-unstyled">
       <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
       <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
-      <li><time class="post-time" datetime="2014-12-18">18 Dec 2014</time> &mdash; <a href="/blog/seguranca/como-criar-ssh-key-pair-unix.html" title="Criar SSH Keys em sistemas UNIX">Criar SSH Keys em sistemas UNIX</a></li>
+      <li><time class="post-time" datetime="2008-11-10">10 Nov 2008</time> &mdash; <a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">Como instalar o WordPress</a></li>
     </ol>
   </section><!-- ./post-related -->
   <hr>
