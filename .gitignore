@@ -1,6 +1,10 @@
 #########################
 # Folders to ignore
 #########################
+
+assets
+_site
+_source/resources/dist
 vendor
 node_modules
 bower_components
