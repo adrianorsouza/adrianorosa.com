@@ -56,6 +56,13 @@ module.exports = function( grunt ) {
          dest: '<%= pkg.build %>/assets/js/'
       },
 
+      includes: {
+         cwd: '<%= pkg.src %>/includes/',
+         expand: true,
+         src:  ['**'],
+         dest: '<%= pkg.build %>/assets/includes/'
+      },
+
       fonts: {
          cwd: '<%= pkg.src %>/fonts/',
          expand: true,
