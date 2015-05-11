@@ -2,349 +2,343 @@
 <urlset xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd" xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>http://adrianorosa.com/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/seguranca/ssh-keys.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/sublime-text/sidebar-icones-suporte-sublime-text-3-soda-theme.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/nginx/instalar-nginx-no-osx-mavericks.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/ruby/upgrade-ruby-no-mac-osx-via-homebrew.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/nginx/configurar-nginx-https-server-com-self-signed-ssl-certificado.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/google/google-testa-nova-pagina-de-buscas.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/google/internet-explorer-8-otimizado-para-o-google.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/wordpress/como-instalar-o-wordpress.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/tecnologia/google-earth-e-lancado-para-iphone.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/asp/transformar-em-maiusculo-primeira-letra-de-cada-sentenca.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/banco-de-dados/como-copiar-estrutura-de-tabelas-no-sql-server.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/banco-de-dados/como-alterar-o-collate-do-sql-server.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/tecnologia/comecaram-as-votacoes-do-peixe-grande.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/css/o-que-e-css.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/css/por-que-devo-usar-css-nas-paginas-do-meu-site.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/css/quem-criou-e-mantem-o-css.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/asp/resolver-problemas-com-apostrofe-ou-aspas.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/tecnologia/celular-do-google-nao-mudara-setor-de-telecom-de-imediato.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/banco-de-dados/conceito-sobre-banco-de-dados.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/google/chrome-e-mais-rapido-que-firefox-e-ie-comprovam-primeiros-testes.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/google/google-lanca-navegador-o-google-chrome.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/tecnologia/iphone-3g-chega-no-brasil-em-setembro.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/asp/classe-para-enviar-email-usando-cdosys.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/asp/funcao-replace-do-asp.html</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/about/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/asp/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/aws/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/banco-de-dados/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/css/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>http://adrianorosa.com/blog/category/desenvolvedor/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/google/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/jquery/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/laravel/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/linux/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/nginx/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/noticias/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/ruby/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/seguranca/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/sublime-text/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/tecnologia/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/category/wordpress/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/page/2/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/page/3/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/page/4/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
     <loc>http://adrianorosa.com/blog/page/5/</loc>
-    <lastmod>2015-05-10T21:13:41-03:00</lastmod>
+    <lastmod>2015-05-11T18:19:35-03:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.5</priority>
   </url>
