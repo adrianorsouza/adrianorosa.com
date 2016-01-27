@@ -6,10 +6,10 @@ category: laravel
 
 No Laravel 5 me deparei com um problema comum que vem sendo [discutido][3] largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo `bootstrap/paths.php` muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot `public` que as vezes precisa se chamar `public_html`, `www` ou `web` dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.
 
-Pois bem, esse arquivo `bootstrap/paths.php` foi removido no Laravel 5, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe `Illuminate\Foundation\Application` e redefinir o método `publicPath()` ou qualquer outro path que deseja modificar ex. para o diretório `storage` deverá redefinir o método `storagePath()`, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo `bootstrap/app.php` onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.
+Pois bem, esse arquivo `bootstrap/paths.php` foi removido no Laravel v5.0, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe `Illuminate\Foundation\Application` e redefinir o método `publicPath()` ou qualquer outro path que deseja modificar ex. para o diretório `storage` deverá redefinir o método `storagePath()`, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo `bootstrap/app.php` onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.
 
 
-Passo 1: Extender a classe Application:
+Passo 1: Estender a classe Application:
 
 {% highlight php startinline %}
 namespace MyApp
