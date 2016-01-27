@@ -21,9 +21,9 @@ if [[ ! $STATUS ]]; then
   git diff
   git add .
   git commit -m "site build"
-  # git push origin gh-pages
-  # git checkout master
-  # git push origin master
+  git push origin gh-pages
+  git checkout master
+  git push origin master
   exit;
 
 else
