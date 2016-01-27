@@ -77,8 +77,8 @@
 </header>
   <section class="post-content">
     <p>No Laravel 5 me deparei com um problema comum que vem sendo <a href="https://github.com/laravel/framework/issues/7108">discutido</a> largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo <code>bootstrap/paths.php</code> muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot <code>public</code> que as vezes precisa se chamar <code>public_html</code>, <code>www</code> ou <code>web</code> dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.</p>
-<p>Pois bem, esse arquivo <code>bootstrap/paths.php</code> foi removido no Laravel 5, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe <code>Illuminate\Foundation\Application</code> e redefinir o método <code>publicPath()</code> ou qualquer outro path que deseja modificar ex. para o diretório <code>storage</code> deverá redefinir o método <code>storagePath()</code>, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo <code>bootstrap/app.php</code> onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.</p>
-<p>Passo 1: Extender a classe Application:</p>
+<p>Pois bem, esse arquivo <code>bootstrap/paths.php</code> foi removido no Laravel v5.0, e agora não é mais possível definir esse tipo de configuração no framework por padrão, ou seja, se quiser alterar um desses diretórios terá que criar alguns hacks ou da maneira mais fácil que é extender a classe <code>Illuminate\Foundation\Application</code> e redefinir o método <code>publicPath()</code> ou qualquer outro path que deseja modificar ex. para o diretório <code>storage</code> deverá redefinir o método <code>storagePath()</code>, após criar a classe dentro do namespace do seu projeto também é necessário alterar o arquivo <code>bootstrap/app.php</code> onde a classe é instanciada sendo assim essa alteração será refletida em toda aplicação.</p>
+<p>Passo 1: Estender a classe Application:</p>
 <div class="highlight"><pre><code class="language-php" data-lang="php"><span class="k">namespace</span> <span class="nx">MyApp</span>
 <span class="k">class</span> <span class="nc">Application</span> <span class="k">extends</span> <span class="nx">\Illuminate\Foundation\Application</span> <span class="p">{</span>
     <span class="k">public</span> <span class="k">function</span> <span class="nf">publicPath</span><span class="p">()</span>
@@ -184,7 +184,7 @@
         <li><a href="https://twitter.com/adrianorosa" class="_blank"><i class="ico ico-twitter"></i> Twitter</a></li>
         <li><a href="https://www.facebook.com/adrianorosadesouza" class="_blank"><i class="ico ico-facebook"></i> Facebook</a></li>
       </ol>
-      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2015</small></p>
+      <p><small>This blog is proudly built with <a href="http://jekyllrb.com/" class="_blank">Jekyll</a> | &copy; 2005 &mdash; 2016</small></p>
     </footer>
 <script src="/assets/js/jquery.min.js"></script>
 <script src="/assets/js/main.js"></script>
