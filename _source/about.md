@@ -7,13 +7,13 @@ permalink: /about/
 category: page
 ---
 
-[Adriano Rosa](/) é desenvolvedor web há mais de 8 anos, nesse período desenvolveu idéias e soluções para resolver problemas comuns de empresas com a internet
+[Adriano Rosa](/) é desenvolvedor web há mais de 10 anos, nesse período desenvolveu idéias e soluções para resolver problemas comuns de empresas com a internet
 com impacto relativo em seus investimentos.
 
 Apaixonado pelo o que faz! Ao longo desse tempo se especializou em diversas tecnologias de desenvolvimento web,
 hoje é considerado **[FullStack Developer](/about/)** com habilidades em:
 
-- HTML5, CSS3 e LESS
+- HTML5, CSS3, LESS e SASS
 - PHP, Ruby e JAVASCRIPT
 - HTTP, REST, SOAP, JSON
 - SEO e Web Analytics
