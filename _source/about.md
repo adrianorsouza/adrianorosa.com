@@ -14,8 +14,9 @@ Apaixonado pelo o que faz! Ao longo desse tempo se especializou em diversas tecn
 hoje é considerado **[FullStack Developer](/about/)** com habilidades em:
 
 - HTML5, CSS3, LESS e SASS
-- PHP, Ruby e JAVASCRIPT
-- HTTP, REST, SOAP, JSON
+- AngularJS, ReactJS
+- PHP, Ruby e Javascript
+- HTTP, REST, RESTFull APIs, SOAP, JSON
 - SEO e Web Analytics
 - Amazon Web Services
 - WebServers Linux based Nginx (LEMP Stack) e Apache (LAMP Stack)
