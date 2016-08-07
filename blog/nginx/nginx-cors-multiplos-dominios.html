@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>O que é CSS? | Adriano Rosa</title>
-    <meta name="description" content="Do inglês “Cascading Style Sheets” (Planilhas de Estilo em Cascatas), o CSS, como é conhecido popularmente, é uma simples linguagem de design que visa facilitar o processo de estilização de um web site, Com o CSS, você pode controlar a cor do texto, o estilo das fontes, o espaçamento entre parágrafos, o tamanho e posicionamento de colunas e quais imagens e cores de fundo de fundo devem ser utilizadas, bem como uma variedade de efeitos.
+    <title>Nginx CORS com múltiplos domínios | Adriano Rosa</title>
+    <meta name="description" content="CORS (Cross-origin resource sharing) ou (compartilhamento de recursos de origem cruzada) é um mecanismo que permite que os recursos de acesso restrito (por exemplo, fontes) em uma página web possa ser acessado a partir de outro domínio de origem do qual o recurso foi originado. Wikipedia
 ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Adriano Rosa">
@@ -18,17 +18,17 @@
       <script src="/assets/js/html5shiv.min.js"></script>
       <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    <link rel='prev' href='http://adrianorosa.com/blog/css/por-que-devo-usar-css-nas-paginas-do-meu-site.html' />
-    <link rel='next' href='http://adrianorosa.com/blog/tecnologia/comecaram-as-votacoes-do-peixe-grande.html' />
-    <link rel="canonical" href="http://adrianorosa.com/blog/css/o-que-e-css.html" />
+    <link rel='prev' href='http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/composer/composer-lock-files.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html" />
     <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
     <!-- OpenGraphic tags -->
     <meta property="og:locale" content="pt-br" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="O que é CSS?" />
-    <meta property="og:description" content="Do inglês “Cascading Style Sheets” (Planilhas de Estilo em Cascatas), o CSS, como é conhecido popularmente, é uma simples linguagem de design que visa facilitar o processo de estilização de um web site, Com o CSS, você pode controlar a cor do texto, o estilo das fontes, o espaçamento entre parágrafos, o tamanho e posicionamento de colunas e quais imagens e cores de fundo de fundo devem ser utilizadas, bem como uma variedade de efeitos.
+    <meta property="og:title" content="Nginx CORS com múltiplos domínios" />
+    <meta property="og:description" content="CORS (Cross-origin resource sharing) ou (compartilhamento de recursos de origem cruzada) é um mecanismo que permite que os recursos de acesso restrito (por exemplo, fontes) em uma página web possa ser acessado a partir de outro domínio de origem do qual o recurso foi originado. Wikipedia
 " />
-    <meta property="og:url" content="http://adrianorosa.com/blog/css/o-que-e-css.html" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html" />
     <meta property="og:site_name" content="Adriano Rosa" />
     <meta property="article:author" content="Adriano Rosa" />
     <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
@@ -58,7 +58,7 @@
     <div class="blog-header">
       <div class="container">
           <h1 class="blog-title">
-                  CSS
+                  Nginx
           </h1>
       </div>
     </div>
@@ -67,44 +67,63 @@
           <div class="col-sm-8 content">
 <article class="post">
   <header class="post-header">
-<h1 class="post-title">O que é CSS?</h1>
+<h1 class="post-title">Nginx CORS com múltiplos domínios</h1>
 <p class="post-meta">
-<time class="post-time" datetime="2008-09-29"><i class="ico ico-clock"></i> 29 Sep 2008</time> &mdash;
+<time class="post-time" datetime="2015-12-09"><i class="ico ico-clock"></i> 09 Dec 2015</time> &mdash;
 <span class="post-category">
-<a href="/blog/category/css" title="Artigos na Categoria CSS">CSS</a>
+<a href="/blog/category/nginx" title="Artigos na Categoria Nginx">Nginx</a>
 </span> &mdash;
-<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/css/o-que-e-css.html#disqus_thread" title="Comentário">0 Comentário</a>
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html#disqus_thread" title="Comentário">0 Comentário</a>
 </p>
 </header>
   <section class="post-content">
-    <p>Do inglês “Cascading Style Sheets” (Planilhas de Estilo em Cascatas), o CSS, como é conhecido popularmente, é uma simples linguagem de design que visa facilitar o processo de estilização de um web site, Com o CSS, você pode controlar a cor do texto, o estilo das fontes, o espaçamento entre parágrafos, o tamanho e posicionamento de colunas e quais imagens e cores de fundo de fundo devem ser utilizadas, bem como uma variedade de efeitos.</p>
-<p>O CSS foi criado em uma linguagem fácil de entender e aprender, mas oferece um controle poderoso sobre a forma como um documento é exibido. Na maioria das vezes, o CSS é combinado com linguagens de marcação HTML ou XHTML.</p>
-<p>Essas linguagens de marcação contêm os textos que você vê em uma pagina da web – os parágrafos, cabeçalhos, listas e tabelas – são o elo com documento da web. Eles contêm dados da página, enquanto o documento CSS contém a informação de como deverá ser o visual dessa pagina.</p>
-<p>HTML e XHTML são linguagens muitos semelhantes. De fato, para a maioria dos documentos de hoje, elas são praticamente idênticas, embora o XHTML tenha alguns requerimentos específicos sobre o tipo de sintaxe utilizada.</p>
+    <p><strong>CORS</strong> (Cross-origin resource sharing) ou (compartilhamento de recursos de origem cruzada) é um mecanismo que permite que os recursos de acesso restrito (por exemplo, fontes) em uma página web possa ser acessado a partir de outro domínio de origem do qual o recurso foi originado. <a href="https://en.wikipedia.org/wiki/Cross-origin_resource_sharing">Wikipedia</a></p>
+<h3 id="como-posso-definir-cors-com-nginx">Como posso definir CORS com Nginx</h3>
+<p>Implementar CORS é simples basta enviar o seguinte Header:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">Access-Control-Allow-Origin: *
+</code></pre></div>
+<p>Para implementar <strong>CORS</strong> de uma maneira mais refinada quando um virtual host manipula mais de um domínio é bem simples.</p>
+<p>Basicamente o que precisa ser feito é utilizar um Regex para capturar a lista de domínios que deseja enviar.</p>
+<p>Esse exemplo é útil quando seu vhost serve webfonts para múltiplos domínios:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">location ~* \.(?:ttf|ttc|otf|eot|woff|woff2)$ {
+   if ( $http_origin ~* (https?://(.+\.)?(domain1|domain2|domain3)\.(?:net|com)$) ) {
+      add_header &quot;Access-Control-Allow-Origin&quot; &quot;$http_origin&quot;;
+   }
+}
+</code></pre></div>
+<p>Nesse exemplo os domínios que poderão acessar os recursos deste server serão:</p>
+<ul>
+<li>domain1.net</li>
+<li>domain1.com</li>
+<li>domain2.net</li>
+<li>domain2.com</li>
+<li>domain3.net</li>
+<li>domain3.com</li>
+</ul>
   </section><!-- ./post-content -->
   <hr>
   <section class="post-related">
     <h3>Post relacionados</h3>
     <ol class="list-unstyled">
-      <li><time class="post-time" datetime="2008-09-29">29 Sep 2008</time> &mdash; <a href="/blog/css/quem-criou-e-mantem-o-css.html" title="Quem criou e mantém o CSS?">Quem criou e mantém o CSS?</a></li>
-      <li><time class="post-time" datetime="2008-09-29">29 Sep 2008</time> &mdash; <a href="/blog/css/por-que-devo-usar-css-nas-paginas-do-meu-site.html" title="Por que devo usar CSS nas paginas do meu site?">Por que devo usar CSS nas paginas do meu site?</a></li>
+      <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
+      <li><time class="post-time" datetime="2015-01-10">10 Jan 2015</time> &mdash; <a href="/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html" title="FTP não é seguro saiba por que">FTP não é seguro saiba por que</a></li>
       <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
     </ol>
   </section><!-- ./post-related -->
   <hr>
   <section class="post-navigation">
     <ul class="pager">
-      <li class="prev"><a href="/blog/css/por-que-devo-usar-css-nas-paginas-do-meu-site.html" title="Por que devo usar CSS nas paginas do meu site?">&lsaquo; anterior</a></li>
-      <li class="next"><a href="/blog/tecnologia/comecaram-as-votacoes-do-peixe-grande.html" title="Começaram as votações do Peixe Grande">próximo &rsaquo;</a></li>
+      <li class="prev"><a href="/blog/laravel/alterar-public-path-no-laravel-5.html" title="Alterar public path no Laravel 5">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/composer/composer-lock-files.html" title="Composer lock file">próximo &rsaquo;</a></li>
     </ul>
   </section><!-- ./post-navigation -->
   <section class="post-comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'adrianorosa';
-        var disqus_title = 'O que é CSS?';
-        var disqus_url = 'http://adrianorosa.com/blog/css/o-que-e-css.html';
-        var disqus_identifier = '26 http://adrianorosa.com/?p=26';
+        var disqus_title = 'Nginx CORS com múltiplos domínios';
+        var disqus_url = 'http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html';
+        var disqus_identifier = '';
         // var disqus_developer = 1; // developer mode is on
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -147,12 +166,12 @@
       <li><a href="/blog/category/asp" title="ASP">ASP</a></li>
       <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
       <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
-      <li class="active"><a href="/blog/category/css" title="CSS">CSS</a></li>
+      <li><a href="/blog/category/css" title="CSS">CSS</a></li>
       <li><a href="/blog/category/composer" title="Composer">Composer</a></li>
       <li><a href="/blog/category/google" title="Google">Google</a></li>
       <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
       <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
-      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li class="active"><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
       <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
       <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
       <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>

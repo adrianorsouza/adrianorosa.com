@@ -5,8 +5,8 @@
     <description>Web Developer FullStack</description>
     <link>http://adrianorosa.com/</link>
     <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 06 Aug 2016 21:32:23 -0300</pubDate>
-    <lastBuildDate>Sat, 06 Aug 2016 21:32:23 -0300</lastBuildDate>
+    <pubDate>Sat, 06 Aug 2016 22:09:31 -0300</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2016 22:09:31 -0300</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -38,6 +38,38 @@
         <guid isPermaLink="true">http://adrianorosa.com/blog/composer/composer-lock-files.html</guid>
         <category>blog</category>
         <category>composer</category>
+      </item>
+      <item>
+        <title>Nginx CORS com múltiplos domínios</title>
+        <description>&lt;p&gt;&lt;strong&gt;CORS&lt;/strong&gt; (Cross-origin resource sharing) ou (compartilhamento de recursos de origem cruzada) é um mecanismo que permite que os recursos de acesso restrito (por exemplo, fontes) em uma página web possa ser acessado a partir de outro domínio de origem do qual o recurso foi originado. &lt;a href=&quot;https://en.wikipedia.org/wiki/Cross-origin_resource_sharing&quot;&gt;Wikipedia&lt;/a&gt;&lt;/p&gt;
+&lt;h3 id=&quot;como-posso-definir-cors-com-nginx&quot;&gt;Como posso definir CORS com Nginx&lt;/h3&gt;
+&lt;p&gt;Implementar CORS é simples basta enviar o seguinte Header:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Access-Control-Allow-Origin: *
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Para implementar &lt;strong&gt;CORS&lt;/strong&gt; de uma maneira mais refinada quando um virtual host manipula mais de um domínio é bem simples.&lt;/p&gt;
+&lt;p&gt;Basicamente o que precisa ser feito é utilizar um Regex para capturar a lista de domínios que deseja enviar.&lt;/p&gt;
+&lt;p&gt;Esse exemplo é útil quando seu vhost serve webfonts para múltiplos domínios:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;location ~* \.(?:ttf|ttc|otf|eot|woff|woff2)$ {
+   if ( $http_origin ~* (https?://(.+\.)?(domain1|domain2|domain3)\.(?:net|com)$) ) {
+      add_header &amp;quot;Access-Control-Allow-Origin&amp;quot; &amp;quot;$http_origin&amp;quot;;
+   }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Nesse exemplo os domínios que poderão acessar os recursos deste server serão:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;domain1.net&lt;/li&gt;
+&lt;li&gt;domain1.com&lt;/li&gt;
+&lt;li&gt;domain2.net&lt;/li&gt;
+&lt;li&gt;domain2.com&lt;/li&gt;
+&lt;li&gt;domain3.net&lt;/li&gt;
+&lt;li&gt;domain3.com&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+        <pubDate>Wed, 09 Dec 2015 00:00:00 -0200</pubDate>
+        <link>http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</guid>
+        <category>blog</category>
+        <category>nginx</category>
       </item>
       <item>
         <title>Alterar public path no Laravel 5</title>
@@ -417,292 +449,6 @@ Version: 1.6.2-1~trusty
         <guid isPermaLink="true">http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</guid>
         <category>blog</category>
         <category>jquery</category>
-      </item>
-      <item>
-        <title>Como configurar um servidor web Linux Ubuntu</title>
-        <description>&lt;p&gt;Este artigo pode ser considerado a continuação de &lt;a href=&quot;/blog/aws/criar-instancia-na-amazon-aws.html&quot; title=&quot;Como Criar uma instancia na Amazon AWS&quot;&gt;como criar uma instancia na Amazon AWS&lt;/a&gt; escrito recentemente onde falo sobre a instalação do Ubuntu Server na nuvem. Porém os métodos descritos neste post podem ser aplicados em qualquer instalação do Linux Ubuntu Server versão a partir da 12.10 até a mais recente. Foram longas horas de pesquisas e testes para chegar há um conceito básico de configuração e dos principais requisitos de segurança para um servidor web, este guia foi elaborado para efeito de estudos e testes de novas aplicações e pode ser aplicado no mundo real. Por favor, sinta-se livre em colaborar com este material se de alguma forma possua alguma informação relevante que possa ser atribuída à este artigo.&lt;/p&gt;
-&lt;h2 id=&quot;Índice&quot;&gt;Índice&lt;/h2&gt;
-&lt;!-- MarkdownTOC depth=3 autolink=true bracket=round --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1.-introdu%C3%A7%C3%A3o&quot;&gt;1. Introdução&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2.-requisitos&quot;&gt;2. Requisitos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3.-atualizar-o-sistema&quot;&gt;3. Atualizar o sistema&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#3.1-executar-a-atualiza%C3%A7%C3%A3o-do-sistema&quot;&gt;3.1 Executar a atualização do sistema&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3.2-atualizar-timezone-e-locale&quot;&gt;3.2 Atualizar Timezone e Locale&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.-configura%C3%A7%C3%B5es-de-seguran%C3%A7a&quot;&gt;4. Configurações de Segurança&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#4.1-firewall---ufw&quot;&gt;4.1 Firewall - UFW&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.2-habilitar-logs-do-firewall&quot;&gt;4.2 Habilitar Logs do Firewall&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.3-restringir-configura%C3%A7%C3%B5es-de-rede&quot;&gt;4.3 Restringir configurações de rede&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.4-prevenir-ip-spoofing&quot;&gt;4.4 Prevenir IP Spoofing&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.5-secure-shared-memory&quot;&gt;4.5 Secure shared memory&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.6-prevenir-fork-bomb-limitando-user-process&quot;&gt;4.6 Prevenir Fork Bomb limitando user process&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.7-configura%C3%A7%C3%B5es-de-seguran%C3%A7a-do-apache&quot;&gt;4.7 Configurações de Segurança do Apache&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.8-configura%C3%A7%C3%B5es-de-seguran%C3%A7a-do-nginx&quot;&gt;4.8 Configurações de Segurança do Nginx&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.-ssh-security&quot;&gt;5. SSH Security&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#5.1-desabilitar-ssh-root-login&quot;&gt;5.1 Desabilitar SSH Root Login&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.2-desabilitar-port-forwarding&quot;&gt;5.2 Desabilitar Port Forwarding&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.3-definir-usu%C3%A1rios-que-podem-conectar-via-ssh&quot;&gt;5.3 Definir usuários que podem conectar via SSH&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.4-use-sftp-inv%C3%A9s-de-ftp&quot;&gt;5.4 Use SFTP invés de FTP&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.5-ssh-welcome-banner&quot;&gt;5.5 SSH Welcome Banner&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6.-monitorar-o-sistema-e-alertas&quot;&gt;6. Monitorar o Sistema e Alertas&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#6.1-configurar-o-monit&quot;&gt;6.1 Configurar o Monit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#7.-instalar-htop&quot;&gt;7. Instalar HTOP&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- /MarkdownTOC --&gt;
-&lt;h2 id=&quot;1.-introdução&quot;&gt;1. Introdução&lt;/h2&gt;
-&lt;p&gt;Este artigo é um guia baseado em várias horas de pesquisa em fóruns, sites e na própria documentação do &lt;a href=&quot;https://help.ubuntu.com/&quot; title=&quot;Documentação Ubuntu&quot;&gt;Linux Ubuntu&lt;/a&gt;. Em forma de agradecimento para aqueles que contribuem para comunidade open source no fim desta página deixo uma referência de seus respectivos links para que também possa ser útil para você que deseja se aprofundar nesse assunto.&lt;/p&gt;
-&lt;h2 id=&quot;2.-requisitos&quot;&gt;2. Requisitos&lt;/h2&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;/blog/aws/criar-instancia-na-amazon-aws.html&quot; title=&quot;Como Criar uma instancia na Amazon AWS&quot;&gt;Linux Ubuntu Server 13.10 LTS&lt;/a&gt; ou posterior instalado.&lt;/li&gt;
-&lt;li&gt;Opcional &lt;a href=&quot;/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html&quot;&gt;Nginx (LEMP stack)&lt;/a&gt; instalado&lt;/li&gt;
-&lt;li&gt;Opcional &lt;a href=&quot;#todo&quot;&gt;Apache (LAMP stack)&lt;/a&gt; instalado ou ambos LEMP e LAMP stack.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;3.-atualizar-o-sistema&quot;&gt;3. Atualizar o sistema&lt;/h2&gt;
-&lt;p&gt;Primeira coisa após uma recente instalação do Ubuntu é atualizar sua lista de pacotes e pacotes já instalados, mesmo sendo uma nova instalação pode conter alguns programas desatualizadas ou algumas correções de bug não incluída na compilação do sistema.&lt;/p&gt;
-&lt;h3 id=&quot;3.1-executar-a-atualização-do-sistema&quot;&gt;3.1 Executar a atualização do sistema&lt;/h3&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
-sudo apt-get upgrade
-sudo apt-get dist-upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Caso deseja fazer o upgrade do sistema por ex: da versão 13.10 LTS para 14.10 LTS:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo do-release-upgrade 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;3.2-atualizar-timezone-e-locale&quot;&gt;3.2 Atualizar Timezone e Locale&lt;/h3&gt;
-&lt;p&gt;Quando instalamos um novo servidor web é fundamental verificar se está sincronizado com a data e fuso horário local ou definido pela sua aplicação.&lt;/p&gt;
-&lt;p&gt;O Timezone define seu fuso horário, Locale define as traduções de strings e formatos data, numérico, moeda e etc. de acordo com sua região.&lt;/p&gt;
-&lt;p&gt;Em caso de instancias criada na Amazon AWS EC2 o Timezone do servidor não estará definido, é necessário configurar o Timezone e locale conforme os seguintes passos:&lt;/p&gt;
-&lt;p&gt;Alterar o Timezone e Locale:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo dpkg-reconfigure tzdata 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para verificar o atual locale execute:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;locale
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para visualizar o locale definido no sistema:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;locale -a
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Caso não tenha o &lt;code&gt;pt_BR.UTF8&lt;/code&gt; definido no locale é possível instalar o pacote:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo locale-gen pt_BR.UTF-8
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Se sua configuração não foi feita corretamente e esta recebendo a seguinte mensagem de erro: &lt;/p&gt;
-&lt;pre&gt;&lt;span class=&quot;text-danger&quot;&gt;FIX ERROR: Sorry, command-not-found has crashed! Please file a bug report at: http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&lt;/span&gt;&lt;/pre&gt;
-&lt;p&gt;Solução edite o arquivo de configuração &lt;code&gt;/var/lib/locales/supported.d/local&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /var/lib/locales/supported.d/local
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E adicione as seguintes linhas:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;pt_BR.UTF-8 UTF-8
-en_US.UTF-8 UTF-8
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Ou abra o arquivo: &lt;code&gt;/etc/default/locale&lt;/code&gt; e defina manualmente os parâmetros que causam erros:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;LANG=&amp;quot;pt_BR.UTF-8&amp;quot;
-LANGUAGE=&amp;quot;pt_BR.UTF-8&amp;quot;
-LC_CTYPE=&amp;quot;pt_BR.UTF-8&amp;quot;
-LC_ALL=&amp;quot;pt_BR.UTF-8&amp;quot;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Se o problema persistir execute os seguintes comandos:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;export LANGUAGE=pt_BR.UTF-8
-export LANG=pt_BR.UTF-8
-export LC_ALL=pt_BR.UTF-8
-export LC_CTYPE=pt_BR.UTF-8
-sudo locale-gen pt_BR.UTF-8
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Por Fim Reconfigure o Locale:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo dpkg-reconfigure locales
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;4.-configurações-de-segurança&quot;&gt;4. Configurações de Segurança&lt;/h2&gt;
-&lt;h3 id=&quot;4.1-firewall---ufw&quot;&gt;4.1 Firewall - UFW&lt;/h3&gt;
-&lt;p&gt;Se seu servidor está na Amazon AWS ele está protegido por um &lt;a href=&quot;http://en.wikipedia.org/wiki/Application_firewall#Network-based_application_firewalls&quot;&gt;Network Firewall&lt;/a&gt;, caso tenha definido um &lt;strong&gt;Security Group&lt;/strong&gt;, porém podemos adicionar mais uma camada de segurança usando o UFW (&lt;em&gt;Uncomplicated Firewall&lt;/em&gt;) um &lt;a href=&quot;http://en.wikipedia.org/wiki/Application_firewall#Host-based_application_firewalls&quot;&gt;Host-based Firewall&lt;/a&gt; que já vem instalado no Ubuntu, mas desativado.&lt;/p&gt;
-&lt;p&gt;Antes de habilitar UFW Firewall é necessário adicionar as regras de entrada para evitar que você fique trancado do lado de fora e não tenha qualquer tipo acesso ao servidor.&lt;/p&gt;
-&lt;p&gt;As principais portas de acesso que precisam ser adicionadas são TCP 22 &lt;code&gt;SSH&lt;/code&gt; e 80 &lt;code&gt;HTTP&lt;/code&gt;. Para liberar essas portas execute o seguinte comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw allow 22
-sudo ufw allow 80
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para permitir acesso ao servidor de um especifico endereço IP:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw allow proto tcp from 1234.456.789.0 to any port 22 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Então poderá ativar o UFW Firewall com o comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw enable
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para verificar o status do UFW use:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw status verbose
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para deletar uma regra no UFW:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw delete deny 80/tcp 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.2-habilitar-logs-do-firewall&quot;&gt;4.2 Habilitar Logs do Firewall&lt;/h3&gt;
-&lt;p&gt;Se você estiver usando o ufw, você pode habilitar logs com o seguinte comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo ufw logging on
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.3-restringir-configurações-de-rede&quot;&gt;4.3 Restringir configurações de rede&lt;/h3&gt;
-&lt;p&gt;O Kernel do Linux permite alterar vários parâmetros no system runtime, o arquivo &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; pode ser modificado para deixar ainda mais restrito suas configurações de rede como também prevenir ataques como &lt;strong&gt;&lt;a href=&quot;http://en.wikipedia.org/wiki/SYN_flood&quot;&gt;Syn Flood&lt;/a&gt;&lt;/strong&gt;. Não vou detalhar todos os itens aqui, mas o arquivo é bem comentado, eu recomendo que antes de editar leia seu manual.&lt;/p&gt;
-&lt;p&gt;Agora, abra o arquivo &lt;code&gt;/etc/sysctl.conf&lt;/code&gt; &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/sysctl.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E altere conteúdo desse arquivo para o seguinte:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;net.ipv4.conf.default.rp_filter = 1
-net.ipv4.conf.all.rp_filter = 1
-net.ipv4.icmp_echo_ignore_broadcasts = 1
-net.ipv4.tcp_syncookies = 1
-net.ipv4.tcp_max_syn_backlog = 2048
-net.ipv4.tcp_synack_retries = 2
-net.ipv4.tcp_syn_retries = 5
-net.ipv4.ip_forward = 0
-net.ipv4.icmp_echo_ignore_all = 1
-net.ipv4.conf.all.accept_redirects = 0
-net.ipv6.conf.all.accept_redirects = 0
-net.ipv4.conf.default.accept_redirects = 0
-net.ipv6.conf.default.accept_redirects = 0
-net.ipv4.conf.all.send_redirects = 0
-net.ipv4.conf.default.send_redirects = 0
-net.ipv4.conf.all.accept_source_route = 0
-net.ipv6.conf.all.accept_source_route = 0
-net.ipv4.conf.default.accept_source_route = 0
-net.ipv6.conf.default.accept_source_route = 0
-net.ipv4.conf.all.log_martians = 1
-net.ipv4.icmp_ignore_bogus_error_responses = 1
-net.ipv6.conf.default.router_solicitations = 0
-net.ipv6.conf.default.accept_ra_rtr_pref = 0
-net.ipv6.conf.default.accept_ra_pinfo = 0
-net.ipv6.conf.default.accept_ra_defrtr = 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;após alterar o arquivo faça reload:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo sysctl -p
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.4-prevenir-ip-spoofing&quot;&gt;4.4 Prevenir IP Spoofing&lt;/h3&gt;
-&lt;p&gt;Edite o arquivo &lt;code&gt;/etc/host.conf&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/host.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Adicione as seguintes linhas:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;order bind,hosts
-nospoof on
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.5-secure-shared-memory&quot;&gt;4.5 Secure shared memory&lt;/h3&gt;
-&lt;p&gt;Por padrão, &lt;code&gt;/run/shm&lt;/code&gt; é montado com leitura/gravação, com permissão para executar programas. Nos últimos anos, muitas listas de discussão de segurança identificaram diversos exploits onde &lt;code&gt;/run/shm&lt;/code&gt; é usado em um ataque contra a serviços, como o httpd. &lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults#Shared_Memory&quot;&gt;Para mais detalhes&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Edite o arquivo &lt;code&gt;/etc/fstab&lt;/code&gt; e adicione a seguinte linha:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;none    /run/shm    tmpfs   rw,noexec,nosuid,nodev  0 0
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.6-prevenir-fork-bomb-limitando-user-process&quot;&gt;4.6 Prevenir Fork Bomb limitando user process&lt;/h3&gt;
-&lt;p&gt;Edit o arquivo: &lt;code&gt;/etc/security/limits.conf&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/security/limits.conf
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E adicione a seguinte linha no fim do arquivo:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;*                hard    nproc           800
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;4.7-configurações-de-segurança-do-apache&quot;&gt;4.7 Configurações de Segurança do Apache&lt;/h3&gt;
-&lt;p&gt;Se possui o Apache (LAMP stack) instalado no seu servidor siga as instruções do artigo &lt;a href=&quot;#todo&quot;&gt;como instalar e configurar o Apache&lt;/a&gt; para adicionar uma camada extra de segurança no seu servidor web.&lt;/p&gt;
-&lt;h3 id=&quot;4.8-configurações-de-segurança-do-nginx&quot;&gt;4.8 Configurações de Segurança do Nginx&lt;/h3&gt;
-&lt;p&gt;Se possui o Nginx (LEMP stack) instalado no seu servidor siga as instruções do artigo &lt;a href=&quot;/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html&quot;&gt;como instalar e configurar o Nginx&lt;/a&gt; para adicionar uma camada extra de segurança no seu servidor web.&lt;/p&gt;
-&lt;h2 id=&quot;5.-ssh-security&quot;&gt;5. SSH Security&lt;/h2&gt;
-&lt;p&gt;SSH é um meio seguro para conexão com seu servidor remoto, embora seja muito seguro alguns tweaks na configuração do &lt;code&gt;sshd&lt;/code&gt; pode tornar ainda mais restrito, para isso é necessário abrir o arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;. E neste arquivo vamos alterar alguns parâmetros e se esses parâmetros não existirem iremos adicioná-lo.&lt;/p&gt;
-&lt;h3 id=&quot;5.1-desabilitar-ssh-root-login&quot;&gt;5.1 Desabilitar SSH Root Login&lt;/h3&gt;
-&lt;p&gt;Geralmente o Ubuntu não permite acesso direto com o usuário &lt;code&gt;root&lt;/code&gt;, mas caso tenha definido uma senha para usuário &lt;code&gt;root&lt;/code&gt; isso pode ser um potencial risco de segurança. Para desabilitar login com &lt;code&gt;root&lt;/code&gt; abra o o arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/ssh/sshd_config
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Aproveite e desabilite também &lt;strong&gt;&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/Configuring#Disable_Password_Authentication&quot;&gt;Password Authentication&lt;/a&gt;&lt;/strong&gt; e &lt;strong&gt;&lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults#SSH_Login_Grace_Time&quot;&gt;LoginGraceTime&lt;/a&gt;&lt;/strong&gt; encontre os parâmetros a seguir e defina conforme abaixo:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;LoginGraceTime 20
-PasswordAuthentication no
-PermitRootLogin no
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;5.2-desabilitar-port-forwarding&quot;&gt;5.2 Desabilitar Port Forwarding&lt;/h3&gt;
-&lt;p&gt;Se os parâmetros abaixo não existirem adicione no fim do arquivo para desabilitar SSH Port Forwarding:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowTcpForwarding no
-X11Forwarding no
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;5.3-definir-usuários-que-podem-conectar-via-ssh&quot;&gt;5.3 Definir usuários que podem conectar via SSH&lt;/h3&gt;
-&lt;p&gt;É possível definir usuários ou grupos específicos que podem ter ou não acesso via SSH.&lt;br&gt;
-Para permitir ou bloquear usuários SSH:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowUsers username
-DenyUsers username
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para permitir ou bloquear groups SSH:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;AllowGroups groupname
-DenyGroups groupname
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;5.4-use-sftp-invés-de-ftp&quot;&gt;5.4 Use SFTP invés de FTP&lt;/h3&gt;
-&lt;p&gt;Suponha que você queira dar alguns usuários ou grupos a capacidade de upload e download de arquivos de seus diretórios home (ou ~/web), mas não uma conta shell completo com permissão de conexão SSH. No Ubuntu isso é simples de conseguir com componente SFTP do OpenSSH.&lt;/p&gt;
-&lt;p&gt;Primeiro localize a seguinte linha no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Subsystem sftp /usr/lib/openssh/sftp-server
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E altera para:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Subsystem sftp internal-sftp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Agora, adicione as linhas como esta abaixo no fim do arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt;.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Match User username
-  ChrootDirectory %h
-  X11Forwarding no
-  AllowAgentForwarding no
-  AllowTcpForwarding no
-  ForceCommand internal-sftp
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para definir essa regra para mais de um usuário, use grupos e altere a linha &lt;code&gt;Match User username&lt;/code&gt; para o nome do grupo que criou para usuários &lt;code&gt;SFTP&lt;/code&gt; como abaixo:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;Match Group groupname
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Também, defina o shell para &lt;code&gt;/usr/bin/false&lt;/code&gt; para previnir normal ssh login:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo usermod -s /usr/bin/false username
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p class=&quot;text-warning&quot;&gt;
-&lt;strong&gt;Importante:&lt;/strong&gt; A diretório definido no parâmetro &lt;code&gt;ChrootDirectory&lt;/code&gt; deve pertencer ao usuário &lt;code&gt;root&lt;/code&gt; se este diretório é a própria pasta home do usuário, então altere as permissões:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo chown root:root /home/username
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;5.5-ssh-welcome-banner&quot;&gt;5.5 SSH Welcome Banner&lt;/h3&gt;
-&lt;p&gt;Se desejar é possível adicionar um banner de boas vindas para ser exibido quando usuários SSH se conectarem, para isso no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; remova &lt;code&gt;#&lt;/code&gt; na linha &lt;code&gt;#Banner /etc/issue.net&lt;/code&gt;.&lt;/p&gt;
-&lt;p&gt;Logo após, edite o arquivo &lt;code&gt;/etc/issue.net&lt;/code&gt; para definir o banner que será exibido quando usuários se conectarem via SSH.&lt;/p&gt;
-&lt;p&gt;Após todas as mudanças no arquivo &lt;code&gt;/etc/ssh/sshd_config&lt;/code&gt; lembre-se de reiniciar o ssh daemon com o seguinte comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo service ssh restart
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;6.-monitorar-o-sistema-e-alertas&quot;&gt;6. Monitorar o Sistema e Alertas&lt;/h2&gt;
-&lt;p&gt;Mesmo as melhores configurações de servidores podem ter problemas. Para monitorar os recursos do seu servidor Linux eu recomendo instalar e configurar o &lt;a href=&quot;http://mmonit.com/monit/&quot;&gt;Monit&lt;/a&gt;. Monit permite monitorar eventos e processos, muito útil para checar sobrecarga ou paralisação de algum recurso.&lt;/p&gt;
-&lt;p&gt;Para instalar o Monit:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install monit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Para habilitar Monit on startup edite o arquivo &lt;code&gt;/etc/default/monit&lt;/code&gt;: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/default/monit
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E altere o parâmetro &lt;code&gt;START&lt;/code&gt; para &lt;code&gt;yes&lt;/code&gt; ou &lt;code&gt;1&lt;/code&gt; da seguinte maneira: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;# Set START to yes to start the monit
-START=yes
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h3 id=&quot;6.1-configurar-o-monit&quot;&gt;6.1 Configurar o Monit&lt;/h3&gt;
-&lt;p&gt;O arquivo de configuração do Monit fica localizado em &lt;code&gt;/etc/monit/monitrc&lt;/code&gt;. Ao abrir esse arquivo pode parecer inicialmente bem complexo para entender seus parâmetros, mas o que precisa ser feito e adicionar entradas dos processos que deseja monitorar por ex: apache, mysql, ssh e definir seus limites e alertas caso tenha alguma falha e finalmente definir um endereço de email para onde será enviado alertas em caso de falha ou overload. Bom eu recomendo que leia a &lt;a href=&quot;http://mmonit.com/monit/#documentation&quot;&gt;documentação&lt;/a&gt; caso tenha alguma dúvida.&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/monit/monitrc
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Depois de configurar o Monit pode testar as configurações: &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo monit -t
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Após configurar o Monit para habilitar/desabilitar use os seguintes comandos:&lt;/p&gt;
-&lt;p&gt;Habilitar:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo /etc/init.d/monit start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Desabilitar:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo /etc/init.d/monit stop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;7.-instalar-htop&quot;&gt;7. Instalar HTOP&lt;/h2&gt;
-&lt;p&gt;&lt;a href=&quot;http://hisham.hm/htop/&quot;&gt;HTOP&lt;/a&gt; é um programa similar ao comando &lt;code&gt;top&lt;/code&gt; mas de forma interativa você pode visualizar processos no Linux. Para instalar execute o comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install htop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;hr&gt;
-&lt;h4 id=&quot;referência&quot;&gt;Referência&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/StricterDefaults&quot;&gt;https://help.ubuntu.com/community/StricterDefaults&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&quot;&gt;http://askubuntu.com/questions/205378/unsupported-locale-setting-fault-by-command-not-found&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/&quot;&gt;https://help.ubuntu.com/community/SSH/OpenSSH/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;https://help.ubuntu.com/community/UFW&quot;&gt;https://help.ubuntu.com/community/UFW&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;http://hisham.hm/htop/&quot;&gt;http://hisham.hm/htop/&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;http://mmonit.com/monit/#documentation&quot;&gt;http://mmonit.com/monit/#documentation&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics&quot;&gt;https://www.thefanclub.co.za/how-to/how-secure-ubuntu-1204-lts-server-part-1-basics&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;http://blog.chriskankiewicz.com/setting-up-an-ubuntu-web-server.html&quot;&gt;http://blog.chriskankiewicz.com/setting-up-an-ubuntu-web-server.html&lt;/a&gt;  &lt;/p&gt;
-</description>
-        <pubDate>Wed, 03 Sep 2014 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</guid>
-        <category>blog</category>
-        <category>linux</category>
       </item>
     
   </channel>
