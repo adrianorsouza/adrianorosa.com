@@ -5,10 +5,40 @@
     <description>Web Developer FullStack</description>
     <link>http://adrianorosa.com/</link>
     <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sun, 13 Mar 2016 13:04:14 -0300</pubDate>
-    <lastBuildDate>Sun, 13 Mar 2016 13:04:14 -0300</lastBuildDate>
+    <pubDate>Sat, 06 Aug 2016 21:32:23 -0300</pubDate>
+    <lastBuildDate>Sat, 06 Aug 2016 21:32:23 -0300</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
+      <item>
+        <title>Composer lock file</title>
+        <description>&lt;p&gt;Devo ou não fazer o commit do arquivo &lt;code&gt;composer.lock&lt;/code&gt;. Quando um ou vários packages é instalado como dependência em seu projeto, o Composer vai atualizar as informações de cada package no arquivo &lt;code&gt;composer.lock&lt;/code&gt;.&lt;/p&gt;
+&lt;p&gt;Ao fazer o commit do arquivo &lt;code&gt;composer.lock&lt;/code&gt;, e sempre que utilizar o comando &lt;code&gt;composer install&lt;/code&gt;, o &lt;a href=&quot;https://getcomposer.org&quot;&gt;&lt;strong&gt;Composer&lt;/strong&gt;&lt;/a&gt; vai então instalar as versões exatas definidos anteriormente no seu projeto.&lt;/p&gt;
+&lt;p&gt;Por isso é importante fazer o commit do arquivo &lt;code&gt;composer.lock&lt;/code&gt; para garantir que as dependências de seu projeto sejam sempre as mesmas, isso vai evitar inconsistências e possíveis erros.&lt;/p&gt;
+&lt;h3 id=&quot;o-que-acontece-seu-eu-não-fazer-o-commit-do-composer.lock&quot;&gt;O que acontece seu eu não fazer o commit do &lt;code&gt;composer.lock&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;Mesmo que esteja trabalhando um projeto sem a colaboração de outros developers pode acontecer inconsistências nas dependências do seu projeto.&lt;/p&gt;
+&lt;p&gt;Imagine o seguinte cenário onde você instalou o seguinte package como dependência, isso em seu ambiente de desenvolvimento.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;quot;require&amp;quot;: {
+  &amp;quot;league/flysystem-aws-s3-v3&amp;quot;: &amp;quot;^1.0&amp;quot;
+},
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Quando você publicar seu projeto no ambiente de produção ou até mesmo em executá-lo em outro local de desenvolvimento, tipicamente você vai executar o comando:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;composer install 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Como não vai existir o arquivo &lt;code&gt;composer.lock&lt;/code&gt; na raiz do projeto, o Composer então vai instalar a versão mais recente do package &lt;code&gt;league/flysystem-aws-s3-v3&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;Até aqui tudo bem, mas digamos que alguns dias após o início do desenvolvimento do seu projeto a versão &lt;code&gt;v1.2.0&lt;/code&gt; do package &lt;code&gt;league/flysystem-aws-s3-v3&lt;/code&gt; foi lançado, então quando você instalar as dependências ao invés de obter a versão &lt;code&gt;v1.0.0&lt;/code&gt;, que foi testado no ambiente de desenvolvimento, será instalado a versão &lt;code&gt;v1.2.x&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;Nesse momento que surge o problema! Se por ventura, alguma mudança no package teve algum &lt;em&gt;breaking changes&lt;/em&gt; seu projeto pode estar com algum tipo de bug.&lt;/p&gt;
+&lt;p&gt;Por isso é fundamental fazer o commit do &lt;code&gt;composer.lock&lt;/code&gt; sempre que desejar manter a consistência e instalar as versões exatas de suas dependências em seu projeto.&lt;/p&gt;
+&lt;h3 id=&quot;em-que-situação-não-é-necessário-comitar-composer.lock&quot;&gt;Em que situação não é necessário &lt;em&gt;comitar&lt;/em&gt; &lt;code&gt;composer.lock&lt;/code&gt;&lt;/h3&gt;
+&lt;p&gt;As vezes, é desnecessário &lt;em&gt;comitar&lt;/em&gt; &lt;code&gt;composer.lock&lt;/code&gt; quando estiver desenvolvendo uma library.&lt;/p&gt;
+&lt;h3 id=&quot;mais-detalhes&quot;&gt;Mais detalhes&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file&quot;&gt;https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 26 Jun 2016 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/composer/composer-lock-files.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/composer/composer-lock-files.html</guid>
+        <category>blog</category>
+        <category>composer</category>
+      </item>
       <item>
         <title>Alterar public path no Laravel 5</title>
         <description>&lt;p&gt;No Laravel 5 me deparei com um problema comum que vem sendo &lt;a href=&quot;https://github.com/laravel/framework/issues/7108&quot;&gt;discutido&lt;/a&gt; largamente por outros desenvolvedores, acontece que em versões anteriores do Laravel existia um arquivo &lt;code&gt;bootstrap/paths.php&lt;/code&gt; muito util quando queríamos alterar os nomes de alguns dos diretórios padrão usado pelo framework, como por exemplo, a pasta webroot &lt;code&gt;public&lt;/code&gt; que as vezes precisa se chamar &lt;code&gt;public_html&lt;/code&gt;, &lt;code&gt;www&lt;/code&gt; ou &lt;code&gt;web&lt;/code&gt; dependendo do tipo de configuração do seu webserver ou do serviço de hospedagem que utiliza.&lt;/p&gt;
@@ -673,182 +703,6 @@ START=yes
         <guid isPermaLink="true">http://adrianorosa.com/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html</guid>
         <category>blog</category>
         <category>linux</category>
-      </item>
-      <item>
-        <title>Criar uma instancia na Amazon AWS</title>
-        <description>&lt;p&gt;Configurar um servidor na nuvem usando os serviços de cloud computing da Amazon AWS é muito simples e rápido, em poucos minutos você pode ter seu servidor Linux ou Windows Server up and running. Este artigo aborda as principais instruções para criar uma instancia(servidor) com uma distribuição Linux Ubuntu 14.10 utilizando o serviço EC2 (Elastic Cloud Computing) da Amazon AWS.&lt;/p&gt;
-&lt;h2 id=&quot;Índice&quot;&gt;Índice&lt;/h2&gt;
-&lt;!-- MarkdownTOC autolink=true bracket=round  depth=3 --&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#1.-introdu%C3%A7%C3%A3o&quot;&gt;1. Introdução&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#2.-requisitos&quot;&gt;2. Requisitos&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#3.-selecionar-uma-regi%C3%A3o&quot;&gt;3. Selecionar uma região&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#4.-configurar-security-group&quot;&gt;4. Configurar Security Group&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#5.-criar-uma-instancia-ec2&quot;&gt;5. Criar uma instancia EC2&lt;/a&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-1:-choose-an-amazon-machine-image-(ami)&quot;&gt;Passo 1: Choose an Amazon Machine Image (AMI)&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-2:-choose-an-instance-type&quot;&gt;Passo 2: Choose an Instance Type&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-3:-configure-instance-details&quot;&gt;Passo 3: Configure Instance Details&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-4:-add-storage&quot;&gt;Passo 4: Add Storage&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-5:-tag-instance&quot;&gt;Passo 5: Tag Instance&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-6:-configure-security-group&quot;&gt;Passo 6: Configure Security Group&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#passo-7:-review-instance-launch&quot;&gt;Passo 7: Review Instance Launch&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#6.-criar-elastic-ip-e-associar-a-uma-instancia&quot;&gt;6. Criar Elastic IP e associar a uma instancia&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#7.-conectar-a-instancia-via-ssh&quot;&gt;7. Conectar a Instancia via SSH&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;&lt;a href=&quot;#conclus%C3%A3o&quot;&gt;Conclusão&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-&lt;!-- /MarkdownTOC --&gt;
-&lt;h2 id=&quot;1.-introdução&quot;&gt;1. Introdução&lt;/h2&gt;
-&lt;p&gt;Na abordagem deste artigo é muito importante entender alguns termos básicos que serão utilizados no decorrer de cada passo, pois a Amazon AWS usa &lt;a href=&quot;http://docs.aws.amazon.com/general/latest/gr/glos-chap.html#E&quot;&gt;diferentes nomenclaturas&lt;/a&gt; para seus serviços, portanto, termos como &lt;strong&gt;&lt;em&gt;Instancia&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;Servidor&lt;/strong&gt; , &lt;strong&gt;&lt;em&gt;Elastic IP&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;IP Fixo&lt;/strong&gt;, &lt;strong&gt;&lt;em&gt;Security Group&lt;/em&gt;&lt;/strong&gt; entende-se  &lt;strong&gt;Firewall&lt;/strong&gt; e &lt;strong&gt;&lt;em&gt;Console&lt;/em&gt;&lt;/strong&gt; entende-se &lt;strong&gt;Painel&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;2.-requisitos&quot;&gt;2. Requisitos&lt;/h2&gt;
-&lt;p&gt;Para avançar neste artigo, é necessário:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;Ter uma conta na &lt;a href=&quot;http://aws.amazon.com/pt/free/&quot;&gt;Amazon AWS&lt;/a&gt;, suponho que já tenha criado, e que já esteja logado com suas credenciais no &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home&quot;&gt;console da AWS&lt;/a&gt;.&lt;/li&gt;
-&lt;li&gt;Entender como conectar a um servidor remoto via SSH.&lt;/li&gt;
-&lt;li&gt;Ter o &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/download.html&quot;&gt;Putty&lt;/a&gt; instalado (apenas para usuários Windows).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;h2 id=&quot;3.-selecionar-uma-região&quot;&gt;3. Selecionar uma região&lt;/h2&gt;
-&lt;p&gt;Após entrar no &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home&quot;&gt;console&lt;/a&gt; da AWS é necessário definir uma região padrão onde seus dados e servidores serão armazenados, A Amazon AWS possui DataCenter espalhados pelo mundo se deseja apontar serviços para usuários a nível nacional, então escolha a região São Paulo.&lt;/p&gt;
-&lt;p&gt;Cada região onde a Amazon possui DataCenter é identificada por um único ID, em São Paulo é &lt;code&gt;sa-east-1&lt;/code&gt;, por ex. na California é &lt;code&gt;us-west-1&lt;/code&gt;. Os preços também variam de região para região no momento São Paulo é uma das mais caras &lt;em&gt;(não é atoa que é a ultima na lista &lt;small&gt;imagem 3.1&lt;/small&gt; e não é ordem alfabética, e sim preço!)&lt;/em&gt;. A região Oregon &lt;code&gt;us-west-2&lt;/code&gt; nos Estados Unidos tem o custo menor para os serviços da AWS, porém é necessário levar em consideração a latencia devido a distancia entre uma região e outra.&lt;/p&gt;
-&lt;p&gt;Bom, para selecionar uma região onde seu servidor e serviços serão alocado acesse o menu no canto superior direito do console.&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/image1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;200&quot;&gt;
-&lt;span&gt;imagem 3.1: Selecionar uma região&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Após selecionar uma região clique no serviço &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1&quot;&gt;EC2&lt;/a&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;4.-configurar-security-group&quot;&gt;4. Configurar Security Group&lt;/h2&gt;
-&lt;p&gt;Antes de criar uma instancia é importante definir um &lt;strong&gt;Security Group&lt;/strong&gt; com as permissões de acesso de acordo com seu objetivo, nesse caso será definido um novo &lt;strong&gt;Security Group&lt;/strong&gt; para atender os requisitos de um servidor web, portanto será necessário liberar as portas TCP 80 para acesso via protocolo HTTP e 22 para poder conectar ao servidor remotamente via SSH.&lt;/p&gt;
-&lt;p&gt;No menu lateral esquerdo do console &lt;a href=&quot;https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1&quot;&gt;ec2&lt;/a&gt; localize o item &lt;code&gt;NETWORK &amp;amp; SECURITY&lt;/code&gt; clique em &lt;strong&gt;Security Groups&lt;/strong&gt;, logo em seguida no botão &lt;strong&gt;Create Security Group&lt;/strong&gt;, uma janela de diálogo como na &lt;small&gt;imagem 4.1&lt;/small&gt; deverá ser exibida.&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/image2.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 4.1: Configurar Security Group&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Nesta janela, na guia &lt;strong&gt;Inbound&lt;/strong&gt; preencha corretamente os campos mais importantes:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;strong&gt;Security group name&lt;/strong&gt;: Dê um nome para este Security Group.&lt;/li&gt;
-&lt;li&gt;&lt;strong&gt;Description&lt;/strong&gt; : Informe uma descrição para identificar este Security Group.&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Agora, adicione as regras de firewall clicando no botão &lt;strong&gt;Add Rule&lt;/strong&gt;
-na coluna &lt;code&gt;Type&lt;/code&gt; selecione o protocolo TCP &lt;code&gt;HTTP&lt;/code&gt; e em seguida mesmo processo também adicione o protocolo &lt;code&gt;SSH&lt;/code&gt;.&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;IMPORTANTE:&lt;/strong&gt; Como essa instancia ainda passará por diversas configurações e testes para se tornar um webserver acessível publicamente, então é recomendado liberar temporariamente acessos apenas para seu IP, na coluna &lt;strong&gt;Source&lt;/strong&gt; informe seu endereço IP, como pode ver na &lt;em&gt;imagem 4.1&lt;/em&gt;.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Para concluir clique &lt;strong&gt;Create&lt;/strong&gt;.&lt;/p&gt;
-&lt;h2 id=&quot;5.-criar-uma-instancia-ec2&quot;&gt;5. Criar uma instancia EC2&lt;/h2&gt;
-&lt;p&gt;Bem, agora no menu lateral do console &lt;small&gt;imagem 5.1&lt;/small&gt; de um clique em Instances e em seguida clique no botão &lt;strong&gt;Launch Instance&lt;/strong&gt;.
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/image-create-instance.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
-&lt;span&gt;imagem 5.1: Criar uma instancia EC2&lt;/span&gt;
-&lt;/div&gt;&lt;/p&gt;
-&lt;p&gt;Será aberto uma janela com sete passos até concluir a instalação, no passo um selecione uma imagem(AMI) que deseja instalar, você pode criar um instancia usando distribuições Linux e Windows Server. Para este artigo será utilizado uma distribuição Linux Ubuntu 14.10 e o tipo de virtualização será HVM.&lt;/p&gt;
-&lt;h3 id=&quot;passo-1:-choose-an-amazon-machine-image-(ami)&quot;&gt;Passo 1: Choose an Amazon Machine Image (AMI)&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.1: Escolha uma Imagem (AMI)&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;Importante:&lt;/strong&gt; Na nova geração de instancias AWS opte pelo tipo de virtualização HVM para obter melhor performance, para mais detalhes veja &lt;a href=&quot;#todo&quot; title=&quot;Amazon AWS Diferenças Entre Virtualizacao PARAVIRTUAL e HVM&quot;&gt;diferenças entre HVM e PARAVIRTUAL&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Para prosseguir clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;passo-2:-choose-an-instance-type&quot;&gt;Passo 2: Choose an Instance Type&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-2.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.2: Escolha um tipo de instancia&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Nesta tela &lt;small&gt;imagem 5.2&lt;/small&gt; escolha o tipo de hardware para sua instancia de acordo com suas necessidades. se for elegível Free Tier User pode optar por &lt;code&gt;t2.micro&lt;/code&gt;. &lt;/p&gt;
-&lt;p&gt;Em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;passo-3:-configure-instance-details&quot;&gt;Passo 3: Configure Instance Details&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-3.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.3: Configure Detalhes da Instancia&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Nesta tela &lt;small&gt;imagem 5.3&lt;/small&gt; apenas marque a opção &lt;strong&gt;Enable termination protection&lt;/strong&gt; para evitar que acidentalmente você delete essa instancia. Em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;passo-4:-add-storage&quot;&gt;Passo 4: Add Storage&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-4.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.4: Configure Quantidade de Armazenamento&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Na tela &lt;small&gt;imagem 5.4&lt;/small&gt; defina na coluna &lt;strong&gt;Size (GiB)&lt;/strong&gt; a quantidade de armazenamento, para obter melhor desempenho escolha o tipo de armazenamento &lt;code&gt;SSD&lt;/code&gt; ou &lt;code&gt;Provisioned IOPS (SSD)&lt;/code&gt;. &lt;/p&gt;
-&lt;p&gt;Clique em &lt;strong&gt;Next&lt;/strong&gt; para continuar.&lt;/p&gt;
-&lt;h3 id=&quot;passo-5:-tag-instance&quot;&gt;Passo 5: Tag Instance&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-5.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.5: Criar Instance Tags&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Esta tela &lt;small&gt;imagem 5.5&lt;/small&gt; é opcional, se necessário adicione tags para identificar sua instancia, em seguida clique em &lt;strong&gt;Next&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;passo-6:-configure-security-group&quot;&gt;Passo 6: Configure Security Group&lt;/h3&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-6.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 5.6: Configurar Security Group&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Nesta etapa &lt;small&gt;imagem 5.6&lt;/small&gt; no item &lt;strong&gt;Assign a security group&lt;/strong&gt; marque a opção &lt;strong&gt;Select an existing security group&lt;/strong&gt; e escolha o &lt;strong&gt;Security Group&lt;/strong&gt; que criou anteriormente, para finalizar clique em &lt;strong&gt;Review and Launch&lt;/strong&gt;.&lt;/p&gt;
-&lt;h3 id=&quot;passo-7:-review-instance-launch&quot;&gt;Passo 7: Review Instance Launch&lt;/h3&gt;
-&lt;p&gt;- Revise suas configurações em seguida clique em &lt;strong&gt;Launch&lt;/strong&gt;.&lt;br&gt;
-- Após clicar em &lt;strong&gt;Launch&lt;/strong&gt; uma janela de dialogo será aberta &lt;small&gt;imagem 5.7&lt;/small&gt;, para que tenha acesso à sua instancia via SSH nesta janela crie seu par de chaves ou selecione uma já existente.&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-7.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
-&lt;span&gt;imagem 5.7: Selecione Key Pair ou crie uma.&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Se selecionar a opção: &lt;strong&gt;create a new key pair&lt;/strong&gt; você terá que dar um nome para este par de chaves &lt;small&gt;imagem 5.7.1&lt;/small&gt;, e em seguida clique no botão &lt;strong&gt;Download Key Pair&lt;/strong&gt;, salve este arquivo no seu computador e posteriormente altere as permissões desse arquivo para somente leitura.&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/step-7.1.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
-&lt;span&gt;imagem 5.7.1: Criar Key Pair&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;&lt;strong&gt;ATENÇÃO:&lt;/strong&gt; A chave privada será utilizada para você se conectar a instancia via SSH. Sem essa chave não terá como acessar a instancia de maneira alguma.&lt;/p&gt;
-&lt;p&gt;Clique no botão &lt;strong&gt;Launch Instances&lt;/strong&gt; e Pronto sua instancia será criada.&lt;/p&gt;
-&lt;p&gt;Após isso volte ao console EC2 Instances e veja na descrição dessa instancia todas informações necessários que precisa para conectar via SSH, você pode usar os dados do seu &lt;strong&gt;Public IP&lt;/strong&gt; ou &lt;strong&gt;Public DNS&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Até aqui tudo certo, porém o único problema é que sua instancia ao ser criada recebe um &lt;strong&gt;Public IP&lt;/strong&gt; e um &lt;strong&gt;Public DNS&lt;/strong&gt; ex: &lt;strong&gt;ec2-XX-XX-XX-XX.sa-east-1.compute.amazonaws.com&lt;/strong&gt; onde X é o seu &lt;strong&gt;Public IP&lt;/strong&gt;, você pode usar ambos para se conectar ou acessar seu website, mas a cada vez que re-iniciar sua instancia este endereço IP e DNS mudam, então para resolver essa questão é importante associar um IP fixo à sua instancia usando &lt;strong&gt;Elastic IP&lt;/strong&gt; até porque se deseja manter um webserver terá que ter um IP fixo de qualquer maneira.&lt;/p&gt;
-&lt;p&gt;Termina aqui o passo 3, no próximo passo será criar e associar um Elastic IP à essa instancia.&lt;/p&gt;
-&lt;h2 id=&quot;6.-criar-elastic-ip-e-associar-a-uma-instancia&quot;&gt;6. Criar Elastic IP e associar a uma instancia&lt;/h2&gt;
-&lt;p&gt;No menu lateral do console EC2 vá até &lt;code&gt;NETWORK &amp;amp; SECURITY&lt;/code&gt; and clique em &lt;strong&gt;Elastic IP&lt;/strong&gt;, em seguida clique em &lt;strong&gt;Allocate New Address&lt;/strong&gt;, isso abrirá uma janela de diálogo &lt;small&gt;imagem 6.1&lt;/small&gt;, clique em &lt;strong&gt;Yes, Allocate&lt;/strong&gt;.&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/elastic-ip.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;250&quot;&gt;
-&lt;span&gt;imagem 6.1&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Após clicar em &lt;strong&gt;Yes&lt;/strong&gt; um no novo &lt;strong&gt;Elastic IP&lt;/strong&gt; será alocado, agora é preciso associar este IP à sua instancia, então nessa mesma tela selecione o endereço IP recém alocado e clique em &lt;strong&gt;Associate Address&lt;/strong&gt;, isso abrirá uma nova janela de dialogo &lt;small&gt;imagem 6.2&lt;/small&gt;. &lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/image-associate-address.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;100%&quot;&gt;
-&lt;span&gt;imagem 6.2&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Basta um clique no campo &lt;strong&gt;Instance&lt;/strong&gt; e inteligentemente o console exibirá uma lista com suas instancias, selecione a instancia na qual deseja alocar este &lt;strong&gt;Elastic IP&lt;/strong&gt;. Para concluir clique em &lt;strong&gt;Associate&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;Agora de volta ao console EC2 Instances veja na descrição da sua instancia Linux um IP fixo publico foi definido agora poderá usar este endereço sempre que for conectar à sua instancia.&lt;/p&gt;
-&lt;h2 id=&quot;7.-conectar-a-instancia-via-ssh&quot;&gt;7. Conectar a Instancia via SSH&lt;/h2&gt;
-&lt;p&gt;Sua instancia Linux foi criada, um Elastic IP foi associado! Agora é possível conectar a instancia de maneira segura via SSH, usando sua chave privada salva no momento da criação da instancia.&lt;/p&gt;
-&lt;p&gt;No Windows deverá usar o programa Putty para acessar seu servidor via SSH &lt;a href=&quot;http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/putty.html&quot;&gt;veja aqui como se conectar&lt;/a&gt;. &lt;/p&gt;
-&lt;p&gt;Em sistemas UNIX basta abrir o terminal e primeiramente alterar a permissão da sua chave privada:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;chmod 400 MyKeyPair.pem
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Em seguida poderá conectar a instancia usando a chave privada &lt;code&gt;MyKeyPair.pem&lt;/code&gt;&lt;/p&gt;
-&lt;p&gt;Comando SSH para conectar a instancia remotamente&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ ssh -i MyKeyPair.pem ubuntu@XX.XXX.XXX.XX
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; você também pode conectar usando seu endereço de &lt;strong&gt;DNS&lt;/strong&gt; ex: &lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;$ ssh -i MyKeyPair.pem ubuntu@ec2-XX-XX-XXX-XXX.sa-east-1.compute.amazonaws.com
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;&lt;strong&gt;Dica:&lt;/strong&gt; o usuário padrão no Linux Ubuntu é: &lt;code&gt;ubuntu&lt;/code&gt; outras distribuições Linux pode ser &lt;code&gt;ec2-user&lt;/code&gt; ou &lt;code&gt;root&lt;/code&gt;, mas o processo para conectar é o mesmo.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Se tudo foi feito de forma correta a seguinte tela de boas vindas do Ubuntu será exibida:&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/09/connect-ssh.png&quot; alt=&quot;&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
-&lt;span&gt;imagem 7.1: Conexão via SSH&lt;/span&gt;
-&lt;/div&gt;
-&lt;p&gt;Agora tendo acesso remoto a instancia é possível prosseguir com as demais configurações necessárias para um servidor web, esses próximos passos serão detalhados em diferentes artigos:&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;a href=&quot;/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html&quot;&gt;Como configurar um servidor Linux Ubuntu&lt;/a&gt;&lt;/li&gt;
-&lt;li&gt;Como configurar um servidor Web Linux Ubuntu com PHP5, Apache e MySQL (LAMP).&lt;/li&gt;
-&lt;li&gt;Como configurar um servidor Web Linux com PHP5, Nginx e MySQL (LEMP).&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;Mais dicas podem ser encontradas neste artigo:&lt;/p&gt;
-&lt;h2 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h2&gt;
-&lt;p&gt;Vimos como criar um servidor na nuvem da AWS, mas que chamamos de &lt;code&gt;Instancia&lt;/code&gt;, em alguns cliques temos um servidor web up and running em uma das maiores empresas de Cloud Computing, essa é uma simples instalação, mas existem diversos serviços e possibilidades, dependendo do seu tipo de negócio ou projeto.&lt;/p&gt;
-</description>
-        <pubDate>Mon, 01 Sep 2014 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/aws/criar-instancia-na-amazon-aws.html</guid>
-        <category>blog</category>
-        <category>aws</category>
       </item>
     
   </channel>

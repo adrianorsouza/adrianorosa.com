@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Windows Live Hotmail ganha acesso POP3 | Adriano Rosa</title>
-    <meta name="description" content="A Microsoft finalmente disponibilizou acesso ao Hotmail através do pop3 e smtp, Agora é possível enviar e receber e-mails de programas como Outlook, Thunderbird, Mail, Gmail, iPhone, iPod touch, Android ou qualquer outro programa.
+    <title>Composer lock file | Adriano Rosa</title>
+    <meta name="description" content="Devo ou não fazer o commit do arquivo composer.lock. Quando um ou vários packages é instalado como dependência em seu projeto, o Composer vai atualizar as informações de cada package no arquivo composer.lock.
 ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Adriano Rosa">
@@ -18,17 +18,16 @@
       <script src="/assets/js/html5shiv.min.js"></script>
       <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    <link rel='prev' href='http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html' />
-    <link rel='next' href='http://adrianorosa.com/blog/google/internet-explorer-8-otimizado-para-o-google.html' />
-    <link rel="canonical" href="http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html" />
+    <link rel='prev' href='http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/composer/composer-lock-files.html" />
     <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
     <!-- OpenGraphic tags -->
     <meta property="og:locale" content="pt-br" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Windows Live Hotmail ganha acesso POP3" />
-    <meta property="og:description" content="A Microsoft finalmente disponibilizou acesso ao Hotmail através do pop3 e smtp, Agora é possível enviar e receber e-mails de programas como Outlook, Thunderbird, Mail, Gmail, iPhone, iPod touch, Android ou qualquer outro programa.
+    <meta property="og:title" content="Composer lock file" />
+    <meta property="og:description" content="Devo ou não fazer o commit do arquivo composer.lock. Quando um ou vários packages é instalado como dependência em seu projeto, o Composer vai atualizar as informações de cada package no arquivo composer.lock.
 " />
-    <meta property="og:url" content="http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/composer/composer-lock-files.html" />
     <meta property="og:site_name" content="Adriano Rosa" />
     <meta property="article:author" content="Adriano Rosa" />
     <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
@@ -58,7 +57,7 @@
     <div class="blog-header">
       <div class="container">
           <h1 class="blog-title">
-                  Noticias
+                  Composer
           </h1>
       </div>
     </div>
@@ -67,28 +66,37 @@
           <div class="col-sm-8 content">
 <article class="post">
   <header class="post-header">
-<h1 class="post-title">Windows Live Hotmail ganha acesso POP3</h1>
+<h1 class="post-title">Composer lock file</h1>
 <p class="post-meta">
-<time class="post-time" datetime="2009-02-12"><i class="ico ico-clock"></i> 12 Feb 2009</time> &mdash;
+<time class="post-time" datetime="2016-06-26"><i class="ico ico-clock"></i> 26 Jun 2016</time> &mdash;
 <span class="post-category">
-<a href="/blog/category/noticias" title="Artigos na Categoria Noticias">Noticias</a>
+<a href="/blog/category/composer" title="Artigos na Categoria Composer">Composer</a>
 </span> &mdash;
-<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html#disqus_thread" title="Comentário">0 Comentário</a>
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/composer/composer-lock-files.html#disqus_thread" title="Comentário">0 Comentário</a>
 </p>
 </header>
   <section class="post-content">
-    <p>A Microsoft finalmente disponibilizou acesso ao Hotmail através do pop3 e smtp, Agora é possível enviar e receber e-mails de programas como Outlook, Thunderbird, Mail, Gmail, iPhone, iPod touch, Android ou qualquer outro programa.</p>
-<p>Antigamente era possível baixar e-mails somente através do recuros IMAP, que não era muito pratico.</p>
-<p>Atendendo a pedido de usuários a empresa resolveu aderir ao novo sistema.</p>
-<p>Se você já configurou algumas vez uma conta do Gmail Pop3, será fácil, pois é mesma coisa.</p>
-<p>Segue abaixo as configurações:</p>
-<div class="highlight"><pre><code class="language-text" data-lang="text">Servidor POP: pop3.live.com (SSL ativado)
-Nome de usuário: E-mail completo, incluindo @hotmail.com, por exemplo
-Sua Senha: Senha
-Servidor SMTP: smtp.live.com (autenticação ativada)
-TLS/SSL: Ativado (porta 995)
+    <p>Devo ou não fazer o commit do arquivo <code>composer.lock</code>. Quando um ou vários packages é instalado como dependência em seu projeto, o Composer vai atualizar as informações de cada package no arquivo <code>composer.lock</code>.</p>
+<p>Ao fazer o commit do arquivo <code>composer.lock</code>, e sempre que utilizar o comando <code>composer install</code>, o <a href="https://getcomposer.org"><strong>Composer</strong></a> vai então instalar as versões exatas definidos anteriormente no seu projeto.</p>
+<p>Por isso é importante fazer o commit do arquivo <code>composer.lock</code> para garantir que as dependências de seu projeto sejam sempre as mesmas, isso vai evitar inconsistências e possíveis erros.</p>
+<h3 id="o-que-acontece-seu-eu-não-fazer-o-commit-do-composer.lock">O que acontece seu eu não fazer o commit do <code>composer.lock</code></h3>
+<p>Mesmo que esteja trabalhando um projeto sem a colaboração de outros developers pode acontecer inconsistências nas dependências do seu projeto.</p>
+<p>Imagine o seguinte cenário onde você instalou o seguinte package como dependência, isso em seu ambiente de desenvolvimento.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&quot;require&quot;: {
+  &quot;league/flysystem-aws-s3-v3&quot;: &quot;^1.0&quot;
+},
 </code></pre></div>
-<p>Fonte: iMasters</p>
+<p>Quando você publicar seu projeto no ambiente de produção ou até mesmo em executá-lo em outro local de desenvolvimento, tipicamente você vai executar o comando:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">composer install 
+</code></pre></div>
+<p>Como não vai existir o arquivo <code>composer.lock</code> na raiz do projeto, o Composer então vai instalar a versão mais recente do package <code>league/flysystem-aws-s3-v3</code>. </p>
+<p>Até aqui tudo bem, mas digamos que alguns dias após o início do desenvolvimento do seu projeto a versão <code>v1.2.0</code> do package <code>league/flysystem-aws-s3-v3</code> foi lançado, então quando você instalar as dependências ao invés de obter a versão <code>v1.0.0</code>, que foi testado no ambiente de desenvolvimento, será instalado a versão <code>v1.2.x</code>. </p>
+<p>Nesse momento que surge o problema! Se por ventura, alguma mudança no package teve algum <em>breaking changes</em> seu projeto pode estar com algum tipo de bug.</p>
+<p>Por isso é fundamental fazer o commit do <code>composer.lock</code> sempre que desejar manter a consistência e instalar as versões exatas de suas dependências em seu projeto.</p>
+<h3 id="em-que-situação-não-é-necessário-comitar-composer.lock">Em que situação não é necessário <em>comitar</em> <code>composer.lock</code></h3>
+<p>As vezes, é desnecessário <em>comitar</em> <code>composer.lock</code> quando estiver desenvolvendo uma library.</p>
+<h3 id="mais-detalhes">Mais detalhes</h3>
+<p><a href="https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file">https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file</a></p>
   </section><!-- ./post-content -->
   <hr>
   <section class="post-related">
@@ -96,23 +104,22 @@ TLS/SSL: Ativado (porta 995)
     <ol class="list-unstyled">
       <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
       <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
-      <li><time class="post-time" datetime="2014-11-28">28 Nov 2014</time> &mdash; <a href="/blog/seguranca/ssh-keys.html" title="SSH Keys">SSH Keys</a></li>
+      <li><time class="post-time" datetime="2014-07-25">25 Jul 2014</time> &mdash; <a href="/blog/ruby/upgrade-ruby-no-mac-osx-via-homebrew.html" title="Upgrade Ruby no Mac OSX via Homebrew">Upgrade Ruby no Mac OSX via Homebrew</a></li>
     </ol>
   </section><!-- ./post-related -->
   <hr>
   <section class="post-navigation">
     <ul class="pager">
-      <li class="prev"><a href="/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html" title="Links Patrocinados em pesquisas de imagens do Google.">&lsaquo; anterior</a></li>
-      <li class="next"><a href="/blog/google/internet-explorer-8-otimizado-para-o-google.html" title="Internet Explorer 8 otimizado para o Google">próximo &rsaquo;</a></li>
+      <li class="prev"><a href="/blog/laravel/alterar-public-path-no-laravel-5.html" title="Alterar public path no Laravel 5">&lsaquo; anterior</a></li>
     </ul>
   </section><!-- ./post-navigation -->
   <section class="post-comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'adrianorosa';
-        var disqus_title = 'Windows Live Hotmail ganha acesso POP3';
-        var disqus_url = 'http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html';
-        var disqus_identifier = '67 http://adrianorosa.com/?p=67';
+        var disqus_title = 'Composer lock file';
+        var disqus_url = 'http://adrianorosa.com/blog/composer/composer-lock-files.html';
+        var disqus_identifier = '';
         // var disqus_developer = 1; // developer mode is on
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -156,12 +163,12 @@ TLS/SSL: Ativado (porta 995)
       <li><a href="/blog/category/aws" title="AWS">AWS</a></li>
       <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
       <li><a href="/blog/category/css" title="CSS">CSS</a></li>
-      <li><a href="/blog/category/composer" title="Composer">Composer</a></li>
+      <li class="active"><a href="/blog/category/composer" title="Composer">Composer</a></li>
       <li><a href="/blog/category/google" title="Google">Google</a></li>
       <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
       <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
       <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
-      <li class="active"><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
+      <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
       <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
       <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
       <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
