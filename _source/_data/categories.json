@@ -20,6 +20,11 @@
     "lead": ""
 },
 {
+    "label": "Composer",
+    "slug": "composer",
+    "lead": "Package Management"
+},
+{
     "label": "Google",
     "slug": "google",
     "lead": ""
