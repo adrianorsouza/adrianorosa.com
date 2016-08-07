@@ -20,7 +20,7 @@ class PostWritter extends FileHandle
     public $path_source   = '_source';
     public $path_data     = '_source/_data';
     public $path_category = '_source/blog/category';
-    public $path_template = 'src/template';
+    public $path_template = '_source/resources/template';
 
     /**
      * store a JSON data read from categories.json
