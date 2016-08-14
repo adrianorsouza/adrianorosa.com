@@ -238,7 +238,7 @@ Agora tendo acesso remoto a instancia é possível prosseguir com as demais conf
 
 - [Como configurar um servidor Linux Ubuntu]
 - Como configurar um servidor Web Linux Ubuntu com PHP5, Apache e MySQL (LAMP).
-- Como configurar um servidor Web Linux com PHP5, Nginx e MySQL (LEMP).
+- [Como configurar um servidor Web Linux com PHP5, Nginx e MySQL (LEMP)][vhost].
 
 Mais dicas podem ser encontradas neste artigo:
 
@@ -254,3 +254,5 @@ Vimos como criar um servidor na nuvem da AWS, mas que chamamos de `Instancia`, e
 [ec2]: https://console.aws.amazon.com/ec2/v2/home?region=sa-east-1
 [artigo_hvm]: #todo "Amazon AWS Diferenças Entre Virtualizacao PARAVIRTUAL e HVM"
 [Como configurar um servidor Linux Ubuntu]: /blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html
+
+[vhost]: /blog/nginx/setup-server-block-virtual-host-com-nginx.html
