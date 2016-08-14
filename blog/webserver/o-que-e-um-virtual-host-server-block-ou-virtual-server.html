@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Links Patrocinados em pesquisas de imagens do Google. | Adriano Rosa</title>
-    <meta name="description" content="Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.
+    <title>O que é um Virtual Host, Server Block ou Virtual Server? | Adriano Rosa</title>
+    <meta name="description" content="Virtual Host (Apache) ou Server Block / Virtual Server (Nginx), em configurações de um webserver, refere-se a uma prática de servir mais de um site no mesmo servidor. Um Virtual Host pode ser baseado em IP, ou seja, diferentes IPs servindo vários sites no mesmo server, ou ainda baseado em nome de domínio, ou seja, vários domínios servindo no mesmo server.
 ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Adriano Rosa">
@@ -18,17 +18,17 @@
       <script src="/assets/js/html5shiv.min.js"></script>
       <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    <link rel='prev' href='http://adrianorosa.com/blog/wordpress/como-instalar-o-wordpress.html' />
-    <link rel='next' href='http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html' />
-    <link rel="canonical" href="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html" />
+    <link rel='prev' href='http://adrianorosa.com/blog/composer/composer-lock-files.html' />
+    <link rel='next' href='http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html" />
     <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
     <!-- OpenGraphic tags -->
     <meta property="og:locale" content="pt-br" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Links Patrocinados em pesquisas de imagens do Google." />
-    <meta property="og:description" content="Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.
+    <meta property="og:title" content="O que é um Virtual Host, Server Block ou Virtual Server?" />
+    <meta property="og:description" content="Virtual Host (Apache) ou Server Block / Virtual Server (Nginx), em configurações de um webserver, refere-se a uma prática de servir mais de um site no mesmo servidor. Um Virtual Host pode ser baseado em IP, ou seja, diferentes IPs servindo vários sites no mesmo server, ou ainda baseado em nome de domínio, ou seja, vários domínios servindo no mesmo server.
 " />
-    <meta property="og:url" content="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html" />
     <meta property="og:site_name" content="Adriano Rosa" />
     <meta property="article:author" content="Adriano Rosa" />
     <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
@@ -58,7 +58,7 @@
     <div class="blog-header">
       <div class="container">
           <h1 class="blog-title">
-                  Google
+                  Webserver
           </h1>
       </div>
     </div>
@@ -67,44 +67,102 @@
           <div class="col-sm-8 content">
 <article class="post">
   <header class="post-header">
-<h1 class="post-title">Links Patrocinados em pesquisas de imagens do Google.</h1>
+<h1 class="post-title">O que é um Virtual Host, Server Block ou Virtual Server?</h1>
 <p class="post-meta">
-<time class="post-time" datetime="2009-02-04"><i class="ico ico-clock"></i> 04 Feb 2009</time> &mdash;
+<time class="post-time" datetime="2016-08-14"><i class="ico ico-clock"></i> 14 Aug 2016</time> &mdash;
 <span class="post-category">
-<a href="/blog/category/google" title="Artigos na Categoria Google">Google</a>
+<a href="/blog/category/webserver" title="Artigos na Categoria Webserver">Webserver</a>
 </span> &mdash;
-<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html#disqus_thread" title="Comentário">0 Comentário</a>
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html#disqus_thread" title="Comentário">0 Comentário</a>
 </p>
 </header>
   <section class="post-content">
-    <p>Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.</p>
-<p>O que de fato, vale considerar que cada vez mais o Google está exibindo anúncios em diversas redes as campanhas relevantes aos usuários, mas que pode também gerar um aumento no numero de impressões e queda do CTR de um determinado grupo de anúncios no AdWords,</p>
-<p><img class="size-full wp-image-64" title="links-patrocinados-busca-image" src="/images/2011/04/links-patrocinados-busca-image.jpg" alt="" width="480" height="281" /></p>
-<p>O Google gigante das buscas, em época de crise mundial mostra que está se fortalecendo com seus principais produtos, AdSense e AdWords e descontinuando outros produtos gratuitos.</p>
+    <p><strong>Virtual Host (Apache)</strong> ou <strong>Server Block / <a href="/blog/nginx/setup-server-block-virtual-host-com-nginx.html">Virtual Server (Nginx)</a></strong>, em configurações de um webserver, refere-se a uma prática de servir mais de um site no mesmo servidor. Um Virtual Host pode ser baseado em IP, ou seja, diferentes IPs servindo vários sites no mesmo server, ou ainda baseado em nome de domínio, ou seja, vários domínios servindo no mesmo server.</p>
+<blockquote>
+<p>O termo Virtual Host é normalmente conhecido no Apache, no Nginx a mesma prática é chamada de Server Block ou Virtual Server, pois um Virtual Server é configurado dentro da diretiva <code>server</code> block.</p>
+</blockquote>
+<h2 id="apache-virtual-host">Apache Virtual Host</h2>
+<p>A configuração de um Virtual Host no Apache é relativamente simples:</p>
+<h3 id="name-based">Name-based</h3>
+<p>Virtual Host baseado em nome é mais simples pois o server vai servir diferentes sites usando o mesmo endereço IP.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;VirtualHost *:80&gt;
+    ServerName www.example.com
+    ServerAlias example.com 
+    DocumentRoot &quot;/www/domain&quot;
+&lt;/VirtualHost&gt;
+&lt;VirtualHost *:80&gt;
+    ServerName other.example.com
+    DocumentRoot &quot;/www/otherdomain&quot;
+&lt;/VirtualHost&gt;
+</code></pre></div>
+<h3 id="ip-based">Ip-based</h3>
+<p>Virtual Host baseado em IPs requer setup extra de DNS para que funcione corretamente, geralmente configurar name-based é mais simples por conta disso, e a configuração no Apache é assim:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">&lt;VirtualHost 172.20.30.40:80&gt;
+  DocumentRoot &quot;/www/vhosts/www1&quot;
+  ServerName www1.example.com
+&lt;/VirtualHost&gt;
+&lt;VirtualHost 172.20.30.50:80&gt;
+  DocumentRoot &quot;/www/vhosts/www2&quot;
+  ServerName www2.example.org
+&lt;/VirtualHost&gt;
+</code></pre></div>
+<h2 id="nginx-virtual-host-(server-block-/-virtual-server)">Nginx Virtual Host (Server Block / Virtual Server)</h2>
+<p>No nginx configurar um Virtual Host é muito mais simples, é possível definir um Virtual Host ip-based ou name-based ou ambos no mesmo server block, veja como fica a configuração:</p>
+<h3 id="name-based">Name-based</h3>
+<div class="highlight"><pre><code class="language-text" data-lang="text">server {
+  listen      80;
+   server_name example.net www.example.net;
+   root /var/www/site1
+   ...
+}
+server {
+  listen      80;
+  server_name example.com www.example.com;
+  root /var/www/site2
+  ...
+}
+</code></pre></div>
+<p>Nesse exemplo acima o webserver determina o host de acordo com request e faz o roteamento para o server de destino.</p>
+<h3 id="ip-based-ou-mixed">Ip-based ou mixed</h3>
+<p>No mesmo Server Block podemos definir um Virtual Server para ambos ip-based e name-based, veja só:</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">server {
+  listen      192.168.1.1:80;
+  server_name example.org www.example.org;
+  ...
+}
+server {
+  listen      192.168.1.2:80;
+  server_name example.com www.example.com;
+  ...
+}
+</code></pre></div>
+<h3 id="mais-detalhes">Mais detalhes</h3>
+<p><a href="https://httpd.apache.org/docs/current/vhosts/">https://httpd.apache.org/docs/current/vhosts/</a><br>
+<a href="https://nginx.org/en/docs/http/request_processing.html">https://nginx.org/en/docs/http/request_processing.html</a></p>
   </section><!-- ./post-content -->
   <hr>
   <section class="post-related">
     <h3>Post relacionados</h3>
     <ol class="list-unstyled">
-      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2016-08-14">14 Aug 2016</time> &mdash; <a href="/blog/nginx/setup-server-block-virtual-host-com-nginx.html" title="Setup Virtual Server com NGINX">Setup Virtual Server com NGINX</a></li>
       <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
-      <li><time class="post-time" datetime="2008-11-10">10 Nov 2008</time> &mdash; <a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">Como instalar o WordPress</a></li>
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
     </ol>
   </section><!-- ./post-related -->
   <hr>
   <section class="post-navigation">
     <ul class="pager">
-      <li class="prev"><a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">&lsaquo; anterior</a></li>
-      <li class="next"><a href="/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html" title="Windows Live Hotmail ganha acesso POP3">próximo &rsaquo;</a></li>
+      <li class="prev"><a href="/blog/composer/composer-lock-files.html" title="Composer lock file">&lsaquo; anterior</a></li>
+      <li class="next"><a href="/blog/nginx/setup-server-block-virtual-host-com-nginx.html" title="Setup Virtual Server com NGINX">próximo &rsaquo;</a></li>
     </ul>
   </section><!-- ./post-navigation -->
   <section class="post-comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'adrianorosa';
-        var disqus_title = 'Links Patrocinados em pesquisas de imagens do Google.';
-        var disqus_url = 'http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html';
-        var disqus_identifier = '63 http://adrianorosa.com/?p=63';
+        var disqus_title = 'O que é um Virtual Host, Server Block ou Virtual Server?';
+        var disqus_url = 'http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html';
+        var disqus_identifier = '';
         // var disqus_developer = 1; // developer mode is on
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -149,7 +207,7 @@
       <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
       <li><a href="/blog/category/css" title="CSS">CSS</a></li>
       <li><a href="/blog/category/composer" title="Composer">Composer</a></li>
-      <li class="active"><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
       <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
       <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
       <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
@@ -158,7 +216,7 @@
       <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>
       <li><a href="/blog/category/sublime-text" title="Sublime Text">Sublime Text</a></li>
       <li><a href="/blog/category/tecnologia" title="Tecnologia">Tecnologia</a></li>
-      <li><a href="/blog/category/webserver" title="Webserver">Webserver</a></li>
+      <li class="active"><a href="/blog/category/webserver" title="Webserver">Webserver</a></li>
       <li><a href="/blog/category/wordpress" title="Wordpress">Wordpress</a></li>
       <li><a href="/blog/category/jquery" title="jQuery">jQuery</a></li>
     </ol>

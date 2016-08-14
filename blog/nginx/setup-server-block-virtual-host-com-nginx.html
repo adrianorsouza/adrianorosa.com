@@ -4,8 +4,8 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>Links Patrocinados em pesquisas de imagens do Google. | Adriano Rosa</title>
-    <meta name="description" content="Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.
+    <title>Setup Virtual Server com NGINX | Adriano Rosa</title>
+    <meta name="description" content="Para quem esta acostumado com Apache, já deve ter configurado ou ouvido falar sobre Virtual Host, eu cheguei a explicar a diferença entre Server Block/Virtual Server(Nginx) e Virtual Host(Apache). Bem, isso também é possível no Nginx, mas aqui chamamos de Server Block ou Virtual Server. 
 ">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Adriano Rosa">
@@ -18,17 +18,16 @@
       <script src="/assets/js/html5shiv.min.js"></script>
       <script src="/assets/js/respond.min.js"></script>
     <![endif]-->
-    <link rel='prev' href='http://adrianorosa.com/blog/wordpress/como-instalar-o-wordpress.html' />
-    <link rel='next' href='http://adrianorosa.com/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html' />
-    <link rel="canonical" href="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html" />
+    <link rel='prev' href='http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html' />
+    <link rel="canonical" href="http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html" />
     <link rel="alternate" type="application/rss+xml" title="Adriano Rosa &raquo; Feed" href="http://adrianorosa.com/feed.xml" />
     <!-- OpenGraphic tags -->
     <meta property="og:locale" content="pt-br" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Links Patrocinados em pesquisas de imagens do Google." />
-    <meta property="og:description" content="Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.
+    <meta property="og:title" content="Setup Virtual Server com NGINX" />
+    <meta property="og:description" content="Para quem esta acostumado com Apache, já deve ter configurado ou ouvido falar sobre Virtual Host, eu cheguei a explicar a diferença entre Server Block/Virtual Server(Nginx) e Virtual Host(Apache). Bem, isso também é possível no Nginx, mas aqui chamamos de Server Block ou Virtual Server. 
 " />
-    <meta property="og:url" content="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html" />
+    <meta property="og:url" content="http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html" />
     <meta property="og:site_name" content="Adriano Rosa" />
     <meta property="article:author" content="Adriano Rosa" />
     <meta property="og:image" content="http://adrianorosa.com/images/logo.png" />
@@ -58,7 +57,7 @@
     <div class="blog-header">
       <div class="container">
           <h1 class="blog-title">
-                  Google
+                  Nginx
           </h1>
       </div>
     </div>
@@ -67,44 +66,88 @@
           <div class="col-sm-8 content">
 <article class="post">
   <header class="post-header">
-<h1 class="post-title">Links Patrocinados em pesquisas de imagens do Google.</h1>
+<h1 class="post-title">Setup Virtual Server com NGINX</h1>
 <p class="post-meta">
-<time class="post-time" datetime="2009-02-04"><i class="ico ico-clock"></i> 04 Feb 2009</time> &mdash;
+<time class="post-time" datetime="2016-08-14"><i class="ico ico-clock"></i> 14 Aug 2016</time> &mdash;
 <span class="post-category">
-<a href="/blog/category/google" title="Artigos na Categoria Google">Google</a>
+<a href="/blog/category/nginx" title="Artigos na Categoria Nginx">Nginx</a>
 </span> &mdash;
-<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html#disqus_thread" title="Comentário">0 Comentário</a>
+<i class="ico ico-comment"></i> <a href="http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html#disqus_thread" title="Comentário">0 Comentário</a>
 </p>
 </header>
   <section class="post-content">
-    <p>Está semana fiquei surpreso ao fazer uma simples pesquisa no Google Images, não foi pela inovação em adicionar novas opções de pesquisa como pesquisar imagens de um determinado conteúdo, por tipo, tamanho de imagens e até mesmo imagens de rosto, mas sim pelo fato dos links patrocinados também estarem sendo exibidos nessa rede de pesquisa, Logo após links patrocinados voltarem a ser exibidos em outras redes como orkut agora ganha espaço também na busca de imagens.</p>
-<p>O que de fato, vale considerar que cada vez mais o Google está exibindo anúncios em diversas redes as campanhas relevantes aos usuários, mas que pode também gerar um aumento no numero de impressões e queda do CTR de um determinado grupo de anúncios no AdWords,</p>
-<p><img class="size-full wp-image-64" title="links-patrocinados-busca-image" src="/images/2011/04/links-patrocinados-busca-image.jpg" alt="" width="480" height="281" /></p>
-<p>O Google gigante das buscas, em época de crise mundial mostra que está se fortalecendo com seus principais produtos, AdSense e AdWords e descontinuando outros produtos gratuitos.</p>
+    <p>Para quem esta acostumado com Apache, já deve ter configurado ou ouvido falar sobre <a href="https://httpd.apache.org/docs/current/vhosts/">Virtual Host</a>, eu cheguei a explicar a <a href="/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html">diferença entre Server Block/Virtual Server(Nginx) e Virtual Host(Apache)</a>. Bem, isso também é possível no Nginx, mas aqui chamamos de <code>Server Block</code> ou <code>Virtual Server</code>. </p>
+<p>A configuração no Nginx é feita dentro de blocks <code>{}</code>, logo existem diversas diretivas. E para configurar um Virtual Server usamos a diretiva <code>server</code>. Dentro dessa diretiva fazemos o setup de um Virtual Server.</p>
+<p>Como o Nginx permite vários block no mesmo arquivo de configuração, nesse exemplo vou criar 3 Virtual Servers dentro do block <code>http</code>.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">http {
+  # Virtual Server 1 (Site principal)
+  server {
+    listen      80;
+    server_name example.com www.example.com;
+    root /var/www/www.example.org
+    location / {
+        try_files $uri $uri/ =404;
+    }    
+  }
+  # Virtual Server 2 (CMS site)
+  server {
+    listen      80;
+    server_name admin.example.com;
+    root /var/www/admin.example.com
+    location / {
+        try_files $uri $uri/ =404;
+    }
+  }
+  # Virtual Server 3 (API site)
+  server {
+    listen      80;
+    server_name api.example.com;
+    root /var/www/api.example.com
+    location / {
+        try_files $uri $uri/ =404;
+    }
+  }
+}
+</code></pre></div>
+<h3 id="virtual-host-no-ambiente-de-desenvolvimento-local">Virtual Host no ambiente de desenvolvimento local</h3>
+<p>No ambiente de desenvolvimento local também é necessário configurar o arquivo de <code>hosts</code>, localizado em <code>/etc/hosts</code> em sistemas Unix ou em <code>%SystemRoot%\System32\drivers\etc\hosts</code> no Windows.</p>
+<p>No arquivo de <code>hosts</code> é necessário adicionar um roteamento para que o domínio que estamos testando seja apontado para o nosso servidor local.</p>
+<div class="highlight"><pre><code class="language-text" data-lang="text">127.0.0.1 example.com www.example.com
+127.0.0.1 admin.example.com
+127.0.0.1 api.example.com
+</code></pre></div>
+<p>Concluído todas as configurações no webserver e arquivo de <code>hosts</code>, agora é necessário reiniciar o nginx para alterações terem efeito.</p>
+<h4 id="linux">Linux</h4>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo service nginx reload
+</code></pre></div>
+<h4 id="osx">OSX</h4>
+<div class="highlight"><pre><code class="language-text" data-lang="text">sudo nginx -s reload
+</code></pre></div>
+<h3 id="conclusão">Conclusão</h3>
+<p>Com o Nginx percebemos como é fácil o setup de um Virtual Server, o modo de configuração em block permite maior flexibilidade no setup de um ou vários webserver, talvez por isso que eu prefiro Nginx ao invés do Apache, não só por essa questão mais também por outras questão de performance.</p>
   </section><!-- ./post-content -->
   <hr>
   <section class="post-related">
     <h3>Post relacionados</h3>
     <ol class="list-unstyled">
-      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
+      <li><time class="post-time" datetime="2016-08-14">14 Aug 2016</time> &mdash; <a href="/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html" title="O que é um Virtual Host, Server Block ou Virtual Server?">O que é um Virtual Host, Server Block ou Virtual Server?</a></li>
       <li><time class="post-time" datetime="2014-09-03">03 Sep 2014</time> &mdash; <a href="/blog/linux/configurar-webserver-linux-ubuntu-php-e-apache-nginx.html" title="Como configurar um servidor web Linux Ubuntu">Como configurar um servidor web Linux Ubuntu</a></li>
-      <li><time class="post-time" datetime="2008-11-10">10 Nov 2008</time> &mdash; <a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">Como instalar o WordPress</a></li>
+      <li><time class="post-time" datetime="2014-09-01">01 Sep 2014</time> &mdash; <a href="/blog/aws/criar-instancia-na-amazon-aws.html" title="Criar uma instancia na Amazon AWS">Criar uma instancia na Amazon AWS</a></li>
     </ol>
   </section><!-- ./post-related -->
   <hr>
   <section class="post-navigation">
     <ul class="pager">
-      <li class="prev"><a href="/blog/wordpress/como-instalar-o-wordpress.html" title="Como instalar o WordPress">&lsaquo; anterior</a></li>
-      <li class="next"><a href="/blog/noticias/windows-live-hotmail-ganha-acesso-pop3.html" title="Windows Live Hotmail ganha acesso POP3">próximo &rsaquo;</a></li>
+      <li class="prev"><a href="/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html" title="O que é um Virtual Host, Server Block ou Virtual Server?">&lsaquo; anterior</a></li>
     </ul>
   </section><!-- ./post-navigation -->
   <section class="post-comments">
     <div id="disqus_thread"></div>
     <script type="text/javascript">
         var disqus_shortname = 'adrianorosa';
-        var disqus_title = 'Links Patrocinados em pesquisas de imagens do Google.';
-        var disqus_url = 'http://adrianorosa.com/blog/google/links-patrocinados-em-pesquisas-de-imagens-do-google.html';
-        var disqus_identifier = '63 http://adrianorosa.com/?p=63';
+        var disqus_title = 'Setup Virtual Server com NGINX';
+        var disqus_url = 'http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html';
+        var disqus_identifier = '';
         // var disqus_developer = 1; // developer mode is on
         (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -149,10 +192,10 @@
       <li><a href="/blog/category/banco-de-dados" title="Banco de Dados">Banco de Dados</a></li>
       <li><a href="/blog/category/css" title="CSS">CSS</a></li>
       <li><a href="/blog/category/composer" title="Composer">Composer</a></li>
-      <li class="active"><a href="/blog/category/google" title="Google">Google</a></li>
+      <li><a href="/blog/category/google" title="Google">Google</a></li>
       <li><a href="/blog/category/laravel" title="Laravel">Laravel</a></li>
       <li><a href="/blog/category/linux" title="Linux">Linux</a></li>
-      <li><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
+      <li class="active"><a href="/blog/category/nginx" title="Nginx">Nginx</a></li>
       <li><a href="/blog/category/noticias" title="Noticias">Noticias</a></li>
       <li><a href="/blog/category/ruby" title="Ruby">Ruby</a></li>
       <li><a href="/blog/category/seguranca" title="Segurança">Segurança</a></li>

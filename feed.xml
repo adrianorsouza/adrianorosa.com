@@ -5,10 +5,139 @@
     <description>Web Developer FullStack</description>
     <link>http://adrianorosa.com/</link>
     <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Sat, 06 Aug 2016 22:09:31 -0300</pubDate>
-    <lastBuildDate>Sat, 06 Aug 2016 22:09:31 -0300</lastBuildDate>
+    <pubDate>Sun, 14 Aug 2016 15:06:21 -0300</pubDate>
+    <lastBuildDate>Sun, 14 Aug 2016 15:06:21 -0300</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
+      <item>
+        <title>Setup Virtual Server com NGINX</title>
+        <description>&lt;p&gt;Para quem esta acostumado com Apache, já deve ter configurado ou ouvido falar sobre &lt;a href=&quot;https://httpd.apache.org/docs/current/vhosts/&quot;&gt;Virtual Host&lt;/a&gt;, eu cheguei a explicar a &lt;a href=&quot;/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html&quot;&gt;diferença entre Server Block/Virtual Server(Nginx) e Virtual Host(Apache)&lt;/a&gt;. Bem, isso também é possível no Nginx, mas aqui chamamos de &lt;code&gt;Server Block&lt;/code&gt; ou &lt;code&gt;Virtual Server&lt;/code&gt;. &lt;/p&gt;
+&lt;p&gt;A configuração no Nginx é feita dentro de blocks &lt;code&gt;{}&lt;/code&gt;, logo existem diversas diretivas. E para configurar um Virtual Server usamos a diretiva &lt;code&gt;server&lt;/code&gt;. Dentro dessa diretiva fazemos o setup de um Virtual Server.&lt;/p&gt;
+&lt;p&gt;Como o Nginx permite vários block no mesmo arquivo de configuração, nesse exemplo vou criar 3 Virtual Servers dentro do block &lt;code&gt;http&lt;/code&gt;.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;http {
+  # Virtual Server 1 (Site principal)
+  server {
+    listen      80;
+    server_name example.com www.example.com;
+    root /var/www/www.example.org
+    location / {
+        try_files $uri $uri/ =404;
+    }    
+  }
+  # Virtual Server 2 (CMS site)
+  server {
+    listen      80;
+    server_name admin.example.com;
+    root /var/www/admin.example.com
+    location / {
+        try_files $uri $uri/ =404;
+    }
+  }
+  # Virtual Server 3 (API site)
+  server {
+    listen      80;
+    server_name api.example.com;
+    root /var/www/api.example.com
+    location / {
+        try_files $uri $uri/ =404;
+    }
+  }
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;virtual-host-no-ambiente-de-desenvolvimento-local&quot;&gt;Virtual Host no ambiente de desenvolvimento local&lt;/h3&gt;
+&lt;p&gt;No ambiente de desenvolvimento local também é necessário configurar o arquivo de &lt;code&gt;hosts&lt;/code&gt;, localizado em &lt;code&gt;/etc/hosts&lt;/code&gt; em sistemas Unix ou em &lt;code&gt;%SystemRoot%\System32\drivers\etc\hosts&lt;/code&gt; no Windows.&lt;/p&gt;
+&lt;p&gt;No arquivo de &lt;code&gt;hosts&lt;/code&gt; é necessário adicionar um roteamento para que o domínio que estamos testando seja apontado para o nosso servidor local.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;127.0.0.1 example.com www.example.com
+127.0.0.1 admin.example.com
+127.0.0.1 api.example.com
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Concluído todas as configurações no webserver e arquivo de &lt;code&gt;hosts&lt;/code&gt;, agora é necessário reiniciar o nginx para alterações terem efeito.&lt;/p&gt;
+&lt;h4 id=&quot;linux&quot;&gt;Linux&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo service nginx reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h4 id=&quot;osx&quot;&gt;OSX&lt;/h4&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nginx -s reload
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;conclusão&quot;&gt;Conclusão&lt;/h3&gt;
+&lt;p&gt;Com o Nginx percebemos como é fácil o setup de um Virtual Server, o modo de configuração em block permite maior flexibilidade no setup de um ou vários webserver, talvez por isso que eu prefiro Nginx ao invés do Apache, não só por essa questão mais também por outras questão de performance.&lt;/p&gt;
+</description>
+        <pubDate>Sun, 14 Aug 2016 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</guid>
+        <category>blog</category>
+        <category>nginx</category>
+      </item>
+      <item>
+        <title>O que é um Virtual Host, Server Block ou Virtual Server?</title>
+        <description>&lt;p&gt;&lt;strong&gt;Virtual Host (Apache)&lt;/strong&gt; ou &lt;strong&gt;Server Block / &lt;a href=&quot;/blog/nginx/setup-server-block-virtual-host-com-nginx.html&quot;&gt;Virtual Server (Nginx)&lt;/a&gt;&lt;/strong&gt;, em configurações de um webserver, refere-se a uma prática de servir mais de um site no mesmo servidor. Um Virtual Host pode ser baseado em IP, ou seja, diferentes IPs servindo vários sites no mesmo server, ou ainda baseado em nome de domínio, ou seja, vários domínios servindo no mesmo server.&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;O termo Virtual Host é normalmente conhecido no Apache, no Nginx a mesma prática é chamada de Server Block ou Virtual Server, pois um Virtual Server é configurado dentro da diretiva &lt;code&gt;server&lt;/code&gt; block.&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;h2 id=&quot;apache-virtual-host&quot;&gt;Apache Virtual Host&lt;/h2&gt;
+&lt;p&gt;A configuração de um Virtual Host no Apache é relativamente simples:&lt;/p&gt;
+&lt;h3 id=&quot;name-based&quot;&gt;Name-based&lt;/h3&gt;
+&lt;p&gt;Virtual Host baseado em nome é mais simples pois o server vai servir diferentes sites usando o mesmo endereço IP.&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;VirtualHost *:80&amp;gt;
+    ServerName www.example.com
+    ServerAlias example.com 
+    DocumentRoot &amp;quot;/www/domain&amp;quot;
+&amp;lt;/VirtualHost&amp;gt;
+&amp;lt;VirtualHost *:80&amp;gt;
+    ServerName other.example.com
+    DocumentRoot &amp;quot;/www/otherdomain&amp;quot;
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;ip-based&quot;&gt;Ip-based&lt;/h3&gt;
+&lt;p&gt;Virtual Host baseado em IPs requer setup extra de DNS para que funcione corretamente, geralmente configurar name-based é mais simples por conta disso, e a configuração no Apache é assim:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;&amp;lt;VirtualHost 172.20.30.40:80&amp;gt;
+  DocumentRoot &amp;quot;/www/vhosts/www1&amp;quot;
+  ServerName www1.example.com
+&amp;lt;/VirtualHost&amp;gt;
+&amp;lt;VirtualHost 172.20.30.50:80&amp;gt;
+  DocumentRoot &amp;quot;/www/vhosts/www2&amp;quot;
+  ServerName www2.example.org
+&amp;lt;/VirtualHost&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h2 id=&quot;nginx-virtual-host-(server-block-/-virtual-server)&quot;&gt;Nginx Virtual Host (Server Block / Virtual Server)&lt;/h2&gt;
+&lt;p&gt;No nginx configurar um Virtual Host é muito mais simples, é possível definir um Virtual Host ip-based ou name-based ou ambos no mesmo server block, veja como fica a configuração:&lt;/p&gt;
+&lt;h3 id=&quot;name-based&quot;&gt;Name-based&lt;/h3&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;server {
+  listen      80;
+   server_name example.net www.example.net;
+   root /var/www/site1
+   ...
+}
+server {
+  listen      80;
+  server_name example.com www.example.com;
+  root /var/www/site2
+  ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Nesse exemplo acima o webserver determina o host de acordo com request e faz o roteamento para o server de destino.&lt;/p&gt;
+&lt;h3 id=&quot;ip-based-ou-mixed&quot;&gt;Ip-based ou mixed&lt;/h3&gt;
+&lt;p&gt;No mesmo Server Block podemos definir um Virtual Server para ambos ip-based e name-based, veja só:&lt;/p&gt;
+&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;server {
+  listen      192.168.1.1:80;
+  server_name example.org www.example.org;
+  ...
+}
+server {
+  listen      192.168.1.2:80;
+  server_name example.com www.example.com;
+  ...
+}
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
+&lt;h3 id=&quot;mais-detalhes&quot;&gt;Mais detalhes&lt;/h3&gt;
+&lt;p&gt;&lt;a href=&quot;https://httpd.apache.org/docs/current/vhosts/&quot;&gt;https://httpd.apache.org/docs/current/vhosts/&lt;/a&gt;&lt;br&gt;
+&lt;a href=&quot;https://nginx.org/en/docs/http/request_processing.html&quot;&gt;https://nginx.org/en/docs/http/request_processing.html&lt;/a&gt;&lt;/p&gt;
+</description>
+        <pubDate>Sun, 14 Aug 2016 00:00:00 -0300</pubDate>
+        <link>http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</link>
+        <guid isPermaLink="true">http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</guid>
+        <category>blog</category>
+        <category>webserver</category>
+      </item>
       <item>
         <title>Composer lock file</title>
         <description>&lt;p&gt;Devo ou não fazer o commit do arquivo &lt;code&gt;composer.lock&lt;/code&gt;. Quando um ou vários packages é instalado como dependência em seu projeto, o Composer vai atualizar as informações de cada package no arquivo &lt;code&gt;composer.lock&lt;/code&gt;.&lt;/p&gt;
@@ -333,122 +462,6 @@ MIIJKQIBAAKCAgEAzpHUcAE5w5e49Qw2S4cp17OmsIc1D8yfNR7y/ZLsf0382zsw
         <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/ssh-keys.html</guid>
         <category>blog</category>
         <category>seguranca</category>
-      </item>
-      <item>
-        <title>Instalar versão mais recente do Nginx no Linux Ubuntu</title>
-        <description>&lt;p&gt;Instalar o Nginx no Linux é muito simples usando package manager, basta executar comando &lt;code&gt;sudo apt-get install nginx&lt;/code&gt; e pronto, mas o problema que atualmente o Ubuntu 14.10 é entregue com a versão &lt;code&gt;1.4.6&lt;/code&gt; do Nginx pre-instalado em seu repositório de pacotes. É recomendado instalar a versão mais recente e estável de um pacote, no caso do Nginx, hoje a versão mais recente e estável é &lt;code&gt;1.6.2&lt;/code&gt;. Para instalar a versão do Nginx mais recente é necessário algumas configurações no package manager.&lt;/p&gt;
-&lt;h2 id=&quot;1.-remover-o-apache-completamente&quot;&gt;1. Remover o Apache completamente&lt;/h2&gt;
-&lt;p&gt;Caso não tenha o Apache instalado pule para o passo 2.&lt;/p&gt;
-&lt;p&gt;Se o Apache foi instalado anteriormente e você não deseja utilizar os dois webserver Apache e Nginx é recomendado que remova completamente o Apache para evitar conflitos e erro de bind na porta 80.&lt;/p&gt;
-&lt;p&gt;Para remover o Apache:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get purge apache2* 
-sudo apt-get autoremove
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;2.-configure-nginx-pgp-signing_key&quot;&gt;2. Configure Nginx PGP signing_key&lt;/h2&gt;
-&lt;p&gt;É necessário adicionar PGP Key usado nos pacotes nginx para autenticação ao repositório do nginx e evitar alertas de PGP key durante a instalação.&lt;/p&gt;
-&lt;p&gt;Baixe nginx PGP signin key e adicione ao &lt;code&gt;apt&lt;/code&gt;:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;curl http://nginx.org/keys/nginx_signing.key 
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Alternativa, se não tiver o &lt;code&gt;curl&lt;/code&gt; instalado utilize &lt;code&gt;wget&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo wget http://nginx.org/keys/nginx_signing.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Adicionar a chave ao &lt;code&gt;apt&lt;/code&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-key add nginx_signing.key
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;3.-update-source.list&quot;&gt;3. Update source.list&lt;/h2&gt;
-&lt;p&gt;Adicione o repositório &lt;code&gt;http://nginx.org/packages/ubuntu&lt;/code&gt; ao source.list para isso é necessário saber qual o codename do Ubuntu que esta usando, esse nome varia de acordo com a distribuição do Ubuntu, isso é importante para que possa instalar a versão correta do Nginx no seu sistema.&lt;/p&gt;
-&lt;p&gt;Para descobrir a qual o codename do sua versão do Ubuntu execute o comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;cat /etc/lsb-release | grep DISTRIB_CODENAME
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Será exibido algo como &lt;code&gt;DISTRIB_CODENAME=trusty&lt;/code&gt; onde nesse exemplo &lt;em&gt;trusty&lt;/em&gt; será o seu codename.&lt;/p&gt;
-&lt;p&gt;Agora, finalmente crie uma nova &lt;em&gt;source.list&lt;/em&gt;&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nano /etc/apt/sources.list.d/nginx.list
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;E adicione as seguintes linhas nesse arquivo:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;deb http://nginx.org/packages/ubuntu trusty nginx
-deb-src http://nginx.org/packages/ubuntu trusty nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;NOTA: substitua os valores &lt;em&gt;trusty&lt;/em&gt; se seu codename for diferente.&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;h2 id=&quot;4.-instalar-a-versão-recente-do-nginx&quot;&gt;4. Instalar a versão recente do Nginx&lt;/h2&gt;
-&lt;p&gt;Primeiro se você instalou alguma versão antiga do Nginx(como a versão nativa pre-instalado nas distribuições) você pode remover completamente essa versão utilizando o seguinte comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo aptitude purge nginx nginx-light nginx-full nginx-extras nginx-common
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Nota: usando o &lt;code&gt;purge&lt;/code&gt; removerá também arquivos de configuração do nginx&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;Re-sincronize o index dos repositorios de seus pacotes    &lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get update
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Verifique a versão do Nginx na sua lista de repositórios:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-cache show nginx
-Package: nginx
-Version: 1.6.2-1~trusty
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Agora que já tem o versão recente do Nginx poderá instalar executando o comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo apt-get install nginx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;… Ou se você já tem o nginx instalado e deseja apenas fazer o upgrade:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;apt-get dist-upgrade
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Após instalar verifique se o nginx esta em execução:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;service nginx status
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Se o Nginx não estiver está em execução significa que algum erro aconteceu, talvez porque outro processo esta sendo usado na porta 80, verifique usando o seguinte comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo netstat -tulpn
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Se outro processo estiver utilizando a porta 80 finalize este processo com o comando:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;kill -9 xxxx
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;h2 id=&quot;comandos-úteis-do-nginx&quot;&gt;Comandos úteis do Nginx&lt;/h2&gt;
-&lt;p&gt;Inicializar o Nginx:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;service nginx start
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Reiniciar o Nginx:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nginx -s reload
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Parar o Nginx:&lt;/p&gt;
-&lt;div class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-text&quot; data-lang=&quot;text&quot;&gt;sudo nginx -s stop
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;Teste a instalação acesse &lt;a href=&quot;http://localhost&quot;&gt;http://localhost&lt;/a&gt;&lt;/p&gt;
-&lt;div class=&quot;img-wrap text-center&quot;&gt;
-&lt;img src=&quot;/images/2014/11/nginx.jpg&quot; alt=&quot;Nginx&quot; title=&quot;Nginx&quot; class=&quot;img-thumbnail&quot; width=&quot;400&quot;&gt;
-&lt;span&gt;imagem 1: Tela inicial do Nginx&lt;/span&gt;
-&lt;/div&gt;
-&lt;h3 id=&quot;referências&quot;&gt;Referências&lt;/h3&gt;
-&lt;p&gt;&lt;a href=&quot;http://nginx.org/en/linux_packages.html&quot;&gt;http://nginx.org/en/linux_packages.html&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Fri, 28 Nov 2014 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/instalar-versao-recente-nginx-no-linux-ubuntu.html</guid>
-        <category>blog</category>
-        <category>nginx</category>
-      </item>
-      <item>
-        <title>jQuery KeyCode Tabela de referência</title>
-        <description>&lt;p&gt;Capturar a tecla pressionada no teclado do usuário usando as propriedades do Javascript &lt;strong&gt;charCode&lt;/strong&gt; / &lt;strong&gt;keyCode&lt;/strong&gt; / &lt;strong&gt;which&lt;/strong&gt; pode parecer um pouco complexo, e realmente é, por isso é preciso entender como funciona esses eventos. A Captura desses tipos de eventos pode ser útil para validar algum de tipo de entrada em formulários ou em algum outro tipo de evento no browser. Para lidar com esse tipo de evento a biblioteca &lt;a href=&quot;http://api.jquery.com/category/events/keyboard-events/&quot;&gt;jQuery&lt;/a&gt; pode ser uma boa opção, pois alguns browser armazenam esses eventos de forma diferente, principalmente IE. Para capturar o &lt;code&gt;keyCode&lt;/code&gt; do usuário de forma mais precisa o evento &lt;code&gt;keypress()&lt;/code&gt; é a melhor opção.&lt;/p&gt;
-&lt;h3 id=&quot;diferenças-entre-keycode-e-charcode&quot;&gt;Diferenças entre &lt;code&gt;keyCode&lt;/code&gt; e &lt;code&gt;charCode&lt;/code&gt;&lt;/h3&gt;
-&lt;p&gt;&lt;strong&gt;keyCode&lt;/strong&gt; (Keyboard Codes): Representa o número da tecla que o usuário pressiona no teclado.&lt;br&gt;
-&lt;strong&gt;charCode:&lt;/strong&gt; (Character Codes): Representa um número de cada caractere na tabela &lt;a href=&quot;http://www.utf8-chartable.de/unicode-utf8-table.pl?utf8=oct&amp;amp;unicodeinhtml=dec&amp;amp;htmlent=1&quot;&gt;&lt;em&gt;Unicode&lt;/em&gt;&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;Para entender e ter sempre a mão o número de cada &lt;code&gt;keyCode&lt;/code&gt; representado no teclado criei uma tabela para ter como referência, e para testar os eventos &lt;code&gt;keydown()&lt;/code&gt;, &lt;code&gt;keypress()&lt;/code&gt; e &lt;code&gt;keyup()&lt;/code&gt; basta digitar a tecla nos campos de texto a seguir.&lt;/p&gt;
-&lt;h3 id=&quot;javascript-keycode-tabela-de-referencia.&quot;&gt;Javascript KeyCode tabela de referencia.&lt;/h3&gt;
-&lt;p&gt;&lt;input type=&quot;text&quot; name=&quot;keypress&quot; placeholder=&quot;keypress()&quot;&gt;
-&lt;input type=&quot;text&quot; name=&quot;keydown&quot; placeholder=&quot;keydown()&quot;&gt;
-&lt;input type=&quot;text&quot; name=&quot;keyup&quot; placeholder=&quot;keyup()&quot;&gt; &lt;br&gt;
-&lt;strong&gt;&lt;small class=&quot;feedback&quot;&gt;Para testar digite algo nos campos de texto acima&lt;/small&gt;&lt;/strong&gt;
-&lt;table id=&quot;CharCodeList&quot; class=&quot;table table-responsive table-striped table-bordered &quot;&gt;
-  &lt;tbody&gt;&lt;/tbody&gt;
-&lt;/table&gt;&lt;/p&gt;
-&lt;h4 id=&quot;referência:&quot;&gt;Referência:&lt;/h4&gt;
-&lt;p&gt;&lt;a href=&quot;http://unixpapa.com/js/key.html&quot;&gt;http://unixpapa.com/js/key.html&lt;/a&gt;&lt;br&gt;
-&lt;a href=&quot;http://en.wikipedia.org/wiki/UTF-8&quot;&gt;http://en.wikipedia.org/wiki/UTF-8&lt;/a&gt;&lt;/p&gt;
-</description>
-        <pubDate>Thu, 27 Nov 2014 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/jquery/jquery-keycode-tabela-de-referencia.html</guid>
-        <category>blog</category>
-        <category>jquery</category>
       </item>
     
   </channel>
