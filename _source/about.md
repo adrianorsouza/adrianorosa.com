@@ -1,13 +1,13 @@
 ---
 layout: page
 title: Sobre
-description: Analista Programador Back-End e Front-End Web FullStack com conhecimentos em PHP HTML5 CSS LESS e SEO.
+description: Analista Programador Backend e Frontend Web FullStack com conhecimentos em PHP HTML5 CSS LESS e SEO.
 quote: FullStack Web Developer.
 permalink: /about/
 category: page
 ---
 
-[Adriano Rosa](/) é Analista Programador (Back-End e Front-End) há mais de 12 anos, nesse período desenvolveu 
+[Adriano Rosa](/) é Analista Programador (Backend e Frontend) há mais de 12 anos, nesse período desenvolveu 
 idéias e soluções para resolver problemas comuns entre empresas e a internet com impacto relativo em seus 
 investimentos.
 
