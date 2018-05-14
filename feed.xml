@@ -3,10 +3,10 @@
   <channel>
     <title>Adriano Rosa</title>
     <description>Analista Programador Backend e Frontend - Web Developer FullStack</description>
-    <link>http://adrianorosa.com/</link>
-    <atom:link href="http://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
-    <pubDate>Mon, 19 Jun 2017 22:39:24 -0300</pubDate>
-    <lastBuildDate>Mon, 19 Jun 2017 22:39:24 -0300</lastBuildDate>
+    <link>https://adrianorosa.com/</link>
+    <atom:link href="https://adrianorosa.com/feed.xml" rel="self" type="application/rss+xml" />
+    <pubDate>Mon, 14 May 2018 19:46:10 -0300</pubDate>
+    <lastBuildDate>Mon, 14 May 2018 19:46:10 -0300</lastBuildDate>
     <generator>Jekyll v2.2.0</generator>
     
       <item>
@@ -62,8 +62,8 @@
 &lt;p&gt;Com o Nginx percebemos como é fácil o setup de um Virtual Server, o modo de configuração em block permite maior flexibilidade no setup de um ou vários webserver, talvez por isso que eu prefiro Nginx ao invés do Apache, não só por essa questão mais também por outras questão de performance.&lt;/p&gt;
 </description>
         <pubDate>Sun, 14 Aug 2016 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</guid>
+        <link>https://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/nginx/setup-server-block-virtual-host-com-nginx.html</guid>
         <category>blog</category>
         <category>nginx</category>
       </item>
@@ -133,8 +133,8 @@ server {
 &lt;a href=&quot;https://nginx.org/en/docs/http/request_processing.html&quot;&gt;https://nginx.org/en/docs/http/request_processing.html&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 14 Aug 2016 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</guid>
+        <link>https://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/webserver/o-que-e-um-virtual-host-server-block-ou-virtual-server.html</guid>
         <category>blog</category>
         <category>webserver</category>
       </item>
@@ -163,8 +163,8 @@ server {
 &lt;p&gt;&lt;a href=&quot;https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file&quot;&gt;https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Sun, 26 Jun 2016 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/composer/composer-lock-files.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/composer/composer-lock-files.html</guid>
+        <link>https://adrianorosa.com/blog/composer/composer-lock-files.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/composer/composer-lock-files.html</guid>
         <category>blog</category>
         <category>composer</category>
       </item>
@@ -195,8 +195,8 @@ server {
 &lt;/ul&gt;
 </description>
         <pubDate>Wed, 09 Dec 2015 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</guid>
+        <link>https://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/nginx/nginx-cors-multiplos-dominios.html</guid>
         <category>blog</category>
         <category>nginx</category>
       </item>
@@ -223,8 +223,8 @@ server {
 &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;
 </description>
         <pubDate>Sat, 09 May 2015 00:00:00 -0300</pubDate>
-        <link>http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</guid>
+        <link>https://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/laravel/alterar-public-path-no-laravel-5.html</guid>
         <category>blog</category>
         <category>laravel</category>
       </item>
@@ -282,8 +282,8 @@ server {
 &lt;/div&gt;
 </description>
         <pubDate>Sat, 17 Jan 2015 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</guid>
+        <link>https://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/seguranca/acesse-arquivos-remoto-com-sftp-e-filezilla.html</guid>
         <category>blog</category>
         <category>seguranca</category>
       </item>
@@ -310,8 +310,8 @@ server {
 &lt;p&gt;FTP é inseguro é deve ser evitado sempre que possível, o uso de alternativas seguras como SFTP, SCP e WinSCP deve ser usado em seu lugar. Se seu provedor de hospedagem não oferece este recurso procure alternativas como VPS ou migre para empresas que possibilitam essa configuração.&lt;/p&gt;
 </description>
         <pubDate>Sat, 10 Jan 2015 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</guid>
+        <link>https://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/seguranca/ftp-e-nao-e-seguro-saiba-por-que.html</guid>
         <category>blog</category>
         <category>seguranca</category>
       </item>
@@ -353,8 +353,8 @@ server {
 &lt;p&gt;Veja mais detalhes na &lt;a href=&quot;http://www.chiark.greenend.org.uk/%7Esgtatham/putty/docs.html&quot;&gt;documentação do PuTTY&lt;/a&gt;.&lt;/p&gt;
 </description>
         <pubDate>Thu, 18 Dec 2014 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</guid>
+        <link>https://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-windows.html</guid>
         <category>blog</category>
         <category>seguranca</category>
       </item>
@@ -422,8 +422,8 @@ MIIJKQIBAAKCAgEAzpHUcAE5w5e49Qw2S4cp17OmsIc1D8yfNR7y/ZLsf0382zsw
 &lt;p&gt;&lt;a href=&quot;https://help.ubuntu.com/community/SSH/OpenSSH/Keys&quot;&gt;https://help.ubuntu.com/community/SSH/OpenSSH/Keys&lt;/a&gt;&lt;/p&gt;
 </description>
         <pubDate>Thu, 18 Dec 2014 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</guid>
+        <link>https://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/seguranca/como-criar-ssh-key-pair-unix.html</guid>
         <category>blog</category>
         <category>seguranca</category>
       </item>
@@ -458,8 +458,8 @@ MIIJKQIBAAKCAgEAzpHUcAE5w5e49Qw2S4cp17OmsIc1D8yfNR7y/ZLsf0382zsw
 &lt;p&gt;Alternativas como &lt;a href=&quot;https://www.itefix.net/copssh&quot;&gt;CopSSH&lt;/a&gt; pode ser usado no Windows ou se você usa GitHub o programa &lt;a href=&quot;https://windows.github.com/&quot;&gt;GitHub para Windows&lt;/a&gt; oferece o Git Shell como parte da instalação onde é possível criar SSH Keys usando o comando &lt;code&gt;ssh-keygen&lt;/code&gt; do mesmo modo em sistemas Unix.&lt;/p&gt;
 </description>
         <pubDate>Fri, 28 Nov 2014 00:00:00 -0200</pubDate>
-        <link>http://adrianorosa.com/blog/seguranca/ssh-keys.html</link>
-        <guid isPermaLink="true">http://adrianorosa.com/blog/seguranca/ssh-keys.html</guid>
+        <link>https://adrianorosa.com/blog/seguranca/ssh-keys.html</link>
+        <guid isPermaLink="true">https://adrianorosa.com/blog/seguranca/ssh-keys.html</guid>
         <category>blog</category>
         <category>seguranca</category>
       </item>
