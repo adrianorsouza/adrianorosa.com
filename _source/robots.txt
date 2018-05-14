@@ -3,4 +3,4 @@ Disallow: /403.html
 Disallow: /404.html
 Disallow: /50x.html
 
-Sitemap: http://adrianorosa.com/sitemap.xml
+Sitemap: https://adrianorosa.com/sitemap.xml

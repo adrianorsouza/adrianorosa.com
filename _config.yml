@@ -7,7 +7,7 @@ description:      "Analista Programador Backend e Frontend - Web Developer FullS
 author:
   name:           Adriano Rosa
   description:    Web Developer
-  url:            http://adrianorosa.com
+  url:            https://adrianorosa.com
   email:          info@adrianorosa.com
   twitter:        https://twitter.com/adrianorosa
   github:         https://github.com/adrianorsouza
@@ -20,7 +20,7 @@ author:
 # ----------------------------------
 baseurl:          ""
 blog_url:         "/blog"
-url:              "http://adrianorosa.com"
+url:              "https://adrianorosa.com"
 locale:           pt-br
 disqus_enable:    true
 disqus_shortname: adrianorosa
