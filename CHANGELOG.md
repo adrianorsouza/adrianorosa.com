@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## 2020-01-14 00:39
+- PROJECT DEVELOPMENT VERSION 4.0.0 STARTED
+
 ## 2015-05-10 20:41
 - Migrate to Github pages
 

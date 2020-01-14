@@ -1,0 +1,167 @@
+code[class*='language-'],
+pre[class*='language-'] {
+  color: #c5c8c6;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.3);
+  font-family: Inconsolata, Monaco, Consolas, 'Courier New', Courier, monospace;
+  direction: ltr;
+  text-align: left;
+  white-space: pre;
+  word-spacing: normal;
+  word-break: normal;
+  line-height: 1.5;
+  tab-size: 4;
+  hyphens: none;
+}
+
+pre[class*='language-'] {
+  padding: 1em;
+  margin: 0.5em 0;
+  overflow: auto;
+  border-radius: 0.3em;
+  background: #1d1f21;
+}
+
+:not(pre) > code[class*='language-'] {
+  background: #1d1f21;
+  padding: 0.1em;
+  border-radius: 0.3em;
+}
+
+comment {
+  color: #7c7c7c;
+}
+
+.prolog {
+  color: #7c7c7c;
+}
+
+.doctype {
+  color: #7c7c7c;
+}
+
+.cdata {
+  color: #7c7c7c;
+}
+
+.punctuation {
+  color: #c5c8c6;
+}
+
+.namespace {
+  opacity: 0.7;
+}
+
+.property {
+  color: #96cbfe;
+}
+
+.keyword {
+  color: #96cbfe;
+}
+
+.tag {
+  color: #96cbfe;
+}
+
+.class-name {
+  color: #ffffb6;
+  text-decoration: underline;
+}
+
+.boolean {
+  color: #99cc99;
+}
+
+.constant {
+  color: #99cc99;
+}
+
+symbol {
+  color: #f92672;
+}
+
+.deleted {
+  color: #f92672;
+}
+
+.number {
+  color: #ff73fd;
+}
+
+selector {
+  color: #a8ff60;
+}
+
+.attr-name {
+  color: #a8ff60;
+}
+
+.string {
+  color: #a8ff60;
+}
+
+.char {
+  color: #a8ff60;
+}
+
+.builtin {
+  color: #a8ff60;
+}
+
+.inserted {
+  color: #a8ff60;
+}
+
+.variable {
+  color: #c6c5fe;
+}
+
+.operator {
+  color: #ededed;
+}
+
+.entity {
+  color: #ffffb6;
+  cursor: help;
+}
+
+.url {
+  color: #96cbfe;
+}
+
+.language-css .token.string {
+  color: #87c38a;
+}
+
+.style .token.string {
+  color: #87c38a;
+}
+
+.atrule {
+  color: #f9ee98;
+}
+
+.attr-value {
+  color: #f9ee98;
+}
+
+.function {
+  color: #dad085;
+}
+
+.regex {
+  color: #e9c062;
+}
+
+.important {
+  color: #fd971f;
+  font-weight: bold;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.italic {
+  font-style: italic;
+}

@@ -1,0 +1,33 @@
+main {
+  margin: 0 auto;
+  max-width: 75rem;
+
+  header {
+    margin-bottom: 3rem;
+    border-bottom: 1px solid gray;
+
+    h1 a {
+      text-decoration: none;
+      color: initial;
+    }
+  }
+
+  article {
+    //
+  }
+
+  footer {
+    margin-top: 3rem;
+    border-top: 1px solid gray;
+    text-align: center;
+    font-size: 1rem;
+    padding: 5px;
+  }
+}
+
+blockquote {
+  background: #f2f2f2;
+  margin: 0;
+  padding: 5px;
+  color: #7c7c7c;
+}
