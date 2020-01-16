@@ -12,7 +12,7 @@ import { Helmet } from 'react-helmet';
 
 const Head = ({ siteMetadata, children }) => {
   return (
-    <Helmet titleTemplate={`%s | ${siteMetadata.author}`}>{children}</Helmet>
+    <Helmet titleTemplate={`%s | ${siteMetadata.author.name}`}>{children}</Helmet>
   );
 };
 

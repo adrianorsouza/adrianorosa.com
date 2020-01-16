@@ -16,12 +16,13 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
   if (node.internal.type === 'MarkdownRemark') {
     const fileNode = getNode(node.parent);
 
-    const category = fileNode.relativeDirectory.replace(/^[0-9\-]{3}/, '');
+    // const category = fileNode.relativeDirectory.replace(/^[0-9\-]{3}/, '');
+    const category = node.frontmatter.category;
 
     // Grab the title from the frontmatter, otherwise grab from the first heading of markdown content
-    const title =
-      node.frontmatter.title || node.internal.content.split(`\n`)[0];
-    const slug = slugify(title, { lower: true });
+    const title = node.frontmatter.title || node.internal.content.split(`\n`)[0];
+    // const slug = slugify(title, { lower: true });
+    const slug = fileNode.name.replace(/^[0-9]{4}-[0-9]{2}-[0-9]{2}-/, '');
 
     // Creates new query'able field with name of 'title'
     createNodeField({
@@ -34,7 +35,7 @@ exports.onCreateNode = ({ node, getNode, actions }) => {
     createNodeField({
       node,
       name: 'slug',
-      value: `${category}/${slug}`,
+      value: `/blog/${category}/${slug}.html`,
     });
 
     // Creates new query'able field with name of 'category'
