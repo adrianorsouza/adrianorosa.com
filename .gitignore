@@ -20,3 +20,9 @@ cache
 *.sql
 *.zip
 *.sublime-workspace
+
+
+public
+.env*
+.idea
+package-lock.json
